@@ -25,3 +25,4 @@ app.register_blueprint(ui_test_bp,url_prefix='/uitest')
 
 if __name__ == '__main__':
     app.run(port=5002)
+    

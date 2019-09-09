@@ -2,8 +2,9 @@ from flask import jsonify
 from ext import db
 from flask_login import login_required
 from flask_restful import Resource, reqparse
-from app.models import Page, Element, Action, FunctionInfo
+from app.models import Page, Element, Action, FunctionInfo, TestCase ,TestCaseSuit
 from sqlalchemy.exc import IntegrityError
+
 parser_page = reqparse.RequestParser()
 parser_page.add_argument('title', type=str, required=True, help="title cannot be blank!")
 
@@ -53,6 +54,8 @@ parser_ele = reqparse.RequestParser()
 parser_ele.add_argument('title', type=str, required=True, help="title cannot be blank!")
 parser_ele.add_argument('type', type=str, help="type cannot be blank!")
 parser_ele.add_argument('loc', type=str, help="loc cannot be blank!")
+
+
 class ElementList(Resource):
     @login_required
     def get(self, project_id, page_id):
@@ -84,10 +87,12 @@ class ElementList(Resource):
 
 
 parser_ele_detail = reqparse.RequestParser()
-parser_ele_detail.add_argument('formData', type=str,action='append', help="formData cannot be blank!")
+parser_ele_detail.add_argument('formData', type=str, action='append', help="formData cannot be blank!")
+
+
 class ElementDetail(Resource):
     @login_required
-    def put(self, project_id, page_id ,element_id):
+    def put(self, project_id, page_id, element_id):
         args = parser_ele.parse_args()
         entity = Element.query.filter(Element.id == element_id).first()
         entity.title = args.title
@@ -110,11 +115,12 @@ class ElementDetail(Resource):
                 {'status': '0', 'data': element_id, 'msg': "需要先删除或修改元素操作里面关联的元素信息"})
 
 
-
 parser_act = reqparse.RequestParser()
 parser_act.add_argument('title', type=str, required=True, help="title cannot be blank!")
-parser_act.add_argument('functionId', type=str,required=True, help="function_id cannot be blank!")
-parser_act.add_argument('elementId', type=str,required=True, help="element_id cannot be blank!")
+parser_act.add_argument('functionId', type=str, required=True, help="function_id cannot be blank!")
+parser_act.add_argument('elementId', type=str, required=True, help="element_id cannot be blank!")
+
+
 class ActionList(Resource):
     @login_required
     def get(self, project_id, page_id):
@@ -151,7 +157,6 @@ class ActionList(Resource):
             {'status': '1', 'data': {}, 'msg': 'success'})
 
 
-
 class ActionDetail(Resource):
     @login_required
     def put(self, project_id, page_id, action_id):
@@ -164,10 +169,9 @@ class ActionDetail(Resource):
         db.session.commit()
         return jsonify({'status': '1', 'data': args, 'msg': 'success'})
 
-
     @login_required
     def delete(self, project_id, page_id, action_id):
-        entity = Action.query.filter(Action.id == action_id ).first()
+        entity = Action.query.filter(Action.id == action_id).first()
         if entity:
             db.session.delete(entity)
             db.session.commit()
@@ -179,6 +183,8 @@ parser_fun = reqparse.RequestParser()
 parser_fun.add_argument('title', type=str, required=True, help="title cannot be blank!")
 parser_fun.add_argument('type', type=int, required=True, help="type cannot be blank!")
 parser_fun.add_argument('description', type=str, help="description cannot be blank!")
+
+
 class FunctionList(Resource):
     @login_required
     def get(self):
@@ -213,10 +219,9 @@ class FunctionList(Resource):
                 {'status': '0', 'data': {}, 'msg': '名称重复'})
 
 
-
 class FunctionDetail(Resource):
     @login_required
-    def put(self,function_id):
+    def put(self, function_id):
         args = parser_fun.parse_args()
         print(args)
         entity = FunctionInfo.query.filter(FunctionInfo.id == function_id).first()
@@ -226,12 +231,45 @@ class FunctionDetail(Resource):
         db.session.commit()
         return jsonify({'status': '1', 'data': args, 'msg': 'success'})
 
-
     @login_required
     def delete(self, function_id):
-        entity = FunctionInfo.query.filter(FunctionInfo.id == function_id ).first()
+        entity = FunctionInfo.query.filter(FunctionInfo.id == function_id).first()
         if entity:
             db.session.delete(entity)
             db.session.commit()
             return jsonify(
                 {'status': '1', 'data': function_id, 'msg': 'success'})
+
+
+class TestCaseList(Resource):
+    @login_required
+    def get(self):
+        results = list(FunctionInfo.query.filter().all())
+        data_list = []
+        for row in results:
+            data_dict = {}
+            data_dict['i    d'] = row.id
+            data_dict['title'] = row.title
+            data_dict['action_id'] = row.type
+            data_dict['suit_id'] = row.description
+            data_dict['create_datetime'] = str(row.create_datetime)
+            data_dict['update_datetime'] = str(row.update_datetime)
+            data_list.append(data_dict)
+        return jsonify({'status': '1', 'data': {"data_list": data_list}, 'msg': 'success'})
+
+    @login_required
+    def post(self):
+        args = parser_fun.parse_args()
+        title = args.get('title')
+        type = args.get('type')
+        description = args.get('description')
+
+        entity = FunctionInfo(title=title, type=type, description=description)
+        try:
+            db.session.add(entity)
+            db.session.commit()
+            return jsonify(
+                {'status': '1', 'data': {}, 'msg': 'success'})
+        except IntegrityError:
+            return jsonify(
+                {'status': '0', 'data': {}, 'msg': '名称重复'})

@@ -112,20 +112,24 @@ class TestProject(Resource):
         return jsonify({'status': 1, 'data': {}, 'msg': '创建项目成功'})
 
 
-@login_required
-def get_project_list():
-    """获取项目列表"""
-    if request.method == 'GET':
-        user_id = user_loader(session.get('user_id')).id
-        project_lists = list(TestProject.query.filter(TestProject.author_id == user_id).all())
-        data_list=[]
-        for project in project_lists:
-            project_list = {}
-            project_list['id'] = project.id
-            project_list['title'] = project.name
-            data_list.append(project_list)
 
-        return jsonify({'status': 1, 'data': {'list': data_list}, 'msg': '请求项目列表成功'})
+class ProjectDetail(Resource):
+    @login_required
+    def put(self,project_id):
+        args = parser_pro.parse_args()
+        title = args.get('title')
+        if Project.query.filter(Project.title == title).first():
+            return jsonify({'status': '0', 'data': {}, 'msg': '该项目名已被使用,请重新填写'})
 
+        entity = Project.query.filter(Project.id == project_id).first()
+        entity.title = title
+        db.session.commit()
+        return jsonify({'status': 1, 'data': project_id, 'msg': 'Success'})
 
+    @login_required
+    def delete(self,project_id):
+        entity = Project.query.filter(Project.id == project_id).first()
+        db.session.delete(entity)
+        db.session.commit()
+        return jsonify({'status': '0', 'data': {entity}, 'msg': 'success'})
 

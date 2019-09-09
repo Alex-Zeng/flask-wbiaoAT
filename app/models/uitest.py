@@ -21,8 +21,7 @@ class Element(db.Model):
     loc = db.Column(db.String(200), comment="信息描述")
     page_id = db.Column(db.Integer,db.ForeignKey('page.id'), comment="所属页面ID")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
-    update_datetime = db.Column(db.DateTime, nullable=False,
-                                server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
+    update_datetime = db.Column(db.DateTime, nullable=False,                                server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
     page = db.relationship('Page', backref=db.backref('element'))
 
 # 操作表
@@ -55,18 +54,19 @@ class TestCase(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, comment="用例名")
     action_id = db.Column(db.Integer, comment="用例步骤id，关联action表")
-    suit_id = db.Column(db.Integer, db.ForeignKey('test_case_suit.id'), comment="用例集id")
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), comment="所属项目ID")
+
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
-    test_case_suit = db.relationship('TestCaseSuit', backref=db.backref('test_case'))
-
+    project = db.relationship('Project', backref=db.backref('test_case'))
 
 # 用例集
 class TestCaseSuit(db.Model):
     __tablename__ = 'test_case_suit'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, comment="用例集名")
+    test_case_ids = db.Column(db.String(100), nullable=False, comment="包含的用例ID")
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), comment="所属项目ID")
     description = db.Column(db.String(100), comment="说明")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
