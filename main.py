@@ -22,7 +22,6 @@ login_manager.init_app(app)
 app.register_blueprint(admin_bp,url_prefix='/admin')
 app.register_blueprint(ui_test_bp,url_prefix='/uitest')
 
-
 if __name__ == '__main__':
     app.run(port=5002)
     

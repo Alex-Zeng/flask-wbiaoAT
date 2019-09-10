@@ -2,7 +2,7 @@ from flask import jsonify
 from ext import db
 from flask_login import login_required
 from flask_restful import Resource, reqparse
-from app.models import Page, Element, Action, FunctionInfo, TestCase ,TestCaseSuit
+from app.models import Page, Element, Action, FunctionInfo, TestCase, TestCaseSuit
 from sqlalchemy.exc import IntegrityError
 
 parser_page = reqparse.RequestParser()
@@ -223,7 +223,6 @@ class FunctionDetail(Resource):
     @login_required
     def put(self, function_id):
         args = parser_fun.parse_args()
-        print(args)
         entity = FunctionInfo.query.filter(FunctionInfo.id == function_id).first()
         entity.title = args.title
         entity.type = args.type
@@ -241,35 +240,134 @@ class FunctionDetail(Resource):
                 {'status': '1', 'data': function_id, 'msg': 'success'})
 
 
+parser_case = reqparse.RequestParser()
+parser_case.add_argument('title', type=str, required=True, help="title cannot be blank!")
+parser_case.add_argument('action_id', type=int, required=True, help="action_id cannot be blank!")
+
+
 class TestCaseList(Resource):
-    @login_required
-    def get(self):
-        results = list(FunctionInfo.query.filter().all())
+
+    def case_list(self, project_id):
+        results = list(TestCase.query.filter(TestCase.project_id == project_id).all())
         data_list = []
         for row in results:
             data_dict = {}
-            data_dict['i    d'] = row.id
+            data_dict['id'] = row.id
             data_dict['title'] = row.title
-            data_dict['action_id'] = row.type
-            data_dict['suit_id'] = row.description
+            data_dict['action_id'] = row.action_id
+            action = Action.query.filter(Action.id == row.action_id).first()
+            data_dict['action_title'] = action.title
+            data_dict['create_datetime'] = str(row.create_datetime)
+            data_dict['update_datetime'] = str(row.update_datetime)
+            data_list.append(data_dict)
+        return data_list
+
+    @login_required
+    def get(self, project_id):
+        data_list = self.case_list(project_id)
+        return jsonify({'status': '1', 'data': {"data_list": data_list}, 'msg': 'success'})
+    @login_required
+    def post(self, project_id):
+        args = parser_case.parse_args()
+        title = args.get('title')
+        action_id = args.get('action_id')
+
+        entity = TestCase(title=title, action_id=action_id, project_id=project_id)
+        db.session.add(entity)
+        db.session.commit()
+        return jsonify(
+            {'status': '1', 'data': {}, 'msg': 'success'})
+
+
+class TestCaseDetail(Resource):
+    @login_required
+    def put(self, project_id, case_id):
+        args = parser_case.parse_args()
+        entity = TestCase.query.filter(TestCase.id == case_id).first()
+        entity.title = args.title
+        entity.action_id = args.action_id
+        db.session.commit()
+        return jsonify({'status': '1', 'data': args, 'msg': 'success'})
+
+    @login_required
+    def delete(self, project_id, case_id):
+        entity = TestCase.query.filter(TestCase.id == case_id).first()
+        if entity:
+            db.session.delete(entity)
+            db.session.commit()
+            return jsonify(
+                {'status': '1', 'data': case_id, 'msg': 'success'})
+
+
+parser_suit = reqparse.RequestParser()
+parser_suit.add_argument('title', type=str, required=True, help="title cannot be blank!")
+parser_suit.add_argument('test_case_ids', type=str, required=True, help="test_case_ids cannot be blank!")
+parser_suit.add_argument('description', type=str, required=True, help="description cannot be blank!")
+class CaseSuitList(Resource):
+    def case_list_get(self, ids):
+        results = list(TestCase.query.filter(TestCase.id.in_(ids)).all())
+        data_list = []
+        for row in results:
+            data_dict = {}
+            data_dict['id'] = row.id
+            data_dict['title'] = row.title
+            data_dict['action_id'] = row.action_id
+            action = Action.query.filter(Action.id == row.action_id).first()
+            data_dict['action_title'] = action.title
+            data_dict['create_datetime'] = str(row.create_datetime)
+            data_dict['update_datetime'] = str(row.update_datetime)
+            data_list.append(data_dict)
+        return data_list
+
+    # @login_required
+    def get(self, project_id):
+        results = list(TestCaseSuit.query.filter(TestCaseSuit.project_id == project_id).all())
+        data_list = []
+        for row in results:
+            case_list = []
+            data_dict = {}
+            data_dict['id'] = row.id
+            data_dict['title'] = row.title
+            data_dict['test_case_ids'] = row.test_case_ids
+            data_dict['description'] = row.description
+            case_list = self.case_list_get(row.test_case_ids)
+            data_dict['TestCaseList'] = case_list
             data_dict['create_datetime'] = str(row.create_datetime)
             data_dict['update_datetime'] = str(row.update_datetime)
             data_list.append(data_dict)
         return jsonify({'status': '1', 'data': {"data_list": data_list}, 'msg': 'success'})
 
     @login_required
-    def post(self):
-        args = parser_fun.parse_args()
+    def post(self, project_id):
+        args = parser_suit.parse_args()
+        print(args)
         title = args.get('title')
-        type = args.get('type')
         description = args.get('description')
+        test_case_ids = args.get('test_case_ids')
+        print(test_case_ids)
+        entity = TestCaseSuit(title=title, description=description, test_case_ids=test_case_ids, project_id=project_id)
+        db.session.add(entity)
+        db.session.commit()
+        return jsonify(
+            {'status': '1', 'data': {}, 'msg': 'success'})
 
-        entity = FunctionInfo(title=title, type=type, description=description)
-        try:
-            db.session.add(entity)
+
+class CaseSuitDetail(Resource):
+    @login_required
+    def put(self, project_id, case_suit_id):
+        args = parser_suit.parse_args()
+        entity = TestCaseSuit.query.filter(TestCaseSuit.id == case_suit_id).first()
+        entity.title = args.title
+        entity.description = args.description
+        entity.test_case_ids = args.test_case_ids
+        db.session.commit()
+        return jsonify({'status': '1', 'data': args, 'msg': 'success'})
+
+    @login_required
+    def delete(self, project_id, case_suit_id):
+        entity = TestCaseSuit.query.filter(TestCaseSuit.id == case_suit_id).first()
+        if entity:
+            db.session.delete(entity)
             db.session.commit()
             return jsonify(
-                {'status': '1', 'data': {}, 'msg': 'success'})
-        except IntegrityError:
-            return jsonify(
-                {'status': '0', 'data': {}, 'msg': '名称重复'})
+                {'status': '1', 'data': case_suit_id, 'msg': 'success'})
