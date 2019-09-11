@@ -117,8 +117,8 @@ class ElementDetail(Resource):
 
 parser_act = reqparse.RequestParser()
 parser_act.add_argument('title', type=str, required=True, help="title cannot be blank!")
-parser_act.add_argument('functionId', type=str, required=True, help="function_id cannot be blank!")
-parser_act.add_argument('elementId', type=str, required=True, help="element_id cannot be blank!")
+parser_act.add_argument('fun_id', type=str, required=True, help="fun_id cannot be blank!")
+parser_act.add_argument('ele_id', type=str, required=True, help="ele_id cannot be blank!")
 
 
 class ActionList(Resource):
@@ -140,17 +140,12 @@ class ActionList(Resource):
             data_dict['create_datetime'] = str(row.create_datetime)
             data_dict['update_datetime'] = str(row.update_datetime)
             data_list.append(data_dict)
-            print(row.create_datetime)
         return jsonify({'status': '1', 'data': {"data_list": data_list}, 'msg': 'success'})
 
     @login_required
     def post(self, project_id, page_id):
         args = parser_act.parse_args()
-        title = args.get('title')
-        function_id = args.get('functionId')
-        element_id = args.get('elementId')
-
-        entity = Action(title=title, fun_id=function_id, ele_id=element_id, page_id=page_id)
+        entity = Action(title=args.title, fun_id=args.fun_id, ele_id=args.ele_id, page_id=page_id)
         db.session.add(entity)
         db.session.commit()
         return jsonify(
@@ -164,8 +159,8 @@ class ActionDetail(Resource):
         print(args)
         entity = Action.query.filter(Action.id == action_id).first()
         entity.title = args.title
-        entity.fun_id = args.functionId
-        entity.ele_id = args.elementId
+        entity.fun_id = args.fun_id
+        entity.ele_id = args.ele_id
         db.session.commit()
         return jsonify({'status': '1', 'data': args, 'msg': 'success'})
 
