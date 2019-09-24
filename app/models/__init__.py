@@ -3,12 +3,11 @@
 # @Time    : 2019/8/16 13:41
 # @Author  : 曾德辉
 # @File    : __init__.py.py
-from itsdangerous import URLSafeSerializer, BadData, constant_time_compare
+from itsdangerous import BadData, constant_time_compare
 from ext import login_manager, simple_cache
-from flask import jsonify, request,  current_app
-from utils import create_browser_id
-from app.models.admin import User
-from app.models.uitest import Page, Action, FunctionInfo, TestCaseSuit, TestCase, Element
+from flask import jsonify, request
+from app.models.uitest import *
+from app.models.run_test import *
 
 @login_manager.unauthorized_handler
 def unauthorized():
