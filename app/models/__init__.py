@@ -3,9 +3,10 @@
 # @Time    : 2019/8/16 13:41
 # @Author  : 曾德辉
 # @File    : __init__.py.py
-from itsdangerous import BadData, constant_time_compare
+from itsdangerous import URLSafeSerializer, BadData, constant_time_compare
 from ext import login_manager, simple_cache
-from flask import jsonify, request
+from flask import jsonify, request,  current_app
+from app.models.admin import *
 from app.models.uitest import *
 from app.models.run_test import *
 

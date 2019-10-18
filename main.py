@@ -6,6 +6,7 @@
 from flask import Flask
 from app.blue.admin import admin_bp
 from app.blue.uitest import ui_test_bp
+from app.blue.runtest import run_test_bp
 
 from config import DevConfig
 from ext import db, login_manager
@@ -21,6 +22,7 @@ login_manager.init_app(app)
 # app.add_url_rule("/", view_func=views.index)
 app.register_blueprint(admin_bp,url_prefix='/admin')
 app.register_blueprint(ui_test_bp,url_prefix='/uitest')
+app.register_blueprint(run_test_bp,url_prefix='/runtest')
 
 if __name__ == '__main__':
     app.run(port=5002)

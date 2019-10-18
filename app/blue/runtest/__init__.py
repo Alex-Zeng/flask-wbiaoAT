@@ -4,5 +4,5 @@
 # @Author  : 曾德辉
 # @File    : __init__.py.py
 from flask import Blueprint
-run_test_bp = Blueprint('runtest',__name__,template_folder='templates',static_folder='static')
+run_test_bp = Blueprint('run_test',__name__,template_folder='templates',static_folder='static')
 

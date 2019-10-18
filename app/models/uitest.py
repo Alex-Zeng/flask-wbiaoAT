@@ -42,6 +42,7 @@ class FunctionInfo(db.Model):
     __tablename__ = 'function_info'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, unique=True, comment="方法名")
+    fun_title = db.Column(db.String(100), nullable=False, unique=True, comment="方法名")
     type = db.Column(db.Integer, comment="所属系统：0通用，1:Android，2:IOS，3:PC")
     description = db.Column(db.String(100), comment="方法说明")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
@@ -65,6 +66,9 @@ class TestCaseStep(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     rank = db.Column(db.Integer, nullable=False, comment="步骤")
     action_id = db.Column(db.Integer ,  db.ForeignKey('action.id'), nullable=False,  comment="执行动作")
+    skip = db.Column(db.Integer, nullable=False, comment="是否略过")
+    input_key = db.Column(db.String(100) ,   comment="输入参数名称")
+    output_key = db.Column(db.String(100) ,   comment="输出参数名称")
     test_case_id = db.Column(db.Integer, db.ForeignKey('test_case.id'), comment="所属用例ID")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
@@ -89,8 +93,11 @@ class TestSuitStep(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     rank = db.Column(db.Integer, nullable=False, comment="执行顺序")
     test_case_id = db.Column(db.Integer ,  db.ForeignKey('test_case.id'), nullable=False,  comment="用例")
+    skip = db.Column(db.Integer ,  nullable=False,  comment="是否略过")
     test_case_suit_id = db.Column(db.Integer, db.ForeignKey('test_case_suit.id'), comment="所属用例集ID")
+    input_args = db.Column(db.Text, comment="输入参数对象")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
     test_case = db.relationship('TestCase', backref=db.backref('suit'))
+

@@ -38,4 +38,5 @@ api_ui_test.add_resource(FunctionDetail, '/functions/<int:function_id>')
 
 api_run_test = Api(run_test_bp)
 
-api_run_test.add_resource(EquipmentManagement,'/equipment')
+api_run_test.add_resource(EquipmentManagementList, '/equipment')
+api_run_test.add_resource(EquipmentManagementDetail, '/equipment/<int:e_id>')
