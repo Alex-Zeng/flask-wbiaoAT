@@ -13,9 +13,7 @@ class BaseDriver:
                                                                    port=self.desired_caps['remotePort'])
 
     def get_driver(self):
-        driver = webdriver.Remote(self.remote_address, self.desired_caps)
-        driver.start_session()
-        driver.quit()
+        driver = webdriver.Remote(self.remote_address, self.desired_caps['setting_args'])
         return driver
 
 

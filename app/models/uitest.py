@@ -1,6 +1,7 @@
 from ext import db
 
 
+
 # APP页面表
 class Page(db.Model):
     __tablename__ = 'page'

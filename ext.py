@@ -2,6 +2,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from werkzeug.contrib.cache import SimpleCache
 db = SQLAlchemy()
+
+
 # Setup the configuration for login manager.
 #     1. Set the login page.
 #     2. Set the more stronger auth-protection.

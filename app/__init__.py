@@ -40,3 +40,5 @@ api_run_test = Api(run_test_bp)
 
 api_run_test.add_resource(EquipmentManagementList, '/equipment')
 api_run_test.add_resource(EquipmentManagementDetail, '/equipment/<int:e_id>')
+api_run_test.add_resource(StartSession, '/equipment/<int:e_id>/start')
+api_run_test.add_resource(StopSession, '/equipment/<int:e_id>/stop')

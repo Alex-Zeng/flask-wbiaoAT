@@ -1,5 +1,10 @@
+import threading
+
 from flask_login import login_required
 from flask_restful import Resource, reqparse
+import json
+from app.blue.runtest.base.base_driver import BaseDriver
+from app.blue.runtest.base.driver_objects import td
 from app.models import *
 
 parser_em = reqparse.RequestParser()
@@ -7,21 +12,13 @@ parser_em.add_argument('title', type=str, required=True, help="title cannot be b
 parser_em.add_argument('setting_args', type=str, required=True, help="title cannot be blank!")
 parser_em.add_argument('remoteHost', type=str, required=True, help="title cannot be blank!")
 parser_em.add_argument('remotePort', type=str, required=True, help="title cannot be blank!")
+
+
 class EquipmentManagementList(Resource):
     @login_required
     def get(self):
         results = list(EquipmentManagement.query.all())
-        data_list = []
-        for row in results:
-            data_dict = {}
-            data_dict['id'] = row.id
-            data_dict['title'] = row.title
-            data_dict['setting_args'] = row.setting_args
-            data_dict['status'] = row.status
-            data_dict['remoteHost'] = row.remoteHost
-            data_dict['remotePort'] = row.remotePort
-            data_list.append(data_dict)
-        return jsonify({'status': '1', 'data': {"data_list": data_list}, 'message': 'success'})
+        return jsonify({'status': '1', 'data': {"data_list": model_to_dict(results)}, 'message': 'success'})
 
     @login_required
     def post(self):
@@ -52,7 +49,49 @@ class EquipmentManagementDetail(Resource):
         db.session.commit()
         return jsonify({'status': '1', 'data': e_id, 'message': 'success'})
 
-class StartAppium(Resource):
-    @login_required
-    def post(self):
-        pass
+
+# 启动appium session
+parser_ap = reqparse.RequestParser()
+parser_ap.add_argument('session_id', type=str, required=True, help="session_id cannot be blank!")
+
+
+class StartSession(Resource):
+    # @login_required
+    def get(self, e_id):
+        results = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
+        phone_info = model_to_dict(results)
+        phone_info['setting_args'] = json.loads(phone_info['setting_args'])
+        driver = td.start(phone_info)
+        results.status = 1
+        results.session_id = driver.session_id
+        db.session.commit()
+        return jsonify({'status': '1', 'data': driver.session_id, 'message': 'success'})
+
+
+# 停止appium session
+class StopSession(Resource):
+    # @login_required
+    def post(self, e_id):
+        args = parser_ap.parse_args()
+        results = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
+        results.status = 0
+        results.session_id = ''
+        db.session.commit()
+        msg = td.quit(args.session_id)
+        return jsonify({'status': '1', 'data': args.session_id, 'message': msg})
+
+
+# 调试单个用例
+class StartCase(Resource):
+    # @login_required
+    def get(self, e_id):
+        entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
+        print(entity)
+
+
+# 调试用例集
+class StartCasSuit(Resource):
+    # @login_required
+    def get(self, e_id):
+        entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
+        print(entity)

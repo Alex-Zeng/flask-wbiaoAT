@@ -45,7 +45,6 @@ class User(UserMixin, db.Model):
         token = s.dumps((self.id, self.username, self.password, browser_id, life_time))
         return token
 
-
 # 项目表
 class Project(db.Model):
     __tablename__ = 'project'
@@ -57,6 +56,4 @@ class Project(db.Model):
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
     author = db.relationship('User', backref=db.backref('project'))
-
-
 

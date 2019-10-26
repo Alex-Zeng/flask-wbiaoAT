@@ -3,9 +3,9 @@
 # @Time    : 2019/8/16 13:41
 # @Author  : 曾德辉
 # @File    : __init__.py.py
-from itsdangerous import URLSafeSerializer, BadData, constant_time_compare
+from itsdangerous import  BadData, constant_time_compare
 from ext import login_manager, simple_cache
-from flask import jsonify, request,  current_app
+from flask import jsonify, request
 from app.models.admin import *
 from app.models.uitest import *
 from app.models.run_test import *
@@ -59,3 +59,19 @@ def user_loader(token):
     这里的入参就是get_id()的返回值
     """
     return load_token(token)
+
+def model_to_dict(result):
+    from collections import Iterable
+    # 转换完成后，删除  '_sa_instance_state' 特殊属性
+    try:
+        if isinstance(result, Iterable):
+            tmp = [dict(zip(res.__dict__.keys(), res.__dict__.values())) for res in result]
+            for t in tmp:
+                t.pop('_sa_instance_state')
+        else:
+            tmp = dict(zip(result.__dict__.keys(), result.__dict__.values()))
+            tmp.pop('_sa_instance_state')
+        return tmp
+    except BaseException as e:
+        print(e.args)
+        raise TypeError('Type error of parameter')
