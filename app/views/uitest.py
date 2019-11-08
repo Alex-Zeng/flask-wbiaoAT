@@ -326,6 +326,8 @@ parser_step.add_argument('skip', type=int, required=True, help="skip cannot be b
 parser_step.add_argument('action_id', type=str, required=True, help="action_id cannot be blank!")
 parser_step.add_argument('output_key', type=str, help="output_key error")
 parser_step.add_argument('input_key', type=str, help="input_key error!")
+parser_step.add_argument('wait_time', type=int, help="wait_time error!")
+parser_step.add_argument('take_screen_shot', type=int, help="take_screen_shot error!")
 
 
 # 用例步骤
@@ -343,6 +345,8 @@ class TestCaseStepList(Resource):
             data_dict['output_key'] = row.output_key
             data_dict['action_id'] = row.action.id
             data_dict['skip'] = row.skip
+            data_dict['take_screen_shot'] = row.take_screen_shot
+            data_dict['wait_time'] = row.wait_time
             data_dict['page_id'] = row.action.page.id
             data_dict['page_title'] = row.action.page.title
             data_dict['action_title'] = row.action.title
@@ -359,7 +363,7 @@ class TestCaseStepList(Resource):
             return jsonify(
                 {'status': '0', 'data': {}, 'message': '已存在步骤{}'.format(args.rank)})
         entity = TestCaseStep(rank=args.rank, skip=0, action_id=args.action_id, input_key=args.input_key,
-                              output_key=args.output_key, test_case_id=case_id)
+                              output_key=args.output_key, take_screen_shot=args.take_screen_shot,wait_time=args.wait_time,test_case_id=case_id)
         db.session.add(entity)
         db.session.commit()
         return jsonify(
@@ -374,6 +378,8 @@ class TestCaseStepDetail(Resource):
         entity = TestCaseStep.query.filter(TestCaseStep.id == step_id).first()
         entity.rank = args.rank
         entity.action_id = args.action_id
+        entity.wait_time = args.wait_time
+        entity.take_screen_shot = args.take_screen_shot
         entity.input_key = args.input_key
         entity.output_key = args.output_key
         entity.skip = args.skip

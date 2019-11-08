@@ -56,4 +56,6 @@ class Project(db.Model):
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
     author = db.relationship('User', backref=db.backref('project'))
-
+    test_case = db.relationship('TestCase', backref=db.backref('project'))
+    test_case_suit = db.relationship('TestCaseSuit', backref=db.backref('project'))
+    page = db.relationship('Page', backref=db.backref('project'))

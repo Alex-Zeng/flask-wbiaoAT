@@ -11,8 +11,7 @@ class Page(db.Model):
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
-    project = db.relationship('Project', backref=db.backref('page'))
-
+    action = db.relationship('Action', backref=db.backref('page'))
 # 元素信息表
 class Element(db.Model):
     __tablename__ = 'element'
@@ -30,14 +29,14 @@ class Action(db.Model):
     __tablename__ = 'action'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, comment="执行操作名称")
-    fun_id = db.Column(db.Integer, nullable=False, comment="方法id")
-    ele_id = db.Column(db.Integer, comment="所操作元素id")
+    fun_id = db.Column(db.Integer, db.ForeignKey('function_info.id'),nullable=False, comment="方法id")
+    ele_id = db.Column(db.Integer, db.ForeignKey('element.id'),comment="所操作元素id")
     page_id = db.Column(db.Integer, db.ForeignKey('page.id'), comment="所属页面ID")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
-    page = db.relationship('Page', backref=db.backref('action'))
-
+    fun = db.relationship('FunctionInfo')
+    ele = db.relationship('Element')
 # 方法表
 class FunctionInfo(db.Model):
     __tablename__ = 'function_info'
@@ -59,7 +58,7 @@ class TestCase(db.Model):
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
-    project = db.relationship('Project', backref=db.backref('test_case'))
+    step = db.relationship('TestCaseStep', backref=db.backref('test_case'), order_by='TestCaseStep.rank')
 
 # 用例步骤表
 class TestCaseStep(db.Model):
@@ -68,13 +67,14 @@ class TestCaseStep(db.Model):
     rank = db.Column(db.Integer, nullable=False, comment="步骤")
     action_id = db.Column(db.Integer ,  db.ForeignKey('action.id'), nullable=False,  comment="执行动作")
     skip = db.Column(db.Integer, nullable=False, comment="是否略过")
+    take_screen_shot = db.Column(db.Integer, default=0,nullable=False, comment="是否截图")
+    wait_time = db.Column(db.Integer, default=0,nullable=False, comment="用例等待时间")
     input_key = db.Column(db.String(100) ,   comment="输入参数名称")
     output_key = db.Column(db.String(100) ,   comment="输出参数名称")
     test_case_id = db.Column(db.Integer, db.ForeignKey('test_case.id'), comment="所属用例ID")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
-    test_case = db.relationship('TestCase', backref=db.backref('step'))
     action = db.relationship('Action', backref=db.backref('step'))
 
 # 用例集
@@ -86,7 +86,7 @@ class TestCaseSuit(db.Model):
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
-    project = db.relationship('Project', backref=db.backref('test_case_suit'))
+    suit_step = db.relationship('TestSuitStep', backref=db.backref('case_suit'), order_by='TestSuitStep.rank')
 
 # 用例集步骤表
 class TestSuitStep(db.Model):
