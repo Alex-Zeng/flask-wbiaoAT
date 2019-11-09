@@ -3,14 +3,14 @@
 # @Author  : 曾德辉
 # @File    : base_action.py
 from appium.webdriver.common.mobileby import MobileBy
-from base import rtconf
+from base.runtest_config import rtconf
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 import os
 import re
 import traceback
-
+from base.public.log import Log
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -19,27 +19,26 @@ PATH = lambda p: os.path.abspath(
 
 class BaseAction:
 
-    def __init__(self, driver, log, thread_name):
+    def __init__(self, driver, case_title):
         self.driver = driver
         self._by_type = rtconf.find_ele_types
         self.current_case = dict()
-        self.log = log
-        self.thread_name = thread_name
+        self.log = Log('runtest')
         self.ele_wait_time = rtconf.find_ele_wait_time
         self.screen_shot_wait_time = rtconf.take_screen_shot_wait_time
-        self.case_title = ''
+        self.case_title = case_title
 
-    def action(self, case_list, data):
+    def action(self, case_list):
         """
         循环执行用例集中每条用例对应的action方法
         :param case_list: 经过清洗组合用例列表
         :param data: 用例数据列表
         :return:
         """
-        test_data = data
+        test_data = {}
         for v in case_list:
             self.current_case = v
-            case_id = v['id']
+            case_id = v['case_id']
             wait_time = v['wait_time']
             action_title = v['action_title']
             action = v['action']
@@ -54,11 +53,11 @@ class BaseAction:
             loc = self._by_type.get(find_type, MobileBy.XPATH), element_loc
 
             # 是否引用前面某个用例的 输出值
-            if input_data.startwith(rtconf.use_output_arg_symbol):
+            if input_data.startswith(rtconf.use_output_arg_symbol):
                 input_data = test_data[input_data[len(rtconf.use_output_arg_symbol):]]
 
             try:
-                output_text = self.__getattribute__(action)(loc,input_data)
+                output_text = self.__getattribute__(action)(loc, input_data)
                 if output_data == 'verify_code':
                     # 测试环境验证码,只匹配数字
                     pattern = re.compile('\d{6}')
@@ -68,12 +67,10 @@ class BaseAction:
                 else:
                     test_data[output_data] = output_text
 
-                self.log('{}: {} --- {} --- {}'.format(case_id, action_title, element_info, '成功'))
+                self.log.info('{}: {} --- {} --- {}'.format(case_id, action_title, element_info, '成功'))
 
             except Exception as e:
-                self.log('错误: {} --- {} --- {}'.format(action_title, element_info, loc),
-                              '用例id:{} --- 失败!!!!!'.format(case_id))
-                self.log.error(v)
+                self.log.error('错误: {} --- {} --- {}'.format(action_title, element_info, loc))
                 self.log.error(traceback.format_exc())
                 raise e
             finally:
@@ -179,7 +176,7 @@ class BaseAction:
         """
         self.driver.back()
 
-    def move_away_el(self,*args):
+    def move_away_el(self, *args):
         """
         移开某个元素，防止遮挡
         :return:
@@ -192,7 +189,6 @@ class BaseAction:
             touch_action.long_press(el).move_to(x=end_x, y=end_y).release().perform()
         except:
             self.log.info('没有这个元素')
-
 
     def over(self, *args):
         """
@@ -269,7 +265,6 @@ class BaseAction:
             self.driver.switch_to.window(args[1])
         else:
             self.driver.switch_to.window(window_handles[-1])
-
 
     def switch_to_native_app(self, *args):
         """
@@ -439,7 +434,7 @@ class BaseAction:
         locs = args[1].split("|")
         self.travel_elements_digui(locs)
 
-    def take_screen_shot(self, *args, name='截图',wait_time=None):
+    def take_screen_shot(self, *args, name='截图', wait_time=None):
         """
         method explain:获取当前屏幕的截图
         parameter explain：【name】 截图的名称
@@ -448,7 +443,7 @@ class BaseAction:
         """
         day = time.strftime("%Y-%m-%d", time.localtime(time.time()))
         tm = time.strftime("%H_%M_%S", time.localtime(time.time()))
-        fq = rtconf.screenShotsDir + os.sep + day + os.sep + self.thread_name + '_' + self.case_title
+        fq = rtconf.screenShotsDir + os.sep + day + os.sep + '_' + self.case_title
         img_type = '.png'
 
         if os.path.exists(fq):

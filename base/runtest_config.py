@@ -1,4 +1,5 @@
 from appium.webdriver.common.mobileby import MobileBy
+import os
 
 class RuntestConfig():
     use_output_arg_symbol = '$$'
@@ -8,7 +9,8 @@ class RuntestConfig():
                          'class': MobileBy.CLASS_NAME,
                          'tag': MobileBy.TAG_NAME, 'android_uiautomator': MobileBy.ANDROID_UIAUTOMATOR,
                          'accessibility_id': MobileBy.ACCESSIBILITY_ID}
-    screenShotsDir = 'D:\\workspace\\wbiaoAT\\app\\blue\\runtest\\base\\screen_shot'
+    screenShotsDir = os.getcwd() + os.sep + 'screen_shot'
+    logDir = os.getcwd() + os.sep + 'logs'
     func_dict = {
         '点击': 'click',
         '清除文本': 'clear_text',
@@ -47,4 +49,4 @@ class RuntestConfig():
 rtconf = RuntestConfig()
 
 if __name__ == '__main__':
-    os
+    print(rtconf.screenShotsDir)

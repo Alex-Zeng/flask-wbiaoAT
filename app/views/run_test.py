@@ -2,16 +2,15 @@ from flask_login import login_required
 from flask_restful import Resource, reqparse
 import json
 from base.driver_objects import td
+from base.base_action import BaseAction
 from app.models import *
 from collections import deque
 
 parser_em = reqparse.RequestParser()
 parser_em.add_argument('title', type=str, required=True, help="title cannot be blank!")
 parser_em.add_argument('setting_args', type=str, required=True, help="title cannot be blank!")
-parser_em.add_argument('remoteHost', type=str, required=True, help="title cannot be blank!")
-parser_em.add_argument('remotePort', type=str, required=True, help="title cannot be blank!")
-
-
+parser_em.add_argument('remoteHost', type=str, required=True, help="remoteHost cannot be blank!")
+parser_em.add_argument('remotePort', type=str, required=True, help="remotePort cannot be blank!")
 class EquipmentManagementList(Resource):
     @login_required
     def get(self):
@@ -147,7 +146,9 @@ class StartCase(Resource):
         case_entity = TestCase.query.filter(TestCase.id == case_id).first()
         # print(args.input_args)
         case_list = self.analysis_case(case_entity,args.input_args)
-        print(case_list)
+        driver = StartSession.start(args.e_id)
+        ba = BaseAction(driver,case_entity.title)
+        ba.action(case_list)
 
 
 # 调试用例集
