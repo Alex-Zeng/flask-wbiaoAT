@@ -1,9 +1,14 @@
 from flask_login import login_required
 from flask_restful import Resource, reqparse
 import json
+from multiprocessing import Pool
+import os,time,random
+from base.public.log import log_main
 from base.driver_objects import td
 from base.base_action import BaseAction
+from base.public.utils import *
 from app.models import *
+from base.public.log import Log
 from collections import deque
 
 parser_em = reqparse.RequestParser()
@@ -12,6 +17,7 @@ parser_em.add_argument('setting_args', type=str, required=True, help="title cann
 parser_em.add_argument('remoteHost', type=str, required=True, help="remoteHost cannot be blank!")
 parser_em.add_argument('remotePort', type=str, required=True, help="remotePort cannot be blank!")
 class EquipmentManagementList(Resource):
+    ''' 设备管理列表'''
     @login_required
     def get(self):
         results = list(EquipmentManagement.query.all())
@@ -28,6 +34,7 @@ class EquipmentManagementList(Resource):
 
 
 class EquipmentManagementDetail(Resource):
+    ''' 设备信息'''
     @login_required
     def put(self, e_id):
         args = parser_em.parse_args()
@@ -47,10 +54,58 @@ class EquipmentManagementDetail(Resource):
         return jsonify({'status': '1', 'data': e_id, 'message': 'success'})
 
 
+parser_es = reqparse.RequestParser()
+parser_es.add_argument('suit_id', type=int, required=True, help="test_case_suit_id cannot be blank!")
+parser_es.add_argument('rank', type=int, required=True, help="rank cannot be blank!")
+class EquipmentIncludeTestCaseSuitList(Resource):
+    ''' 设备用例集列表'''
+    # @login_required
+    def get(self,e_id):
+        results = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
+        data_list = []
+        for row in results.test_case_suit:
+            data_dict = {}
+            data_dict['id'] = row.id
+            data_dict['rank'] = row.rank
+            data_dict['suit_title'] = model_to_dict(row.test_case_suit).get('title','')
+            data_dict['suit_id'] = model_to_dict(row.test_case_suit).get('id','')
+            test_cases_list = []
+            for item in row.test_case_suit.suit_step:
+                test_cases_list.append(item.test_case)
+            data_dict['test_cases'] = model_to_dict(test_cases_list)
+            data_dict['update_datetime'] = str(row.update_datetime)
+            data_list.append(data_dict)
+        return jsonify({'status': '1', 'data': {"data_list": data_list}, 'message': 'success'})
+
+    # @login_required
+    def post(self,e_id):
+        args = parser_es.parse_args()
+        entity = EquipmentIncludeTesSuit(test_case_suit_id=args.suit_id, rank=args.rank, equipment_id=e_id)
+        db.session.add(entity)
+        db.session.commit()
+        return jsonify({'status': '1', 'data': {}, 'message': 'success'})
+
+class EquipmentIncludeTestCaseSuitDetail(Resource):
+    ''' 设备用例集信息'''
+    # @login_required
+    def put(self, e_id, es_id):
+        args = parser_es.parse_args()
+
+        entity = EquipmentIncludeTesSuit.query.filter(EquipmentIncludeTesSuit.id == es_id).first()
+        entity.equipment_id = e_id
+        entity.test_case_suit_id = args.suit_id
+        entity.rank = args.rank
+        db.session.commit()
+        return jsonify({'status': '1', 'data': args, 'message': 'success'})
+
+    # @login_required
+    def delete(self,e_id, es_id):
+        entity = EquipmentIncludeTesSuit.query.filter(EquipmentIncludeTesSuit.id == es_id).first()
+        db.session.delete(entity)
+        db.session.commit()
+        return jsonify({'status': '1', 'data': es_id, 'message': 'success'})
+
 # 启动appium session
-
-
-
 class StartSession(Resource):
     @staticmethod
     def start(e_id):
@@ -95,65 +150,55 @@ parser_sc.add_argument('e_id', type=int, required=True, help="e_id cannot be bla
 parser_sc.add_argument('input_args', type=str, help="input_args")
 # 调试单个用例
 class StartCase(Resource):
-    # 解析用例
-    def analysis_case(self, case_entity, case_args):
-        case_list = []
-        items = case_entity.step
-        case_id = case_entity.id
-        case_title = case_entity.title
-        case_args_dict={}
-        try:
-            if case_args:
-                case_args_dict = json.loads(case_args)
-        except Exception:
-            return '参数非法: 不符合json格式,请仔细检查参数'
 
-        if case_args_dict:
-            for k,v in case_args_dict.items():
-                if isinstance(v,list):
-                    case_args_dict[k] = deque(v)
-                else:
-                    return '参数非法: 值不是列表形式'
-
-        for item in items:
-            case_dict = {}
-            case_dict['case_id'] = '{}-{}'.format(case_id, item.rank)
-            case_dict['case_title'] = case_title
-            case_dict['action'] = item.action.fun.fun_title
-            case_dict['action_title'] = item.action.title
-            case_dict['element_loc'] = item.action.ele.loc
-            case_dict['element_info'] = item.action.ele.title
-            case_dict['type'] = item.action.ele.type
-            case_dict['screen_shot'] = item.take_screen_shot
-            case_dict['wait_time'] = item.wait_time
-            case_dict['output_arg'] = item.output_key
-            if item.input_key:
-                try:
-                    case_dict['input_arg'] = case_args_dict.get(item.input_key).popleft()
-                except:
-                    pass
-                    # return '未找到对应参数'
-            else:
-                case_dict['input_arg'] = ''
-            case_list.append(case_dict)
-        return case_list
-
-
+    # 单条用例调试
     # @login_required
     def post(self,project_id, case_id):
         args = parser_sc.parse_args()
-        # StartSession.start(args.e_id)
         case_entity = TestCase.query.filter(TestCase.id == case_id).first()
-        # print(args.input_args)
-        case_list = self.analysis_case(case_entity,args.input_args)
+        log_run = Log('single_case_run')
+        case_list = analysis_case(case_entity,args.input_args)
         driver = StartSession.start(args.e_id)
-        ba = BaseAction(driver,case_entity.title)
+        ba = BaseAction(driver,case_entity.title,log_run)
         ba.action(case_list)
 
 
 # 调试用例集
 class StartCasSuit(Resource):
+    def run_test_task(self,e_id):
+        start = time.time()
+        log_main.info('正在运行的任务：{}'.format(e_id))
+
+        entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
+        log_run = Log('Equipment-{}'.format(e_id))
+        driver = StartSession.start(e_id)
+        for item in entity.test_case_suit:
+            print(item.test_case_suit.title)
+            shot_title = '{}-{}'.format(entity.title,item.test_case_suit.title)
+            for step in item.test_case_suit.suit_step:
+                if step.skip == 1:
+                    continue
+                print(step.test_case.id)
+                print(step.test_case.title)
+                print(step.input_args)
+                case_entity = TestCase.query.filter(TestCase.id == step.test_case.id).first()
+                case_list = analysis_case(case_entity,step.input_args)
+                ba = BaseAction(driver, shot_title,log_run)
+                ba.action(case_list)
+
+        end = time.time()
+        log_main.info('任务：%s，用时：%0.2f 秒' % (e_id, (end - start)))
+
     # @login_required
     def get(self, e_id):
-        entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
-        print(entity)
+
+        self.run_test_task(e_id)
+
+
+        # log_main.info('父进程ID：%s' % (os.getpid()))
+        # p = Pool(2)
+        # p.apply_async(self.run_test_task, args=(e_id,))
+        # log_main.info('等待所有添加的进程运行完毕。。。')
+        # p.close()  # 在join之前要先关闭进程池，避免添加新的进程
+        # p.join()
+        # log_main.info('End!!,PID:%s' % os.getpid())

@@ -11,15 +11,16 @@ class EquipmentManagement(db.Model):
     remoteHost = db.Column(db.String(100), nullable=False, comment="远程appium服务器地址")
     remotePort = db.Column(db.Integer, nullable=False, comment="远程appium服务器端口")
 
+    test_case_suit = db.relationship('EquipmentIncludeTesSuit', backref=db.backref('equipment'), order_by='EquipmentIncludeTesSuit.rank')
 
-
-# 执行用例参数表
-class TestArgs(db.Model):
-    __tablename__ = 'test_args'
+# 使用设备执行的一些用例集
+class EquipmentIncludeTesSuit(db.Model):
+    __tablename__ = 'equipment_include_test_suit'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    cycle_time = db.Column(db.Integer, nullable=False,comment="第几次循环")
-    key = db.Column(db.String(100), nullable=False, comment="参数名")
-    value = db.Column(db.Text, comment="参数值")
-    create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
+    equipment_id = db.Column(db.Integer,db.ForeignKey('equipment_management.id'), nullable=False, comment="设备ID")
+    test_case_suit_id = db.Column(db.Integer, db.ForeignKey('test_case_suit.id'),comment="测试集ID")
+    rank = db.Column(db.Integer, nullable=False, comment="执行顺序")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
+
+    test_case_suit = db.relationship('TestCaseSuit')

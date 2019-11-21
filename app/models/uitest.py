@@ -100,5 +100,5 @@ class TestSuitStep(db.Model):
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
-    test_case = db.relationship('TestCase', backref=db.backref('suit'))
+    test_case = db.relationship('TestCase')
 

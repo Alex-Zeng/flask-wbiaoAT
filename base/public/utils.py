@@ -3,14 +3,14 @@
 # @Time    : 2019/7/1 15:42
 # @Author  : 曾德辉
 # @File    : utils.py
+import json
 import os
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 import allure
 from functools import wraps
 import datetime
 import collections
-
-
 
 def all_file_path(root_directory, extension_name):
     '''
@@ -139,6 +139,48 @@ def mkdir(path):
         # 如果目录存在则不创建，并提示目录已存在
         return False
 
+# 解析用例
+def analysis_case(case_entity, case_args):
+    case_list = []
+    items = case_entity.step
+    case_id = case_entity.id
+    case_title = case_entity.title
+    case_args_dict={}
+    try:
+        if case_args:
+            case_args_dict = json.loads(case_args)
+    except Exception:
+        return '参数非法: 不符合json格式,请仔细检查参数'
+
+    if case_args_dict:
+        for k,v in case_args_dict.items():
+            if isinstance(v,list):
+                case_args_dict[k] = collections.deque(v)
+            else:
+                return '参数非法: 值不是列表形式'
+
+    for item in items:
+        case_dict = {}
+        case_dict['case_id'] = '{}-{}'.format(case_id, item.rank)
+        case_dict['case_title'] = case_title
+        case_dict['action'] = item.action.fun.fun_title
+        case_dict['action_title'] = item.action.title
+        case_dict['element_loc'] = item.action.ele.loc
+        case_dict['element_info'] = item.action.ele.title
+        case_dict['type'] = item.action.ele.type
+        case_dict['screen_shot'] = item.take_screen_shot
+        case_dict['wait_time'] = item.wait_time
+        case_dict['output_arg'] = item.output_key
+        if item.input_key:
+            try:
+                case_dict['input_arg'] = case_args_dict.get(item.input_key).popleft()
+            except:
+                pass
+                # return '未找到对应参数'
+        else:
+            case_dict['input_arg'] = ''
+        case_list.append(case_dict)
+    return case_list
 
 if __name__ == '__main__':
     # print(os.path.abspath(os.path.join(os.path.dirname(__file__))

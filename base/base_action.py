@@ -10,23 +10,19 @@ import time
 import os
 import re
 import traceback
-from base.public.log import Log
 
-PATH = lambda p: os.path.abspath(
-    os.path.join(os.path.dirname(__file__), p)
-)
 
 
 class BaseAction:
 
-    def __init__(self, driver, case_title):
+    def __init__(self, driver, case_title, run_log):
         self.driver = driver
         self._by_type = rtconf.find_ele_types
         self.current_case = dict()
-        self.log = Log('runtest')
+        self.log = run_log
         self.ele_wait_time = rtconf.find_ele_wait_time
         self.screen_shot_wait_time = rtconf.take_screen_shot_wait_time
-        self.case_title = case_title
+        self.screent_shot_folder_title = case_title
 
     def action(self, case_list):
         """
@@ -333,7 +329,8 @@ class BaseAction:
         """
         按屏幕比例点击坐标
         """
-        x, y = args[1].split('|')
+        find_type, proportional = args[0]
+        x, y = proportional.split(',')
         width, height = self.get_size()
         x = int(float(x) * width)
         y = int(float(y) * height)
@@ -443,12 +440,12 @@ class BaseAction:
         """
         day = time.strftime("%Y-%m-%d", time.localtime(time.time()))
         tm = time.strftime("%H_%M_%S", time.localtime(time.time()))
-        fq = rtconf.screenShotsDir + os.sep + day + os.sep + '_' + self.case_title
+        fq = rtconf.screenShotsDir + os.sep + day + os.sep + '_' + self.screent_shot_folder_title
         img_type = '.png'
 
         if os.path.exists(fq):
             filename = fq + os.sep + tm + "_" + self.current_case.get(
-                'step', 'action') + name + img_type
+                'action_title', 'action') + name + img_type
         else:
             os.makedirs(fq)
             filename = fq + os.sep + tm + "_" + self.current_case.get(
