@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51c61f42-db77-429e-93f0-e2cd8015eefa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/base/public/multirun.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/run_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/run_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/uitest.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/uitest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/run_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/run_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/base/base_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/base_action.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/public/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/public/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/base/runtest_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/runtest_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,19 +31,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/uitest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="96" column="8" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="200" column="43" lean-forward="true" selection-start-line="200" selection-start-column="43" selection-end-line="200" selection-end-column="43" />
+            <state relative-caret-position="428">
+              <caret line="201" column="56" selection-start-line="201" selection-start-column="56" selection-end-line="201" selection-end-column="56" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -57,9 +43,51 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base/logs/20191121/Equipment-8.log">
+          <provider selected="true" editor-type-id="LogFileEditorProvider">
+            <state relative-caret-position="-20629">
+              <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="660">
+              <caret line="30" column="28" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="28" />
+              <folding>
+                <element signature="e#110#135#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base/runtest_config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.vscode/settings.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/public/log.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1364">
+            <state relative-caret-position="1562">
               <caret line="74" selection-start-line="74" selection-end-line="74" />
               <folding>
                 <element signature="e#145#159#0" expanded="true" />
@@ -69,31 +97,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/base/logs/20191120/runtest.log">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4008" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/public/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
+            <state relative-caret-position="228">
               <caret line="165" column="25" selection-start-line="165" selection-start-column="19" selection-end-line="165" selection-end-column="25" />
               <folding>
                 <element signature="e#110#121#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/base/runtest_config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="31" column="39" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#53#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -108,38 +117,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="902">
-              <caret line="47" column="81" selection-start-line="47" selection-start-column="41" selection-end-line="47" selection-end-column="81" />
-              <folding>
-                <element signature="e#117#152#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/base/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="7" selection-start-line="7" selection-end-line="9" selection-end-column="25" />
-              <folding>
-                <element signature="e#114#124#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/base/base_action.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+            <state relative-caret-position="189">
+              <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
               <folding>
                 <element signature="e#93#146#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base/logs/20191121/Equipment-9.log">
+          <provider selected="true" editor-type-id="LogFileEditorProvider">
+            <state relative-caret-position="-1203">
+              <caret line="450" lean-forward="true" selection-start-line="450" selection-end-line="450" />
             </state>
           </provider>
         </entry>
@@ -164,7 +158,6 @@
       <find>TestCaseStepList</find>
       <find>parser_step</find>
       <find>msg</find>
-      <find>print</find>
       <find>@login_required</find>
       <find>db.Model</find>
       <find>Action</find>
@@ -175,7 +168,14 @@
       <find>JSON格式错误,请重新检查</find>
       <find>test_case_suit_id</find>
       <find>PATH</find>
+      <find>find_ele_wait_time</find>
+      <find>ele_wait_time</find>
       <find>tap_by_proportional</find>
+      <find>args[1]</find>
+      <find>args[0]</find>
+      <find>args</find>
+      <find>print</find>
+      <find>*args</find>
     </findStrings>
     <replaceStrings>
       <replace>TestSuitStepList</replace>
@@ -185,6 +185,8 @@
       <replace># @login_required</replace>
       <replace>MyModel</replace>
       <replace>screen_shot_wait_time</replace>
+      <replace>input_data</replace>
+      <replace>loc</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -194,7 +196,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/example.py" />
         <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/main/__init__.py" />
         <option value="$PROJECT_DIR$/app/blues/admin/__init__.py" />
@@ -220,7 +221,6 @@
         <option value="$PROJECT_DIR$/app/views/admin.py" />
         <option value="$PROJECT_DIR$/migrations/versions/92a54c92fcb7_.py" />
         <option value="$PROJECT_DIR$/app/blue/runtest/__init__.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/migrations/versions/6282a570de50_.py" />
         <option value="$PROJECT_DIR$/utils.py" />
@@ -237,14 +237,16 @@
         <option value="$PROJECT_DIR$/app/models/run_test.py" />
         <option value="$PROJECT_DIR$/migrations/versions/5a838508dbd6_.py" />
         <option value="$PROJECT_DIR$/app/models/uitest.py" />
-        <option value="$PROJECT_DIR$/base/runtest_config.py" />
         <option value="$PROJECT_DIR$/base/__init__.py" />
         <option value="$PROJECT_DIR$/base/public/__init__.py" />
         <option value="$PROJECT_DIR$/base/public/multirun.py" />
-        <option value="$PROJECT_DIR$/base/public/utils.py" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
-        <option value="$PROJECT_DIR$/base/base_action.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/base/public/utils.py" />
+        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/app/views/run_test.py" />
+        <option value="$PROJECT_DIR$/base/runtest_config.py" />
+        <option value="$PROJECT_DIR$/base/base_action.py" />
       </list>
     </option>
   </component>
@@ -276,37 +278,12 @@
             <path>
               <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
               <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name=".vscode" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
               <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
               <item name="base" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="logs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="logs" type="462c0819:PsiDirectoryNode" />
-              <item name="20191120" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
@@ -316,29 +293,7 @@
             </path>
             <path>
               <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="screen_shot" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="screen_shot" type="462c0819:PsiDirectoryNode" />
-              <item name="2019-11-20" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="screen_shot" type="462c0819:PsiDirectoryNode" />
-              <item name="2019-11-20" type="462c0819:PsiDirectoryNode" />
-              <item name="_MUMU模拟器4723-登录退出" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -609,7 +564,8 @@
       <workItem from="1571826653926" duration="26000" />
       <workItem from="1571834311207" duration="80707000" />
       <workItem from="1574132058766" duration="10075000" />
-      <workItem from="1574238255504" duration="5825000" />
+      <workItem from="1574238255504" duration="8836000" />
+      <workItem from="1574306445052" duration="9371000" />
     </task>
     <task id="LOCAL-00001" summary="新增case和casesuit接口">
       <created>1568101321556</created>
@@ -667,18 +623,32 @@
       <option name="project" value="LOCAL" />
       <updated>1573267986612</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="用例集接口">
+      <created>1574300376461</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1574300376461</updated>
+    </task>
+    <task id="LOCAL-00010" summary="用例集接口">
+      <created>1574300576449</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1574300576449</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="374036000" />
+    <option name="totallyTimeSpent" value="386418000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.18710022" />
+      <window_info active="true" content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.18923241" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" visible="true" weight="0.30151844" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
@@ -699,29 +669,6 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" visible="true" weight="0.25" />
       <window_info anchor="right" id="Structure" order="5" sideWeight="0.47211155" visible="true" weight="0.15991472" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.5278884" visible="true" weight="0.16905445" />
-      <window_info anchor="bottom" id="Database Changes" order="0" />
-      <window_info anchor="bottom" id="Terminal" order="1" weight="0.23230974" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="3" />
-      <window_info anchor="bottom" id="Python Console" order="4" weight="0.32977304" />
-      <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" />
-      <window_info anchor="bottom" id="Run" order="8" weight="0.3484646" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="12" />
-      <window_info anchor="right" id="Database" order="0" weight="0.3295129" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="SciView" order="2" weight="0.3295129" />
-      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
-      <window_info anchor="right" id="Structure" order="5" sideWeight="0.47211155" weight="0.13395415" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -734,7 +681,8 @@
     <MESSAGE value="增加 设备启动和停止功能" />
     <MESSAGE value="增加 调试单条用例" />
     <MESSAGE value="调试单条用例成功" />
-    <option name="LAST_COMMIT_MESSAGE" value="调试单条用例成功" />
+    <MESSAGE value="用例集接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="用例集接口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -759,33 +707,6 @@
     <SUITE FILE_PATH="coverage/wbiaoAT$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1565836023697" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/sqlalchemy/sql/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9614">
-          <caret line="442" column="6" selection-start-line="442" selection-start-column="6" selection-end-line="442" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/migrations/versions/0763ac7124a4_.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-198" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/migrations/versions/8829b5c1d86c_.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-150" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/migrations/versions/1d5b3b032bce_.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-462" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/migrations/versions/0b23f45f2040_.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-172" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/migrations/versions/d5f3c81a4ec5_.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -967,17 +888,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="16" column="30" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="30" />
-          <folding>
-            <element signature="n#!!doc" />
-            <element signature="e#110#133#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/logs/20191109/runtest.log" />
     <entry file="file://$PROJECT_DIR$/app/models/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1014,9 +924,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/logs/20191120/main.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/base/logs/20191120/main.log" />
     <entry file="file://$PROJECT_DIR$/base/public/multirun.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -1050,20 +958,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/runtest_config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="31" column="39" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/uitest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="96" column="8" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/logs/20191120/runtest.log" />
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.vscode/settings.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/public/log.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1562">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
+          <folding>
+            <element signature="e#145#159#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/logs/20191121/main.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="484">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="40" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -1076,7 +1011,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/base/public/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
+        <state relative-caret-position="228">
           <caret line="165" column="25" selection-start-line="165" selection-start-column="19" selection-end-line="165" selection-end-column="25" />
           <folding>
             <element signature="e#110#121#0" expanded="true" />
@@ -1084,37 +1019,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/logs/20191120/runtest.log">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4008" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base/public/log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1364">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        <state relative-caret-position="660">
+          <caret line="30" column="28" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="28" />
           <folding>
-            <element signature="e#145#159#0" expanded="true" />
+            <element signature="e#110#135#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/base_action.py">
+    <entry file="file://$PROJECT_DIR$/base/logs/20191121/Equipment-9.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="-1203">
+          <caret line="450" lean-forward="true" selection-start-line="450" selection-end-line="450" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/logs/20191121/Equipment-8.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="-20629">
+          <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="-2490" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/runtest_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+        <state relative-caret-position="352">
+          <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
           <folding>
-            <element signature="e#93#146#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="200" column="43" lean-forward="true" selection-start-line="200" selection-start-column="43" selection-end-line="200" selection-end-column="43" />
+        <state relative-caret-position="428">
+          <caret line="201" column="56" selection-start-line="201" selection-start-column="56" selection-end-line="201" selection-end-column="56" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/base_action.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
+          <folding>
+            <element signature="e#93#146#0" expanded="true" />
           </folding>
         </state>
       </provider>

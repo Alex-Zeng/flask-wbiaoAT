@@ -12,7 +12,6 @@ import re
 import traceback
 
 
-
 class BaseAction:
 
     def __init__(self, driver, case_title, run_log):
@@ -27,9 +26,6 @@ class BaseAction:
     def action(self, case_list):
         """
         循环执行用例集中每条用例对应的action方法
-        :param case_list: 经过清洗组合用例列表
-        :param data: 用例数据列表
-        :return:
         """
         test_data = {}
         for v in case_list:
@@ -44,16 +40,23 @@ class BaseAction:
             element_loc = v['element_loc']
             input_data = v['input_arg']
             output_data = v['output_arg']
-            text = ''
             self.log.info('执行用例{}:{}'.format(case_id, action_title))
-            loc = self._by_type.get(find_type, MobileBy.XPATH), element_loc
+            loc = self._by_type.get(find_type, ''), element_loc
 
             # 是否引用前面某个用例的 输出值
             if input_data.startswith(rtconf.use_output_arg_symbol):
                 input_data = test_data[input_data[len(rtconf.use_output_arg_symbol):]]
 
             try:
-                output_text = self.__getattribute__(action)(loc, input_data)
+                time.sleep(wait_time)
+                if loc[0]:
+                    if input_data:
+                        output_text = self.__getattribute__(action)(loc, input_data)
+                    else:
+                        output_text = self.__getattribute__(action)(loc)
+                else:
+                    output_text = self.__getattribute__(action)()
+
                 if output_data == 'verify_code':
                     # 测试环境验证码,只匹配数字
                     pattern = re.compile('\d{6}')
@@ -72,127 +75,125 @@ class BaseAction:
             finally:
                 # 截图
                 if screenshot:
-                    time.sleep(wait_time)
                     self.take_screen_shot()
 
-    def click(self, *args):
+    def click(self, loc):
         """
         点击
         """
-        self.find_element(args[0]).click()
+        self.find_element(loc).click()
 
-    def clear_text(self, *args):
+    def clear_text(self, loc):
         """
         清除文本
         """
-        self.find_element(args[0]).clear()
+        self.find_element(loc).clear()
 
-    def input_text(self, *args):
+    def input_text(self, loc, input_data):
         """
         输入文本
         """
-        self.find_element(args[0]).send_keys(args[1])
+        self.find_element(loc).send_keys(input_data)
 
-    def get_element_text(self, *args):
+    def get_element_text(self, loc):
         """
         获取元素文本
         """
-        return self.find_element(args[0]).get_attribute("text")
+        return self.find_element(loc).get_attribute("text")
 
-    def check_element(self, *args):
+    def check_element(self, loc):
         """
         断言元素是否存在
         """
         try:
-            assert self.find_element(args[0])
-            f = self.driver.get_screenshot_as_png()
-            self.log.info('成功找到{}元素，截图保留'.format(args[0]))
+            assert self.find_element(loc)
+            self.driver.get_screenshot_as_png()
+            self.log.info('成功找到{}元素，截图保留'.format(loc))
             self.log.info('断言成功')
         except Exception as e:
-            self.log.error('断言失败未找到元素{}'.format(args[0]))
-            f = self.driver.get_screenshot_as_png()
-            self.log.info('未找到{}元素，截图保留'.format(args[0]))
+            self.log.error('断言失败未找到元素{}'.format(loc))
+            self.driver.get_screenshot_as_png()
+            self.log.info('未找到{}元素，截图保留'.format(loc))
             raise e
 
-    def check_text(self, *args):
+    def check_text(self, loc, input_data):
         """
          判断文本是否相等
         """
-        assert args[1] in self.find_element(args[0]).get_attribute("text")
-        self.log.info('断言成功:文本{} 存在'.format(args[1]))
+        assert input_data in self.find_element(loc).get_attribute("text")
+        self.log.info('断言成功:文本{} 存在'.format(input_data))
 
-    def check_elements(self, *args):
+    def check_elements(self, loc):
         """
         断言元素（多个）是否存在
         """
         try:
-            assert self.find_elements(args[0])
-            f = self.driver.get_screenshot_as_png()
-            self.log.info('成功找到{}元素，截图保留'.format(args[0]))
+            assert self.find_elements(loc)
+            self.driver.get_screenshot_as_png()
+            self.log.info('成功找到{}元素，截图保留'.format(loc))
             self.log.info('断言成功')
         except Exception as e:
-            self.log.error('断言失败未找到元素{}'.format(args[0]))
-            f = self.driver.get_screenshot_as_png()
-            self.log.info('未找到{}元素，截图保留'.format(args[0]))
+            self.log.error('断言失败未找到元素{}'.format(loc))
+            self.driver.get_screenshot_as_png()
+            self.log.info('未找到{}元素，截图保留'.format(loc))
             raise e
 
-    def check_activity(self, *args):
+    def check_activity(self, loc, input_data):
         """
         检查是否activity是否符合预期
         """
-        expect_activity = args[1]
+        expect_activity = input_data
         cur_activity = self.driver.current_activity
         try:
             assert cur_activity == expect_activity
-            f = self.driver.get_screenshot_as_png()
-            self.log.info('预期页面，截图保留'.format(args[0]))
+            self.driver.get_screenshot_as_png()
+            self.log.info('预期页面，截图保留'.format(loc))
             self.log.info('是预期页面')
             return 'current_activity: {}, -- expect_activity: {}'.format(cur_activity, expect_activity)
         except Exception as e:
             self.log.error('断言失败:非预期页面{}'.format(expect_activity))
-            f = self.driver.get_screenshot_as_png()
-            self.log.info('非预期页面，截图保留'.format(args[0]))
+            self.driver.get_screenshot_as_png()
+            self.log.info('非预期页面，截图保留'.format(loc))
             raise e
 
-    def get_page_source(self, *args):
+    def get_page_source(self):
         """
         得到当前页面源文件
         """
-        self.conf.get_filepath('pageSourceDir')
-        case_path = self.conf.get_filepath('pageSourceDir') + os.sep + self.driver.current_activity + '.xml'
+        case_path = rtconf.pageSourceDir + os.sep + self.driver.current_activity + '.xml'
 
         if not os.path.exists(case_path):
             f = open(case_path, 'w', encoding='utf-8')
             f.write(self.driver.page_source)
             f.close()
 
-    def back(self, *args):
+    def back(self):
         """
         后退
         """
         self.driver.back()
 
-    def move_away_el(self, *args):
+    def move_away_el(self, loc):
         """
         移开某个元素，防止遮挡
         :return:
         """
         try:
-            el = self.find_element(args[0])
+            el = self.find_element(loc)
             end_x = el.size.get('x')
             end_y = el.size.get('y')
             touch_action = TouchAction(self.driver)
             touch_action.long_press(el).move_to(x=end_x, y=end_y).release().perform()
-        except:
+        except Exception:
             self.log.info('没有这个元素')
 
-    def over(self, *args):
+    def over(self):
         """
         退出
         """
         self.driver.quit()
 
-    def get_size(self, *args):
+    def get_size(self):
         """
         获取界面大小
         """
@@ -200,25 +201,26 @@ class BaseAction:
         y = self.driver.get_window_size()['height']
         return x, y
 
-    def if_dialog_close(self, *args):
+    def if_dialog_close(self, loc):
         """
         关闭浮窗广告
         """
         try:
-            self.find_element(args[0]).click()
-        except:
+            self.find_element(loc).click()
+
+        except Exception:
+
             self.log.info("没有浮窗广告")
             return "没有浮窗广告"
 
-    def wait(self, *args):
+    def wait(self, input_data):
         """
         等待几秒(传整数参数))
         """
         s = 3  # 默认三秒
+        time.sleep(s if not input_data else input_data)
 
-        time.sleep(s if not args[1] else args[1])
-
-    def get_contexts(self, *args):
+    def get_contexts(self):
         """
         获取contexts
         """
@@ -226,7 +228,7 @@ class BaseAction:
         self.log.info(contexts)
         return contexts
 
-    def get_current_context(self, *args):
+    def get_current_context(self):
         """
         获取当前context
         """
@@ -234,41 +236,39 @@ class BaseAction:
         self.log.info(context)
         return context
 
-    def switch_to_webview(self, *args):
+    def switch_to_webview(self, input_data):
         """
         切换到webview或者最后一个webview
         """
         contexts = self.get_contexts()
-        if args[1] and args[1] in contexts:
-            self.driver.switch_to.context(args[1])
+        if input_data and input_data in contexts:
+            self.driver.switch_to.context(input_data)
         else:
             self.driver.switch_to.context(contexts[-1])
 
-    def get_current_window_handle(self, *args):
+    def get_current_window_handle(self):
         """
         获取当前window_handle
-        :param args:
-        :return:
         """
         return self.driver.current_window_handle
 
-    def switch_window_handle(self, *args):
+    def switch_window_handle(self, input_data):
         """
         切换window_handles或者最后一个handle
         """
         window_handles = self.driver.window_handles()
-        if args[1] and args[1] in window_handles:
-            self.driver.switch_to.window(args[1])
+        if input_data and input_data in window_handles:
+            self.driver.switch_to.window(input_data)
         else:
             self.driver.switch_to.window(window_handles[-1])
 
-    def switch_to_native_app(self, *args):
+    def switch_to_native_app(self):
         """
         切换到native
         """
         self.driver.switch_to.context('NATIVE_APP')
 
-    def swipe_to_up(self, *args):
+    def swipe_to_up(self):
         """
         向上滑动屏幕
         """
@@ -280,7 +280,7 @@ class BaseAction:
         y2 = int(screen_size[1] * 0.1)
         self.driver.swipe(x1, y1, x1, y2, 1000)
 
-    def swipe_to_down(self, *args):
+    def swipe_to_down(self):
         """
         向下滑动屏幕
         """
@@ -291,7 +291,7 @@ class BaseAction:
         y2 = int(screen_size[1] * 0.9)
         self.driver.swipe(x1, y1, x1, y2, 1000)
 
-    def swipe_to_right(self, *args):
+    def swipe_to_right(self):
         """
         向右滑动屏幕
         """
@@ -301,7 +301,7 @@ class BaseAction:
         x2 = int(screen_size[1] * 0.8)
         self.driver.swipe(x1, y1, x2, y1, 1000)
 
-    def swipe_to_left(self, *args):
+    def swipe_to_left(self):
         """
         向左滑动屏幕
         """
@@ -311,48 +311,53 @@ class BaseAction:
         x2 = int(screen_size[1] * 0.2)
         self.driver.swipe(x1, y1, x2, y1, 1000)
 
-    def long_press(self, *args):
+    def long_press(self, loc):
         """
         长按元素
         """
-        ele = self.find_element(args[0])
+        ele = self.find_element(loc)
         TouchAction(self.driver).long_press(ele).perform()
 
-    def tap_by_coordinates(self, *args):
+    def tap_by_coordinates(self, loc):
         """
         点击坐标
         """
-        x, y = args[1].split('|')
+        find_type, proportional = loc
+        x, y = proportional.split('|')
         TouchAction(self.driver).tap(x=x, y=y).perform()
 
-    def tap_by_proportional(self, *args):
+    def tap_by_proportional(self, loc):
         """
         按屏幕比例点击坐标
         """
-        find_type, proportional = args[0]
-        x, y = proportional.split(',')
+        print(loc)
+        find_type, proportional = loc
+        x, y = proportional.split('|')
         width, height = self.get_size()
+        print('当前屏幕大小为: {}*{}'.format(width, height))
         x = int(float(x) * width)
         y = int(float(y) * height)
+        print('当前点击坐标为x:{} , y:{}'.format(x, y))
         TouchAction(self.driver).tap(x=x, y=y).perform()
 
-    def refresh(self, *args):
+    def refresh(self):
         """
         刷新
         """
         self.driver.refresh()
 
-    def press_enter(self, *args):
+    def press_enter(self):
         """
         按下回车键
         """
         self.driver.keyevent(66)
 
-    def execute_adb_cmd(self, *args):
+    @staticmethod
+    def execute_adb_cmd(input_data):
         """
         执行adb命令
         """
-        os.system(args[1])
+        os.system(input_data)
 
     def find_element(self, loc):
         """
@@ -376,23 +381,21 @@ class BaseAction:
             value = self.make_xpath_with_feature(value)
         return WebDriverWait(self.driver, self.ele_wait_time, 1).until(lambda x: x.find_elements(by, value))
 
-    def to_activity(self, *args):
+    def to_activity(self, input_data):
         """
         启动activity
-        :param args:
-        :return:
         """
         app_package = self.driver.desired_capabilities().get('appPackage')
-        self.driver.start_activity(app_package, args[1])
+        self.driver.start_activity(app_package, input_data)
 
-    def travel_elements(self, *args):
+    def travel_elements(self, loc):
         """
         遍历元素,点击,返回两个操作
         """
-        elements = self.find_elements(args[0])
+        elements = self.find_elements(loc)
         before_click_activity = self.driver.current_activity
         for i in range(len(elements)):
-            self.find_elements(args[0])[i].click()
+            self.find_elements(loc)[i].click()
             time.sleep(1)
             pagename = "元素{}点击后".format(i)
             self.take_screen_shot(name=pagename)
@@ -424,14 +427,14 @@ class BaseAction:
                 self.back()
                 after_click_activity = self.driver.current_activity
 
-    def travel_elements_more(self, *args):
+    def travel_elements_more(self, input_data):
         """
         纵向遍历元素,点击,返回两个操作
         """
-        locs = args[1].split("|")
+        locs = input_data.split("|")
         self.travel_elements_digui(locs)
 
-    def take_screen_shot(self, *args, name='截图', wait_time=None):
+    def take_screen_shot(self, name='截图', wait_time=None):
         """
         method explain:获取当前屏幕的截图
         parameter explain：【name】 截图的名称

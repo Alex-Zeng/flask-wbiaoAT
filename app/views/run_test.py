@@ -10,6 +10,7 @@ from base.public.utils import *
 from app.models import *
 from base.public.log import Log
 from collections import deque
+from multiprocessing import Process
 
 parser_em = reqparse.RequestParser()
 parser_em.add_argument('title', type=str, required=True, help="title cannot be blank!")
@@ -165,6 +166,8 @@ class StartCase(Resource):
 
 # 调试用例集
 class StartCasSuit(Resource):
+    message=''
+
     def run_test_task(self,e_id):
         start = time.time()
         log_main.info('正在运行的任务：{}'.format(e_id))
@@ -188,17 +191,20 @@ class StartCasSuit(Resource):
 
         end = time.time()
         log_main.info('任务：%s，用时：%0.2f 秒' % (e_id, (end - start)))
+        self.message =  '任务：%s 完成，用时：%0.2f 秒' % (e_id, (end - start))
+
+    def mutli_run(self,e_id):
+        try:
+            p = Process(target=self.run_test_task, args=(e_id,))
+            p.start()
+            return jsonify({'status': '1', 'data': '', 'message': self.message})
+        except Exception as e:
+            return jsonify({'status': '0', 'data': str(e), 'message': '执行失败'})
+
 
     # @login_required
     def get(self, e_id):
 
-        self.run_test_task(e_id)
+        return self.mutli_run(e_id)
 
 
-        # log_main.info('父进程ID：%s' % (os.getpid()))
-        # p = Pool(2)
-        # p.apply_async(self.run_test_task, args=(e_id,))
-        # log_main.info('等待所有添加的进程运行完毕。。。')
-        # p.close()  # 在join之前要先关闭进程池，避免添加新的进程
-        # p.join()
-        # log_main.info('End!!,PID:%s' % os.getpid())

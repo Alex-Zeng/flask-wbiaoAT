@@ -5,13 +5,14 @@ from base import PATH
 
 class RuntestConfig():
     use_output_arg_symbol = '$$'
-    find_ele_wait_time = 6
+    find_ele_wait_time = 10
     take_screen_shot_wait_time = 2
     find_ele_types = {'xpath': MobileBy.XPATH, 'id': MobileBy.ID, 'css': MobileBy.CSS_SELECTOR,
                          'class': MobileBy.CLASS_NAME,
                          'tag': MobileBy.TAG_NAME, 'android_uiautomator': MobileBy.ANDROID_UIAUTOMATOR,
                          'accessibility_id': MobileBy.ACCESSIBILITY_ID}
     screenShotsDir = PATH('screen_shot')
+    pageSourceDir = PATH('pageSourceDir')
     logDir = PATH('logs')
     func_dict = {
         '点击': 'click',
