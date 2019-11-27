@@ -8,9 +8,10 @@ class RuntestConfig():
     find_ele_wait_time = 10
     take_screen_shot_wait_time = 2
     find_ele_types = {'xpath': MobileBy.XPATH, 'id': MobileBy.ID, 'css': MobileBy.CSS_SELECTOR,
-                         'class': MobileBy.CLASS_NAME,
-                         'tag': MobileBy.TAG_NAME, 'android_uiautomator': MobileBy.ANDROID_UIAUTOMATOR,
-                         'accessibility_id': MobileBy.ACCESSIBILITY_ID}
+                      'class': MobileBy.CLASS_NAME,
+                      'tag': MobileBy.TAG_NAME, 'android_uiautomator': MobileBy.ANDROID_UIAUTOMATOR,
+                      'accessibility_id': MobileBy.ACCESSIBILITY_ID, 'tap_by_proportional': '按屏幕千分比点击坐标',
+                      'tap_by_coordinates': '点击坐标'}
     screenShotsDir = PATH('screen_shot')
     pageSourceDir = PATH('pageSourceDir')
     logDir = PATH('logs')
@@ -48,6 +49,7 @@ class RuntestConfig():
         '移动元素到左上角': 'move_away_el',
         '切换window_handle': 'switch_window_handle',
     }
+
 
 rtconf = RuntestConfig()
 

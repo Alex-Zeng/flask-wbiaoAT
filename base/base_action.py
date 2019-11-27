@@ -2,6 +2,7 @@
 # @Time    : 2019/6/28 14:08
 # @Author  : 曾德辉
 # @File    : base_action.py
+
 from appium.webdriver.common.mobileby import MobileBy
 from base.runtest_config import rtconf
 from appium.webdriver.common.touch_action import TouchAction
@@ -66,16 +67,22 @@ class BaseAction:
                 else:
                     test_data[output_data] = output_text
 
-                self.log.info('{}: {} --- {} --- {}'.format(case_id, action_title, element_info, '成功'))
-
-            except Exception as e:
-                self.log.error('错误: {} --- {} --- {}'.format(action_title, element_info, loc))
-                self.log.error(traceback.format_exc())
-                raise e
-            finally:
+                self.log.info(
+                    '{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}'.format('成功', case_id, action_title, element_info,
+                                                                         input_data, output_text))
                 # 截图
                 if screenshot:
+                    time.sleep(rtconf.take_screen_shot_wait_time)
                     self.take_screen_shot()
+
+            except Exception as e:
+                self.log.error('{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}'.format('错误', case_id, action_title, element_info,
+                                                                          input_data, output_text))
+                self.log.error(traceback.format_exc())
+
+                raise e
+
+
 
     def click(self, loc):
         """

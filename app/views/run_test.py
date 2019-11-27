@@ -1,15 +1,13 @@
 from flask_login import login_required
 from flask_restful import Resource, reqparse
-import json
-from multiprocessing import Pool
-import os,time,random
+import time
 from base.public.log import log_main
 from base.driver_objects import td
 from base.base_action import BaseAction
 from base.public.utils import *
 from app.models import *
 from base.public.log import Log
-from collections import deque
+import traceback
 from multiprocessing import Process
 
 parser_em = reqparse.RequestParser()
@@ -166,40 +164,41 @@ class StartCase(Resource):
 
 # 调试用例集
 class StartCasSuit(Resource):
-    message=''
 
     def run_test_task(self,e_id):
         start = time.time()
         log_main.info('正在运行的任务：{}'.format(e_id))
 
         entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
+        et_title = entity.title
         log_run = Log('Equipment-{}'.format(e_id))
         driver = StartSession.start(e_id)
         for item in entity.test_case_suit:
-            print(item.test_case_suit.title)
-            shot_title = '{}-{}'.format(entity.title,item.test_case_suit.title)
+            shot_title = '{}-{}'.format(et_title,item.test_case_suit.title)
+            log_run.info('---------------------- 用例集开始: {} ----------------------'.format(shot_title))
             for step in item.test_case_suit.suit_step:
                 if step.skip == 1:
                     continue
-                print(step.test_case.id)
-                print(step.test_case.title)
-                print(step.input_args)
+                log_run.info('用例{}-{},输入参数列表: {}'.format(step.test_case.id,step.test_case.title,step.input_args))
                 case_entity = TestCase.query.filter(TestCase.id == step.test_case.id).first()
                 case_list = analysis_case(case_entity,step.input_args)
                 ba = BaseAction(driver, shot_title,log_run)
                 ba.action(case_list)
 
+            log_run.info('---------------------- 用例集结束: {} ----------------------'.format(shot_title))
+
         end = time.time()
-        log_main.info('任务：%s，用时：%0.2f 秒' % (e_id, (end - start)))
-        self.message =  '任务：%s 完成，用时：%0.2f 秒' % (e_id, (end - start))
+        msg= '任务：%s，用时：%0.2f 秒' % (e_id, (end - start))
+        log_main.info(msg)
+        return  msg
 
     def mutli_run(self,e_id):
         try:
-            p = Process(target=self.run_test_task, args=(e_id,))
-            p.start()
-            return jsonify({'status': '1', 'data': '', 'message': self.message})
+            msg = self.run_test_task(e_id)
+            return jsonify({'status': '1', 'data': '', 'message': msg})
         except Exception as e:
-            return jsonify({'status': '0', 'data': str(e), 'message': '执行失败'})
+            log_main.error(traceback.format_exc())
+            return jsonify({'status': '0', 'data': '', 'message': traceback.format_exc()})
 
 
     # @login_required

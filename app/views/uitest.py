@@ -67,6 +67,7 @@ parser_ele = reqparse.RequestParser()
 parser_ele.add_argument('title', type=str, required=True, help="title cannot be blank!")
 parser_ele.add_argument('type', type=str, help="type cannot be blank!")
 parser_ele.add_argument('loc', type=str, help="loc cannot be blank!")
+parser_ele.add_argument('page_id', type=int, help="page_id wrong")
 
 
 # 元素
@@ -82,6 +83,7 @@ class ElementList(Resource):
             data_dict['type'] = row.type
             data_dict['loc'] = row.loc
             data_dict['page_id'] = row.page_id
+            data_dict['page_title'] = row.page.title
             data_dict['create_datetime'] = str(row.create_datetime)
             data_dict['update_datetime'] = str(row.update_datetime)
             data_list.append(data_dict)
@@ -90,18 +92,14 @@ class ElementList(Resource):
     # @login_required
     def post(self, project_id, page_id):
         args = parser_ele.parse_args()
-        title = args.get('title')
-        type = args.get('type')
-        loc = args.get('loc')
+        title = args.title
+        type = args.type
+        loc = args.loc.strip()
         entity = Element(title=title, type=type, loc=loc, page_id=page_id)
         db.session.add(entity)
         db.session.commit()
         return jsonify(
             {'status': '1', 'data': {}, 'message': 'success'})
-
-
-parser_ele_detail = reqparse.RequestParser()
-parser_ele_detail.add_argument('formData', type=str, action='append', help="formData cannot be blank!")
 
 
 # 元素内容
@@ -112,7 +110,8 @@ class ElementDetail(Resource):
         entity = Element.query.filter(Element.id == element_id).first()
         entity.title = args.title
         entity.type = args.type
-        entity.loc = args.loc
+        entity.loc = args.loc.strip()
+        entity.page_id = args.page_id
         db.session.commit()
         return jsonify({'status': '1', 'data': args, 'message': 'success'})
 
@@ -137,6 +136,7 @@ parser_act = reqparse.RequestParser()
 parser_act.add_argument('title', type=str, required=True, help="title cannot be blank!")
 parser_act.add_argument('fun_id', type=str, required=True, help="fun_id cannot be blank!")
 parser_act.add_argument('ele_id', type=str, required=True, help="ele_id cannot be blank!")
+parser_act.add_argument('page_id', type=int, help="page_id")
 
 
 # 操作
@@ -156,6 +156,7 @@ class ActionList(Resource):
             ele_title = Element.query.filter(Element.id == row.ele_id).first().title
             data_dict['ele_title'] = ele_title
             data_dict['page_id'] = row.page_id
+            data_dict['page_title'] = row.page.title
             data_dict['create_datetime'] = str(row.create_datetime)
             data_dict['update_datetime'] = str(row.update_datetime)
             data_list.append(data_dict)
@@ -181,6 +182,7 @@ class ActionDetail(Resource):
         entity.title = args.title
         entity.fun_id = args.fun_id
         entity.ele_id = args.ele_id
+        entity.page_id = args.page_id
         db.session.commit()
         return jsonify({'status': '1', 'data': args, 'message': 'success'})
 
@@ -363,7 +365,8 @@ class TestCaseStepList(Resource):
             return jsonify(
                 {'status': '0', 'data': {}, 'message': '已存在步骤{}'.format(args.rank)})
         entity = TestCaseStep(rank=args.rank, skip=0, action_id=args.action_id, input_key=args.input_key,
-                              output_key=args.output_key, take_screen_shot=args.take_screen_shot,wait_time=args.wait_time,test_case_id=case_id)
+                              output_key=args.output_key, take_screen_shot=args.take_screen_shot,
+                              wait_time=args.wait_time, test_case_id=case_id)
         db.session.add(entity)
         db.session.commit()
         return jsonify(
@@ -372,18 +375,46 @@ class TestCaseStepList(Resource):
 
 # 用例步骤内容
 class TestCaseStepDetail(Resource):
+    def update_rank(self, case_id, rank, step_id):
+        up_rank = rank
+        up_step_id = step_id
+        # 同一条用例下,不同步骤,相同排序
+        result = TestCaseStep.query.filter(TestCaseStep.test_case_id == case_id, TestCaseStep.rank == rank,
+                                           TestCaseStep.id != step_id).first()
+        if result:
+            result.rank = rank + 1
+            up_rank = result.rank
+            up_step_id = result.id
+            db.session.commit()
+        else:
+            return
+
+        self.update_rank(case_id, up_rank, up_step_id)
+
+    def init_rank(self, case_id):
+        # 重新排序
+        results = TestCaseStep.query.filter(TestCaseStep.test_case_id == case_id).all()
+        init_rank = 1
+        for item in results:
+            result = TestCaseStep.query.filter(TestCaseStep.id == item.id).first()
+            result.rank = init_rank
+            init_rank += 1
+            db.session.commit()
+
     # @login_required
     def put(self, project_id, case_id, step_id):
         args = parser_step.parse_args()
+        self.update_rank(case_id, args.rank, step_id)
         entity = TestCaseStep.query.filter(TestCaseStep.id == step_id).first()
-        entity.rank = args.rank
         entity.action_id = args.action_id
         entity.wait_time = args.wait_time
         entity.take_screen_shot = args.take_screen_shot
         entity.input_key = args.input_key
         entity.output_key = args.output_key
         entity.skip = args.skip
+        entity.rank = args.rank
         db.session.commit()
+        # self.init_rank(case_id)
         return jsonify({'status': '1', 'data': args, 'message': 'success'})
 
     # @login_required
@@ -455,6 +486,7 @@ parser_suit_step.add_argument('skip', type=int)
 
 # 用例集步骤
 class TestSuitStepList(Resource):
+
     # @login_required
     def get(self, project_id, suit_id):
         results = list(TestSuitStep.query.filter(TestSuitStep.test_case_suit_id == suit_id).order_by(
@@ -506,9 +538,26 @@ class TestSuitStepList(Resource):
 
 # 用例集步骤内容
 class TestSuitStepDetail(Resource):
+    def update_rank(self, suit_id, rank, step_id):
+        up_rank = rank
+        up_step_id = step_id
+        # 同一条用例下,不同步骤,相同排序
+        result = TestSuitStep.query.filter(TestSuitStep.test_case_suit_id == suit_id, TestSuitStep.rank == rank,
+                                           TestSuitStep.id != step_id).first()
+        if result:
+            result.rank = rank + 1
+            up_rank = result.rank
+            up_step_id = result.id
+            db.session.commit()
+        else:
+            return
+
+        self.update_rank(suit_id, up_rank, up_step_id)
+
     # @login_required
     def put(self, project_id, suit_id, step_id):
         args = parser_suit_step.parse_args()
+        self.update_rank(suit_id, args.rank, step_id)
         entity = TestSuitStep.query.filter(TestSuitStep.id == step_id).first()
         entity.rank = args.rank
         entity.test_case_id = args.case_id
