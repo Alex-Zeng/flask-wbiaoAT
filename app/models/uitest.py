@@ -8,6 +8,8 @@ class Page(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, comment="页面名")
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), comment="项目id")
+    parent_directory = db.Column(db.Integer, nullable=False, default=0, comment="父级目录ID")
+    is_del = db.Column(db.Integer, nullable=False, default=0, comment="是否已删除")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
@@ -55,6 +57,8 @@ class TestCase(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, comment="用例名")
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), comment="所属项目ID")
+    is_del = db.Column(db.Integer, nullable=False, default=0, comment="是否已删除")
+    parent_directory = db.Column(db.Integer, nullable=False, default=0,comment="父级目录ID")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
@@ -83,6 +87,8 @@ class TestCaseSuit(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, comment="用例集名")
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), comment="所属项目ID")
+    is_del = db.Column(db.Integer, nullable=False, default=0, comment="是否已删除")
+    parent_directory = db.Column(db.Integer, nullable=False, default=0, comment="父级目录ID")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
@@ -100,5 +106,5 @@ class TestSuitStep(db.Model):
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
-    test_case = db.relationship('TestCase')
+    test_case = db.relationship('TestCase',backref=db.backref('suit'))
 

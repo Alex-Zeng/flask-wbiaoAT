@@ -172,20 +172,22 @@ class StartCasSuit(Resource):
         entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
         et_title = entity.title
         log_run = Log('Equipment-{}'.format(e_id))
-        driver = StartSession.start(e_id)
         for item in entity.test_case_suit:
+            driver = StartSession.start(e_id)
             shot_title = '{}-{}'.format(et_title,item.test_case_suit.title)
-            log_run.info('---------------------- 用例集开始: {} ----------------------'.format(shot_title))
+            log_run.info('-用例集开始: {}-'.format(shot_title))
             for step in item.test_case_suit.suit_step:
                 if step.skip == 1:
                     continue
-                log_run.info('用例{}-{},输入参数列表: {}'.format(step.test_case.id,step.test_case.title,step.input_args))
+                log_run.info('-----用例{}-{},输入参数列表: {}-----'.format(step.test_case.id,step.test_case.title,step.input_args))
                 case_entity = TestCase.query.filter(TestCase.id == step.test_case.id).first()
                 case_list = analysis_case(case_entity,step.input_args)
                 ba = BaseAction(driver, shot_title,log_run)
                 ba.action(case_list)
 
-            log_run.info('---------------------- 用例集结束: {} ----------------------'.format(shot_title))
+            log_run.info('-用例集结束: {}-'.format(shot_title))
+            driver.quit()
+
 
         end = time.time()
         msg= '任务：%s，用时：%0.2f 秒' % (e_id, (end - start))

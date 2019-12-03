@@ -41,7 +41,7 @@ class BaseAction:
             element_loc = v['element_loc']
             input_data = v['input_arg']
             output_data = v['output_arg']
-            self.log.info('执行用例{}:{}'.format(case_id, action_title))
+            self.log.info('----------执行用例{}步骤:{}----------'.format(case_id, action_title))
             loc = self._by_type.get(find_type, ''), element_loc
 
             # 是否引用前面某个用例的 输出值
@@ -68,7 +68,7 @@ class BaseAction:
                     test_data[output_data] = output_text
 
                 self.log.info(
-                    '{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}'.format('成功', case_id, action_title, element_info,
+                    '----------{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}----------'.format('成功', case_id, action_title, element_info,
                                                                          input_data, output_text))
                 # 截图
                 if screenshot:
@@ -76,7 +76,7 @@ class BaseAction:
                     self.take_screen_shot()
 
             except Exception as e:
-                self.log.error('{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}'.format('错误', case_id, action_title, element_info,
+                self.log.error('!!!!!!!!!{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}!!!!!!!!!'.format('错误', case_id, action_title, element_info,
                                                                           input_data, output_text))
                 self.log.error(traceback.format_exc())
 
@@ -114,12 +114,11 @@ class BaseAction:
         """
         try:
             assert self.find_element(loc)
-            self.driver.get_screenshot_as_png()
+            self.take_screen_shot('断言成功')
             self.log.info('成功找到{}元素，截图保留'.format(loc))
-            self.log.info('断言成功')
         except Exception as e:
             self.log.error('断言失败未找到元素{}'.format(loc))
-            self.driver.get_screenshot_as_png()
+            self.take_screen_shot('断言失败')
             self.log.info('未找到{}元素，截图保留'.format(loc))
             raise e
 
@@ -409,37 +408,6 @@ class BaseAction:
             if before_click_activity != self.driver.current_activity:
                 self.back()
 
-    def travel_elements_digui(self, locs, k=0):
-        """
-        递归遍历元素,点击,返回两个操作
-        """
-        tmp = k
-        locs_len = len(locs)
-        loc = MobileBy.XPATH, locs[k]
-        elements = self.find_elements(loc)
-        before_click_activity = self.driver.current_activity
-        el_len = len(elements)
-        for i in range(el_len):
-            index = tmp
-            self.log.info('第{}层级,长度:{},元素:{}'.format(index, el_len, i))
-            self.find_elements(loc)[i].click()
-
-            self.take_screen_shot(name='层级{}-第{}个元素'.format(index, i))
-            while index < locs_len - 1:
-                index += 1
-                self.travel_elements_digui(locs=locs, k=index)
-
-            after_click_activity = self.driver.current_activity
-            while before_click_activity != after_click_activity:
-                self.back()
-                after_click_activity = self.driver.current_activity
-
-    def travel_elements_more(self, input_data):
-        """
-        纵向遍历元素,点击,返回两个操作
-        """
-        locs = input_data.split("|")
-        self.travel_elements_digui(locs)
 
     def take_screen_shot(self, name='截图', wait_time=None):
         """

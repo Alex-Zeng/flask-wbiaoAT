@@ -8,28 +8,41 @@ from app.models import *
 from sqlalchemy.exc import IntegrityError
 
 parser_page = reqparse.RequestParser()
-parser_page.add_argument('title', type=str, required=True, help="title cannot be blank!")
+parser_page.add_argument('title', type=str, nullable=False, help="title cannot be blank!")
+parser_page.add_argument('parentId', type=int, help="parentId cannot be blank!")
 
 
 # 页面
 class PageList(Resource):
-    # @login_required
-    def get(self, project_id):
-        results = list(Page.query.filter(Page.project_id == project_id).all())
+    def list_data(self, id, results,p_title=''):
         data_list = []
         for row in results:
-            data_dict = {}
-            data_dict['id'] = row.id
-            data_dict['title'] = row.title
-            data_list.append(data_dict)
+            if row.parent_directory == id:
+                data_dict = {}
+                data_dict['id'] = row.id
+                data_dict['value'] = row.id
+                data_dict['label'] = row.title
+                data_dict['title'] = row.title
+                data_dict['parent_directory'] = row.parent_directory
+                data_dict['parent_title'] = p_title
+                children = self.list_data(row.id, results, row.title)
+                if children:
+                    data_dict['children'] = children
+                data_list.append(data_dict)
+        return data_list
+
+    # @login_required
+    def get(self, project_id):
+        results = list(Page.query.filter(Page.project_id == project_id, Page.is_del == 0).all())
+        data_list = self.list_data(0, results)
         return jsonify({'status': '1', 'data': {"page_list": data_list}, 'message': 'success'})
 
     # @login_required
     def post(self, project_id):
         args = parser_page.parse_args()
         title = args.get('title')
-
-        entity = Page(title=title, project_id=project_id)
+        p_id = args.parentId if args.parentId else 0
+        entity = Page(title=title, project_id=project_id, parent_directory=p_id)
         db.session.add(entity)
         db.session.commit()
         return jsonify({'status': '1', 'data': {}, 'message': 'success'})
@@ -40,11 +53,12 @@ class PageDetail(Resource):
     # @login_required
     def put(self, project_id, page_id):
         args = parser_page.parse_args()
-        title = args.get('title')
         entity = Page.query.filter(Page.id == page_id, Page.project_id == project_id).first()
-        entity.title = title
+        if args.title:
+            entity.title = args.title
+        entity.parent_directory = args.parentId
         db.session.commit()
-        return jsonify({'status': '1', 'data': {'title': title}, 'message': 'success'})
+        return jsonify({'status': '1', 'data': args, 'message': '修改页面成功'})
 
     # @login_required
     def delete(self, project_id, page_id):
@@ -58,7 +72,7 @@ class PageDetail(Resource):
                         message += st.test_case.title + ','
         if message:
             return jsonify({'status': '0', 'data': {}, 'message': '用例{}有使用到该页面,请先修改或删除用例{}'.format(message, message)})
-        db.session.delete(entity)
+        entity.is_del = 1
         db.session.commit()
         return jsonify({'status': '1', 'data': {}, 'message': 'success'})
 
@@ -122,9 +136,9 @@ class ElementDetail(Resource):
         if len(act) > 0:
             act_list = ''
             for a in act:
-                act_list += str(a.id) + ','
+                act_list += '页面:{}下{},'.format(a.page.title, a.title)
             return jsonify(
-                {'status': '0', 'data': element_id, 'message': "需要先删除或修改元素操作ID为: {} 里面关联的元素信息".format(act_list)})
+                {'status': '0', 'data': element_id, 'message': "需要先删除或修改元素操作: {} 里面关联的元素信息".format(act_list)})
         if entity:
             db.session.delete(entity)
             db.session.commit()
@@ -260,43 +274,59 @@ class FunctionDetail(Resource):
 
 
 parser_case = reqparse.RequestParser()
-parser_case.add_argument('title', type=str, required=True, help="title cannot be blank!")
+parser_case.add_argument('title', type=str, trim=True,help="title cannot be blank!")
+parser_case.add_argument('parentId', type=int, help="title cannot be blank!")
 
 
 # 用例
 class TestCaseList(Resource):
+    def list_data(self, id, results,p_title=''):
+        data_list = []
+        for row in results:
+            if row.parent_directory == id:
+                data_dict = {}
+                data_dict['id'] = row.id
+                data_dict['value'] = row.id
+                data_dict['label'] = row.title
+                data_dict['title'] = row.title
+                data_dict['parent_directory'] = row.parent_directory
+                data_dict['parent_title'] = p_title
+                input_list = []
+                out_list = []
+                for step in row.step:
+                    if step.input_key:
+                        input_list.append(step.input_key)
+                    if step.output_key:
+                        out_list.append(step.output_key)
+
+                data_dict['input_keys'] = ','.join(input_list)
+                data_dict['output_keys'] = ','.join(out_list)
+                data_dict['update_datetime'] = str(row.update_datetime)
+                children = self.list_data(row.id, results, row.title)
+                if children:
+                    data_dict['children'] = children
+                data_list.append(data_dict)
+        return data_list
 
     # @login_required
     def get(self, project_id):
-        results = list(TestCase.query.filter(TestCase.project_id == project_id).all())
-        data_list = []
-        for row in results:
-            data_dict = {}
-            data_dict['id'] = row.id
-            data_dict['title'] = row.title
-            input_list = []
-            out_list = []
-            for step in row.step:
-                if step.input_key:
-                    input_list.append(step.input_key)
-                if step.output_key:
-                    out_list.append(step.output_key)
-
-            data_dict['input_keys'] = ','.join(input_list)
-            data_dict['output_keys'] = ','.join(out_list)
-            data_dict['update_datetime'] = str(row.update_datetime)
-            data_list.append(data_dict)
+        results = list(
+            TestCase.query.filter(TestCase.project_id == project_id, TestCase.is_del == 0).order_by(
+                db.desc(TestCase.update_datetime)).all())
+        data_list = self.list_data(0, results)
         return jsonify({'status': '1', 'data': {"data_list": data_list}, 'message': 'success'})
 
     # @login_required
     def post(self, project_id):
         args = parser_case.parse_args()
         title = args.get('title')
-        entity = TestCase(title=title, project_id=project_id)
+        if not title:
+            return jsonify({'status': '0', 'data': {}, 'message': 'title不能为空'})
+        p_id = args.parentId if args.parentId else 0
+        entity = TestCase(title=title, project_id=project_id, parent_directory=p_id ,is_del = 0,)
         db.session.add(entity)
         db.session.commit()
-        return jsonify(
-            {'status': '1', 'data': {}, 'message': 'success'})
+        return jsonify({'status': '1', 'data': {}, 'message': 'success'})
 
 
 # 用例内容
@@ -305,9 +335,11 @@ class TestCaseDetail(Resource):
     def put(self, project_id, case_id):
         args = parser_case.parse_args()
         entity = TestCase.query.filter(TestCase.id == case_id).first()
-        entity.title = args.title
+        if args.title:
+            entity.title = args.title
+        entity.parent_directory = args.parentId
         db.session.commit()
-        return jsonify({'status': '1', 'data': args, 'message': 'success'})
+        return jsonify({'status': '1', 'data': args, 'message': '修改用例内容成功'})
 
     # @login_required
     def delete(self, project_id, case_id):
@@ -316,10 +348,21 @@ class TestCaseDetail(Resource):
             return jsonify(
                 {'status': '0', 'data': case_id, 'message': '请先删除用例集下面的关联此用例的步骤'})
         if entity:
-            db.session.delete(entity)
+            entity.is_del = 1
             db.session.commit()
             return jsonify(
                 {'status': '1', 'data': case_id, 'message': 'success'})
+
+
+class TestCaseCopy(Resource):
+
+    def get(self, project_id, case_id):
+        entity = TestCase.query.filter(TestCase.id == case_id).first()
+        db.session.add(entity)
+        db.session.commit()
+        # 复制用例
+        # TODO 复制用例
+        # 复制用例步骤
 
 
 parser_step = reqparse.RequestParser()
@@ -336,10 +379,9 @@ parser_step.add_argument('take_screen_shot', type=int, help="take_screen_shot er
 class TestCaseStepList(Resource):
     # @login_required
     def get(self, project_id, case_id):
-        results = list(TestCaseStep.query.filter(TestCaseStep.test_case_id == case_id).order_by(
-            TestCaseStep.rank).all())
+        result = TestCase.query.filter(TestCase.id == case_id).first()
         data_list = []
-        for row in results:
+        for row in result.step:
             data_dict = {}
             data_dict['id'] = row.id
             data_dict['rank'] = row.rank
@@ -385,21 +427,24 @@ class TestCaseStepDetail(Resource):
             result.rank = rank + 1
             up_rank = result.rank
             up_step_id = result.id
-            db.session.commit()
+            db.session.flush()
         else:
+            db.session.commit()
             return
 
         self.update_rank(case_id, up_rank, up_step_id)
 
     def init_rank(self, case_id):
         # 重新排序
-        results = TestCaseStep.query.filter(TestCaseStep.test_case_id == case_id).all()
+        result = TestCase.query.filter(TestCase.id == case_id).first()
+        # results = TestCaseStep.query.filter(TestCaseStep.test_case_id == case_id).all()
         init_rank = 1
-        for item in results:
+        for item in result.step:
             result = TestCaseStep.query.filter(TestCaseStep.id == item.id).first()
             result.rank = init_rank
             init_rank += 1
-            db.session.commit()
+            db.session.flush()
+        db.session.commit()
 
     # @login_required
     def put(self, project_id, case_id, step_id):
@@ -413,6 +458,7 @@ class TestCaseStepDetail(Resource):
         entity.output_key = args.output_key
         entity.skip = args.skip
         entity.rank = args.rank
+        db.session.flush()
         db.session.commit()
         # self.init_rank(case_id)
         return jsonify({'status': '1', 'data': args, 'message': 'success'})
@@ -428,29 +474,40 @@ class TestCaseStepDetail(Resource):
 
 
 parser_suit = reqparse.RequestParser()
-parser_suit.add_argument('title', type=str, required=True, help="title cannot be blank!")
+parser_suit.add_argument('title', type=str, nullable=False, help="title cannot be blank!")
+parser_suit.add_argument('parentId', type=int, help="parentId cannot be blank!")
 
 
 # 用例集
 class CaseSuitList(Resource):
+    def list_data(self, id, results,p_title=''):
+        data_list = []
+        for row in results:
+            if row.parent_directory == id:
+                data_dict = {}
+                data_dict['id'] = row.id
+                data_dict['value'] = row.id
+                data_dict['label'] = row.title
+                data_dict['title'] = row.title
+                data_dict['parent_directory'] = row.parent_directory
+                data_dict['parent_title'] = p_title
+                children = self.list_data(row.id, results,row.title)
+                if children:
+                    data_dict['children'] = children
+                data_list.append(data_dict)
+        return data_list
 
     # # @login_required
     def get(self, project_id):
-        results = list(TestCaseSuit.query.filter(TestCaseSuit.project_id == project_id).all())
-        data_list = []
-        for row in results:
-            data_dict = {}
-            data_dict['id'] = row.id
-            data_dict['title'] = row.title
-            data_dict['create_datetime'] = str(row.create_datetime)
-            data_dict['update_datetime'] = str(row.update_datetime)
-            data_list.append(data_dict)
+        results = list(TestCaseSuit.query.filter(TestCaseSuit.project_id == project_id, TestCaseSuit.is_del == 0).all())
+        data_list = self.list_data(0, results)
         return jsonify({'status': '1', 'data': {"data_list": data_list}, 'message': 'success'})
 
     # @login_required
     def post(self, project_id):
         args = parser_suit.parse_args()
-        entity = TestCaseSuit(title=args.title, project_id=project_id)
+        p_id = args.parentId if args.parentId else 0
+        entity = TestCaseSuit(title=args.title, project_id=project_id, parent_directory=p_id)
         db.session.add(entity)
         db.session.commit()
         return jsonify(
@@ -463,15 +520,17 @@ class CaseSuitDetail(Resource):
     def put(self, project_id, suit_id):
         args = parser_suit.parse_args()
         entity = TestCaseSuit.query.filter(TestCaseSuit.id == suit_id).first()
-        entity.title = args.title
+        if args.title:
+            entity.title = args.title
+        entity.parent_directory = args.parentId
         db.session.commit()
-        return jsonify({'status': '1', 'data': args, 'message': 'success'})
+        return jsonify({'status': '1', 'data': args, 'message': '修改用例集成功'})
 
     # @login_required
     def delete(self, project_id, suit_id):
         entity = TestCaseSuit.query.filter(TestCaseSuit.id == suit_id).first()
         if entity:
-            db.session.delete(entity)
+            entity.is_del = 1
             db.session.commit()
             return jsonify(
                 {'status': '1', 'data': suit_id, 'message': 'success'})

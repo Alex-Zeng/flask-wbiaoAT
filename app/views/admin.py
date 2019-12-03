@@ -87,7 +87,7 @@ class TestProject(Resource):
     @login_required
     def get(self):
         user_id = user_loader(session.get('user_id')).id
-        project_lists = list(Project.query.filter(Project.author_id == user_id).all())
+        project_lists = list(Project.query.filter(Project.author_id == user_id, Project.is_del == 0 ).all())
 
         project_list = []
         for project in project_lists:

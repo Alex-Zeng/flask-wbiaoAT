@@ -52,6 +52,7 @@ class Project(db.Model):
     title = db.Column(db.String(100), nullable=False, comment="项目名")
     env_id = db.Column(db.Integer)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), comment="项目名")
+    is_del = db.Column(db.Integer, nullable=False, default=0, comment="是否已删除")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,
                                 server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")
