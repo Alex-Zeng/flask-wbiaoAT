@@ -140,11 +140,8 @@ def mkdir(path):
         return False
 
 # 解析用例
-def analysis_case(case_entity, case_args):
-    case_list = []
-    items = case_entity.step
-    case_id = case_entity.id
-    case_title = case_entity.title
+def analysis_case(steps, case_args):
+    step_list = []
     case_args_dict={}
     try:
         if case_args:
@@ -158,29 +155,29 @@ def analysis_case(case_entity, case_args):
                 case_args_dict[k] = collections.deque(v)
             else:
                 return '参数非法: 值不是列表形式'
-
-    for item in items:
-        case_dict = {}
-        case_dict['case_id'] = '{}-{}'.format(case_id, item.rank)
-        case_dict['case_title'] = case_title
-        case_dict['action'] = item.action.fun.fun_title
-        case_dict['action_title'] = item.action.title
-        case_dict['element_loc'] = item.action.ele.loc
-        case_dict['element_info'] = item.action.ele.title
-        case_dict['type'] = item.action.ele.type
-        case_dict['screen_shot'] = item.take_screen_shot
-        case_dict['wait_time'] = item.wait_time
-        case_dict['output_arg'] = item.output_key
+    for item in steps:
+        case_step_dict = {}
+        case_step_dict['step'] = item.rank
+        case_step_dict['case_step'] = '步骤: {}'.format(item.rank)
+        case_step_dict['action'] = item.action.fun.fun_title
+        case_step_dict['action_title'] = item.action.title
+        case_step_dict['element_loc'] = item.action.ele.loc
+        case_step_dict['element_info'] = item.action.ele.title
+        case_step_dict['type'] = item.action.ele.type
+        case_step_dict['screen_shot'] = item.take_screen_shot
+        case_step_dict['wait_time'] = item.wait_time
+        case_step_dict['output_arg'] = item.output_key
         if item.input_key:
             try:
-                case_dict['input_arg'] = case_args_dict.get(item.input_key).popleft()
+                case_step_dict['input_arg'] = case_args_dict.get(item.input_key).popleft()
+                case_step_dict['input_key'] = item.input_key
             except:
                 pass
                 # return '未找到对应参数'
         else:
-            case_dict['input_arg'] = ''
-        case_list.append(case_dict)
-    return case_list
+            case_step_dict['input_arg'] = ''
+        step_list.append(case_step_dict)
+    return step_list
 
 if __name__ == '__main__':
     # print(os.path.abspath(os.path.join(os.path.dirname(__file__))

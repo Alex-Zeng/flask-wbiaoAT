@@ -24,7 +24,7 @@ class Log():
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.INFO)
         #设置日志输出格式
-        self.formatter = logging.Formatter('[%(asctime)s] - [%(levelname)s] - %(message)s')
+        self.formatter = logging.Formatter('%(levelname)s - [%(asctime)s] - %(message)s')
 
     def output(self,level,message):
         '''

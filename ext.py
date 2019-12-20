@@ -1,7 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from werkzeug.contrib.cache import SimpleCache
+from flask_apscheduler import APScheduler
 db = SQLAlchemy()
+scheduler = APScheduler()
+
 
 
 # Setup the configuration for login manager.

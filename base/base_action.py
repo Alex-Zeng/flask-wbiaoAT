@@ -3,14 +3,19 @@
 # @Author  : 曾德辉
 # @File    : base_action.py
 
-from appium.webdriver.common.mobileby import MobileBy
-from base.runtest_config import rtconf
-from appium.webdriver.common.touch_action import TouchAction
-from selenium.webdriver.support.wait import WebDriverWait
-import time
 import os
 import re
+import time
 import traceback
+from datetime import datetime
+from appium.webdriver.common.mobileby import MobileBy
+from appium.webdriver.common.touch_action import TouchAction
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.wait import WebDriverWait
+
+from app.models import TestCaseStepLog
+from base.runtest_config import rtconf
+from ext import db
 
 
 class BaseAction:
@@ -24,14 +29,19 @@ class BaseAction:
         self.screen_shot_wait_time = rtconf.take_screen_shot_wait_time
         self.screent_shot_folder_title = case_title
 
-    def action(self, case_list):
+    def action(self, case_step_list, case_log_id=None):
         """
         循环执行用例集中每条用例对应的action方法
         """
+
+        error_msg = ''
+        result = 0
         test_data = {}
-        for v in case_list:
+        for v in case_step_list:
+            start_time = datetime.now()
             self.current_case = v
-            case_id = v['case_id']
+            step_rank = v['step']
+            case_step = v['case_step']
             wait_time = v['wait_time']
             action_title = v['action_title']
             action = v['action']
@@ -39,11 +49,11 @@ class BaseAction:
             screenshot = v['screen_shot']
             element_info = v['element_info']
             element_loc = v['element_loc']
-            input_data = v['input_arg']
+            input_data = v.get('input_arg', None)
+            input_key = v.get('input_key', None)
             output_data = v['output_arg']
-            self.log.info('----------执行用例{}步骤:{}----------'.format(case_id, action_title))
-            loc = self._by_type.get(find_type, ''), element_loc
 
+            loc = self._by_type.get(find_type, ''), element_loc
             # 是否引用前面某个用例的 输出值
             if input_data.startswith(rtconf.use_output_arg_symbol):
                 input_data = test_data[input_data[len(rtconf.use_output_arg_symbol):]]
@@ -68,21 +78,44 @@ class BaseAction:
                     test_data[output_data] = output_text
 
                 self.log.info(
-                    '----------{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}----------'.format('成功', case_id, action_title, element_info,
-                                                                         input_data, output_text))
+                    '----------{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}----------'.format('成功', case_step,
+                                                                                             action_title, element_info,
+                                                                                             input_data, output_text))
                 # 截图
                 if screenshot:
                     time.sleep(rtconf.take_screen_shot_wait_time)
                     self.take_screen_shot()
-
+                result = 1
             except Exception as e:
-                self.log.error('!!!!!!!!!{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}!!!!!!!!!'.format('错误', case_id, action_title, element_info,
-                                                                          input_data, output_text))
-                self.log.error(traceback.format_exc())
-
+                result = 0
+                output_text = 'output_text'
+                self.log.error('!!!!!!!!!{}: {} --- {} --- {}---输入参数: {} ----输出参数:错误!!!!!!!!!'.format('错误', case_step,
+                                                                                                      action_title,
+                                                                                                      element_info,
+                                                                                                      input_data,
+                                                                                                      ))
+                error_msg = traceback.format_exc()
+                self.log.error(error_msg)
                 raise e
-
-
+            finally:
+                end_time = datetime.now()
+                run_test_case_step_times = (end_time - start_time).seconds
+                action_output = ''
+                if output_data:
+                    action_output = '{}:{}'.format(output_data, test_data[output_data])
+                action_input = ''
+                if input_data:
+                    action_input = '{}:{}'.format(input_key, input_data)
+                if case_log_id:
+                    entity = TestCaseStepLog(test_case_log_id=case_log_id,
+                                         test_case_step_rank=step_rank,
+                                         test_case_action_title=action_title, test_case_action_input=action_input,
+                                         test_case_action_output=action_output,
+                                         run_test_action_result=result, error_msg=error_msg,
+                                         action_start_time=start_time, action_end_time=end_time,
+                                         run_test_case_times=run_test_case_step_times)
+                    db.session.add(entity)
+                    db.session.commit()
 
     def click(self, loc):
         """
@@ -372,9 +405,13 @@ class BaseAction:
         """
         by = loc[0]
         value = loc[1]
-        if by == MobileBy.XPATH:
-            value = self.make_xpath_with_feature(value)
-        return WebDriverWait(self.driver, self.ele_wait_time, 1).until(lambda x: x.find_element(by, value))
+        try:
+            if by == MobileBy.XPATH:
+                value = self.make_xpath_with_feature(value)
+            return WebDriverWait(self.driver, self.ele_wait_time, 1).until(lambda x: x.find_element(by, value))
+        except TimeoutException:
+            err_msg = '错误信息: {}秒内未找到该元素, 查询方式: {}, 元素位置: {}'.format(self.ele_wait_time, by, value)
+            raise TimeoutException(err_msg)
 
     def find_elements(self, loc):
         """
@@ -383,9 +420,14 @@ class BaseAction:
         """
         by = loc[0]
         value = loc[1]
-        if by == MobileBy.XPATH:
-            value = self.make_xpath_with_feature(value)
-        return WebDriverWait(self.driver, self.ele_wait_time, 1).until(lambda x: x.find_elements(by, value))
+        try:
+            if by == MobileBy.XPATH:
+                value = self.make_xpath_with_feature(value)
+            return WebDriverWait(self.driver, self.ele_wait_time, 1).until(lambda x: x.find_elements(by, value))
+        except TimeoutException:
+            err_msg = '错误信息: {}秒内未找到该元素, 查询方式: {}, 元素位置: {}'.format(self.ele_wait_time, by, value)
+            s_jpg = self.driver.get_screenshot_as_png()
+            raise TimeoutException(err_msg, s_jpg, traceback.format_exc())
 
     def to_activity(self, input_data):
         """
@@ -408,7 +450,6 @@ class BaseAction:
             if before_click_activity != self.driver.current_activity:
                 self.back()
 
-
     def take_screen_shot(self, name='截图', wait_time=None):
         """
         method explain:获取当前屏幕的截图
@@ -426,8 +467,8 @@ class BaseAction:
                 'action_title', 'action') + name + img_type
         else:
             os.makedirs(fq)
-            filename = fq + os.sep + tm + "_" + self.current_case.get(
-                'step', 'action') + name + img_type
+            filename = fq + os.sep + tm + "_{}步骤".format(self.current_case.get(
+                'step', 'action')) + name + img_type
         time.sleep(wait_time if wait_time else self.screen_shot_wait_time)
         self.driver.get_screenshot_as_file(filename)
         return filename
