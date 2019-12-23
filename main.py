@@ -6,7 +6,6 @@
 from gevent import monkey
 monkey.patch_all()
 
-
 from flask import Flask
 from app.blue.admin import admin_bp
 from app.blue.uitest import ui_test_bp
@@ -23,6 +22,8 @@ db.init_app(app)
 scheduler.init_app(app)
 scheduler.start()
 login_manager.init_app(app)
+
+
 
 # app.add_url_rule("/", view_func=views.index)
 app.register_blueprint(admin_bp, url_prefix='/admin')

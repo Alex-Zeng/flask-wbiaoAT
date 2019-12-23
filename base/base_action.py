@@ -52,7 +52,7 @@ class BaseAction:
             input_data = v.get('input_arg', None)
             input_key = v.get('input_key', None)
             output_data = v['output_arg']
-
+            screen_shot_path = ''
             loc = self._by_type.get(find_type, ''), element_loc
             # 是否引用前面某个用例的 输出值
             if input_data.startswith(rtconf.use_output_arg_symbol):
@@ -84,7 +84,7 @@ class BaseAction:
                 # 截图
                 if screenshot:
                     time.sleep(rtconf.take_screen_shot_wait_time)
-                    self.take_screen_shot()
+                    screen_shot_path = self.take_screen_shot()
                 result = 1
             except Exception as e:
                 result = 0
@@ -96,6 +96,7 @@ class BaseAction:
                                                                                                       ))
                 error_msg = traceback.format_exc()
                 self.log.error(error_msg)
+                screen_shot_path = self.take_screen_shot(name='错误截图')
                 raise e
             finally:
                 end_time = datetime.now()
@@ -108,12 +109,12 @@ class BaseAction:
                     action_input = '{}:{}'.format(input_key, input_data)
                 if case_log_id:
                     entity = TestCaseStepLog(test_case_log_id=case_log_id,
-                                         test_case_step_rank=step_rank,
-                                         test_case_action_title=action_title, test_case_action_input=action_input,
-                                         test_case_action_output=action_output,
-                                         run_test_action_result=result, error_msg=error_msg,
-                                         action_start_time=start_time, action_end_time=end_time,
-                                         run_test_case_times=run_test_case_step_times)
+                                             test_case_step_rank=step_rank,
+                                             test_case_action_title=action_title, test_case_action_input=action_input,
+                                             test_case_action_output=action_output,
+                                             run_test_action_result=result, error_msg=error_msg,
+                                             action_start_time=start_time, action_end_time=end_time,
+                                             run_test_case_times=run_test_case_step_times,screen_shot_path=screen_shot_path)
                     db.session.add(entity)
                     db.session.commit()
 
@@ -462,13 +463,13 @@ class BaseAction:
         fq = rtconf.screenShotsDir + os.sep + day + os.sep + '_' + self.screent_shot_folder_title
         img_type = '.png'
 
-        if os.path.exists(fq):
-            filename = fq + os.sep + tm + "_" + self.current_case.get(
-                'action_title', 'action') + name + img_type
-        else:
+        if not os.path.exists(fq):
             os.makedirs(fq)
-            filename = fq + os.sep + tm + "_{}步骤".format(self.current_case.get(
-                'step', 'action')) + name + img_type
+
+        filename = fq + os.sep + tm + "_步骤{}:{}".format(self.current_case.get(
+            'step'), self.current_case.get(
+            'action_title')) + name + img_type
+
         time.sleep(wait_time if wait_time else self.screen_shot_wait_time)
         self.driver.get_screenshot_as_file(filename)
         return filename

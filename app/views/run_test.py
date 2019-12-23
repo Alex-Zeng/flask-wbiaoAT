@@ -11,10 +11,9 @@ from app.models import *
 from base.public.log import Log
 import traceback
 from datetime import datetime
-from sqlalchemy import func, extract, desc
-
-from apscheduler.triggers.cron import CronTrigger
-
+from sqlalchemy import func
+from base.runtest_config import rtconf
+from flask import Response, Flask, request
 parser_em = reqparse.RequestParser()
 parser_em.add_argument('title', type=str, required=True, help="title cannot be blank!")
 parser_em.add_argument('setting_args', type=str, required=True, help="title cannot be blank!")
@@ -300,7 +299,6 @@ class StartCasSuit(Resource):
                         test_case_result = 0
                         try:
                             case_step_list = analysis_case(case_entity.step, suit_step.input_args)
-                            print('case_log_entity:%s' % case_log_entity.id)
                             ba = BaseAction(driver, shot_title, log_run)
                             ba.action(case_step_list, case_log_entity.id)
                             test_case_result = 1
@@ -483,3 +481,11 @@ class Report(Resource):
         return jsonify(
             {'status': '1', 'data': {"data_count": data_count, "data_list": data_list}, 'message': 'success'})
 
+
+class getImage(Resource):
+    def get(self,id):
+        entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
+        path = entity.screen_shot_path
+        if path:
+            resp = Response(open(path, 'rb'), mimetype="image/jpeg")
+            return resp

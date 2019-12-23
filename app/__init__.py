@@ -49,3 +49,4 @@ api_run_test.add_resource(StartCase, '/projects/<int:project_id>/cases/<int:case
 api_run_test.add_resource(StartCasSuit, '/equipment/<int:e_id>/execute_suit/start')
 api_run_test.add_resource(TestLogList, '/equipment/<int:e_id>/run_test_log')
 api_run_test.add_resource(Report, '/report')
+api_run_test.add_resource(getImage, '/image_log/<int:id>')
