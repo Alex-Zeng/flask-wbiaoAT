@@ -11,9 +11,10 @@ from app.models import *
 from base.public.log import Log
 import traceback
 from datetime import datetime
-from sqlalchemy import func
+from sqlalchemy import func,desc
 from base.runtest_config import rtconf
-from flask import Response, Flask, request
+from flask import Response
+
 parser_em = reqparse.RequestParser()
 parser_em.add_argument('title', type=str, required=True, help="title cannot be blank!")
 parser_em.add_argument('setting_args', type=str, required=True, help="title cannot be blank!")
@@ -257,15 +258,17 @@ class StartCasSuit(Resource):
         log_main.info('正在运行的任务：{}'.format(e_id))
         entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
         et_title = entity.title
-        tl = TestLog(equipment_id=e_id, equipment_title=et_title, equipment_args=entity.setting_args, )
+        tl = TestLog(equipment_id=e_id, equipment_title=et_title, equipment_args=entity.setting_args, run_test_result=2)
         db.session.add(tl)
         db.session.commit()
+        tl_id = tl.id
         status = ''
         msg = '{}'
         tl_result = ''
         failed_suit = ''
         success_suit = ''
-        log_run = Log('Equipment-{}'.format(e_id))
+        log_run = Log('TestLog-{}'.format(tl_id))
+        log_run.info('第{}次运行,运行设备{}:{}, 参数设置:{}'.format(tl_id, e_id, et_title, entity.setting_args))
         try:
             for item in entity.test_case_suit:
                 suit_start = datetime.now()
@@ -290,7 +293,7 @@ class StartCasSuit(Resource):
                             continue
                         else:
                             log_run.info(
-                                '开始:-----用例{}-{},输入参数列表: {}-----'.format(case_entity.id, case_entity.title,
+                                '---开始:-----用例{}-{},输入参数列表: {}-----'.format(case_entity.id, case_entity.title,
                                                                          suit_step.input_args))
                         case_log_entity = TestCaseLog(test_case_id=case_entity.id, test_case_title=case_entity.title,
                                                       test_case_suit_log_id=suit_log.id)
@@ -303,12 +306,12 @@ class StartCasSuit(Resource):
                             ba.action(case_step_list, case_log_entity.id)
                             test_case_result = 1
                             log_run.info(
-                                '结束-----用例{}-{},输入参数列表: {}-----成功-------'.format(case_entity.id, case_entity.title,
+                                '---结束-----用例{}-{},输入参数列表: {}-----成功-------'.format(case_entity.id, case_entity.title,
                                                                                  suit_step.input_args))
                         except Exception as t:
                             test_case_result = 0
                             log_run.error(
-                                '结束-----用例{}-{},输入参数列表: {}-----失败!!!!!!!!!'.format(case_entity.id, case_entity.title,
+                                '---结束-----用例{}-{},输入参数列表: {}-----失败!!!!!!!!!'.format(case_entity.id, case_entity.title,
                                                                                    suit_step.input_args))
                             raise t
                         finally:
@@ -403,7 +406,7 @@ class Report(Resource):
     def get_test_log_count(self):
 
         # 每个设备运行的日志总数
-        entity = TestLog.query.all()
+        entity = TestLog.query.order_by(desc(TestLog.run_test_start_time)).all()
         # dss['test_log_count'] = tl.__len__()
         results_count = db.session.query(TestLog.run_test_result,
                                          func.count(TestLog.id)).group_by(
@@ -483,9 +486,47 @@ class Report(Resource):
 
 
 class getImage(Resource):
-    def get(self,id):
+    def get(self, id):
         entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
         path = entity.screen_shot_path
         if path:
             resp = Response(open(path, 'rb'), mimetype="image/jpeg")
             return resp
+
+
+class getLogFile(Resource):
+    def get(self, id):
+        file_name = 'TestLog-{}.log'.format(id)
+        # entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
+        path = rtconf.logDir
+        str=''
+        file_path = ''
+        for root, dirs, files in os.walk(path):
+            for f in files:
+                if file_name == f:
+                    file_path = os.path.join(root, f)
+        if file_path:
+            with open(file_path, encoding='utf-8') as f:
+                str = f.read().rstrip()
+            resp = Response(str, mimetype="text/xml")
+            return jsonify(
+                {'status': '1', 'data': str, 'message': 'success'})
+
+
+
+class clearLog(Resource):
+
+
+    def delete(self,log_id):
+        entity = TestLog.query.filter(TestLog.id == log_id).first()
+        ob = model_to_dict(entity)
+        for suit in entity.test_case_suit_log:
+            for case in suit.test_case_log:
+                for step in case.test_case_step_log:
+                    db.session.delete(step)
+                db.session.delete(case)
+            db.session.delete(suit)
+        db.session.delete(entity)
+        db.session.commit()
+        return jsonify(
+            {'status': '1', 'data':ob, 'message': 'success'})

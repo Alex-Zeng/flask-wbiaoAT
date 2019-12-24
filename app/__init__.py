@@ -50,3 +50,5 @@ api_run_test.add_resource(StartCasSuit, '/equipment/<int:e_id>/execute_suit/star
 api_run_test.add_resource(TestLogList, '/equipment/<int:e_id>/run_test_log')
 api_run_test.add_resource(Report, '/report')
 api_run_test.add_resource(getImage, '/image_log/<int:id>')
+api_run_test.add_resource(getLogFile, '/getLogFile/<int:id>')
+api_run_test.add_resource(clearLog, '/clearLogFile/<int:log_id>')

@@ -59,7 +59,8 @@ class BaseAction:
                 input_data = test_data[input_data[len(rtconf.use_output_arg_symbol):]]
 
             try:
-                time.sleep(wait_time)
+                if wait_time:
+                    time.sleep(wait_time)
                 if loc[0]:
                     if input_data:
                         output_text = self.__getattribute__(action)(loc, input_data)
@@ -83,8 +84,8 @@ class BaseAction:
                                                                                              input_data, output_text))
                 # 截图
                 if screenshot:
-                    time.sleep(rtconf.take_screen_shot_wait_time)
-                    screen_shot_path = self.take_screen_shot()
+                    shot_name = '步骤_{}_{}'.format(step_rank,action_title)
+                    screen_shot_path = self.take_screen_shot(name=shot_name)
                 result = 1
             except Exception as e:
                 result = 0
@@ -96,7 +97,8 @@ class BaseAction:
                                                                                                       ))
                 error_msg = traceback.format_exc()
                 self.log.error(error_msg)
-                screen_shot_path = self.take_screen_shot(name='错误截图')
+                err_shot_name = '步骤_{}_{}错误截图'.format(step_rank, action_title)
+                screen_shot_path = self.take_screen_shot(name=err_shot_name)
                 raise e
             finally:
                 end_time = datetime.now()
@@ -148,11 +150,11 @@ class BaseAction:
         """
         try:
             assert self.find_element(loc)
-            self.take_screen_shot('断言成功')
+            self.take_screen_shot(name='断言成功')
             self.log.info('成功找到{}元素，截图保留'.format(loc))
         except Exception as e:
             self.log.error('断言失败未找到元素{}'.format(loc))
-            self.take_screen_shot('断言失败')
+            self.take_screen_shot(name='断言失败')
             self.log.info('未找到{}元素，截图保留'.format(loc))
             raise e
 
@@ -169,12 +171,12 @@ class BaseAction:
         """
         try:
             assert self.find_elements(loc)
-            self.driver.get_screenshot_as_png()
+            self.take_screen_shot(name='断言成功')
             self.log.info('成功找到{}元素，截图保留'.format(loc))
             self.log.info('断言成功')
         except Exception as e:
             self.log.error('断言失败未找到元素{}'.format(loc))
-            self.driver.get_screenshot_as_png()
+            self.take_screen_shot(name='断言失败')
             self.log.info('未找到{}元素，截图保留'.format(loc))
             raise e
 
@@ -186,13 +188,13 @@ class BaseAction:
         cur_activity = self.driver.current_activity
         try:
             assert cur_activity == expect_activity
-            self.driver.get_screenshot_as_png()
+            self.take_screen_shot(name='断言成功预期页面')
             self.log.info('预期页面，截图保留'.format(loc))
             self.log.info('是预期页面')
             return 'current_activity: {}, -- expect_activity: {}'.format(cur_activity, expect_activity)
         except Exception as e:
             self.log.error('断言失败:非预期页面{}'.format(expect_activity))
-            self.driver.get_screenshot_as_png()
+            self.take_screen_shot(name='断言失败非预期页面')
             self.log.info('非预期页面，截图保留'.format(loc))
             raise e
 
@@ -459,17 +461,16 @@ class BaseAction:
             device.take_screenShot(u"个人主页")   #实际截图保存的结果为：2018-01-13_17_10_58_个人主页.png
         """
         day = time.strftime("%Y-%m-%d", time.localtime(time.time()))
-        tm = time.strftime("%H_%M_%S", time.localtime(time.time()))
-        fq = rtconf.screenShotsDir + os.sep + day + os.sep + '_' + self.screent_shot_folder_title
+
+        fq = rtconf.screenShotsDir + os.sep + day + os.sep + self.screent_shot_folder_title
         img_type = '.png'
 
         if not os.path.exists(fq):
             os.makedirs(fq)
 
-        filename = fq + os.sep + tm + "_步骤{}:{}".format(self.current_case.get(
-            'step'), self.current_case.get(
-            'action_title')) + name + img_type
-
+        tm = time.strftime("%H_%M_%S", time.localtime(time.time()))
+        filename = fq + os.sep + tm + '{}.png'.format(name)
+        print(filename)
         time.sleep(wait_time if wait_time else self.screen_shot_wait_time)
         self.driver.get_screenshot_as_file(filename)
         return filename
