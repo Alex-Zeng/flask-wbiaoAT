@@ -11,7 +11,7 @@ from base.public.utils import mkdir
 from base.runtest_config import rtconf
 
 
-log_path = rtconf.logDir + os.sep +  ''.join(time.strftime('%Y%m%d'))
+log_path = rtconf.logDir
 mkdir(log_path)
 
 class Log():

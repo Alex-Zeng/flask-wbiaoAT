@@ -1,6 +1,6 @@
 from flask_login import login_required
 from flask_restful import Resource, reqparse
-import time
+import shutil
 from ext import db
 from ext import scheduler as run_test_job
 from base.public.log import log_main
@@ -276,7 +276,7 @@ class StartCasSuit(Resource):
                 suit_title = item.test_case_suit.title
                 shot_title = '{}-{}'.format(et_title, suit_title)
                 log_run.info('-用例集开始: {}-'.format(shot_title))
-                suit_log = TestCaseSuitLog(test_log_id=tl.id, test_case_suit_id=item.test_case_suit_id,
+                suit_log = TestCaseSuitLog(test_log_id=tl_id, test_case_suit_id=item.test_case_suit_id,
                                            test_case_suit_title=suit_title, run_test_result=0)
                 db.session.add(suit_log)
                 db.session.commit()
@@ -302,7 +302,7 @@ class StartCasSuit(Resource):
                         test_case_result = 0
                         try:
                             case_step_list = analysis_case(case_entity.step, suit_step.input_args)
-                            ba = BaseAction(driver, shot_title, log_run)
+                            ba = BaseAction(driver, shot_title, log_run, tl_id)
                             ba.action(case_step_list, case_log_entity.id)
                             test_case_result = 1
                             log_run.info(
@@ -495,20 +495,38 @@ class getImage(Resource):
 
 
 class getLogFile(Resource):
-    def get(self, id):
+    @staticmethod
+    def get_log_file_path(id):
         file_name = 'TestLog-{}.log'.format(id)
         # entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
         path = rtconf.logDir
-        str=''
+
         file_path = ''
         for root, dirs, files in os.walk(path):
             for f in files:
                 if file_name == f:
                     file_path = os.path.join(root, f)
+        return file_path
+
+    @staticmethod
+    def get_log_image_path(id):
+        dir_name = 'TestLog-{}'.format(id)
+        # entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
+        path = rtconf.screenShotsDir
+
+        dir_path = ''
+        for root, dirs, files in os.walk(path):
+            for dir in dirs:
+                if dir_name == dir:
+                    dir_path = os.path.join(root, dir)
+        return dir_path
+
+    def get(self, id):
+        str = ''
+        file_path = self.get_log_file_path(id)
         if file_path:
             with open(file_path, encoding='utf-8') as f:
                 str = f.read().rstrip()
-            resp = Response(str, mimetype="text/xml")
             return jsonify(
                 {'status': '1', 'data': str, 'message': 'success'})
 
@@ -516,10 +534,18 @@ class getLogFile(Resource):
 
 class clearLog(Resource):
 
-
     def delete(self,log_id):
         entity = TestLog.query.filter(TestLog.id == log_id).first()
         ob = model_to_dict(entity)
+        log_file_path = getLogFile.get_log_file_path(log_id)
+        log_image_path = getLogFile.get_log_image_path(log_id)
+        if log_file_path:
+            # 删除日志运行log
+            os.remove(log_file_path)
+        if log_image_path:
+            # 删除某次运行产生的所有截图
+            shutil.rmtree(log_image_path)
+
         for suit in entity.test_case_suit_log:
             for case in suit.test_case_log:
                 for step in case.test_case_step_log:

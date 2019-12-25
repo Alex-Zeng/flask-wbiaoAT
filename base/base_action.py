@@ -20,14 +20,15 @@ from ext import db
 
 class BaseAction:
 
-    def __init__(self, driver, case_title, run_log):
+    def __init__(self, driver, case_title, run_log, tl_id=0):
         self.driver = driver
         self._by_type = rtconf.find_ele_types
         self.current_case = dict()
         self.log = run_log
         self.ele_wait_time = rtconf.find_ele_wait_time
         self.screen_shot_wait_time = rtconf.take_screen_shot_wait_time
-        self.screent_shot_folder_title = case_title
+        self.screen_shot_folder_title = case_title
+        self.screen_shot_folder_log_id = 'TestLog-{}'.format(tl_id)
 
     def action(self, case_step_list, case_log_id=None):
         """
@@ -458,19 +459,18 @@ class BaseAction:
         method explain:获取当前屏幕的截图
         parameter explain：【name】 截图的名称
         Usage:
-            device.take_screenShot(u"个人主页")   #实际截图保存的结果为：2018-01-13_17_10_58_个人主页.png
+            device.take_screenShot(u"个人主页")   #实际截图保存的结果为：20180113171058个人主页.png
         """
-        day = time.strftime("%Y-%m-%d", time.localtime(time.time()))
+        # day = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
 
-        fq = rtconf.screenShotsDir + os.sep + day + os.sep + self.screent_shot_folder_title
+        fq = rtconf.screenShotsDir + os.sep + self.screen_shot_folder_log_id + os.sep + self.screen_shot_folder_title
         img_type = '.png'
 
         if not os.path.exists(fq):
             os.makedirs(fq)
 
-        tm = time.strftime("%H_%M_%S", time.localtime(time.time()))
+        tm = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
         filename = fq + os.sep + tm + '{}.png'.format(name)
-        print(filename)
         time.sleep(wait_time if wait_time else self.screen_shot_wait_time)
         self.driver.get_screenshot_as_file(filename)
         return filename
