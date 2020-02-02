@@ -158,12 +158,15 @@ def analysis_case(steps, case_args):
     for item in steps:
         case_step_dict = {}
         case_step_dict['step'] = item.rank
+        case_step_dict['skip'] = item.skip
         case_step_dict['case_step'] = '步骤: {}'.format(item.rank)
         case_step_dict['action'] = item.action.fun.fun_title
         case_step_dict['action_title'] = item.action.title
-        case_step_dict['element_loc'] = item.action.ele.loc
+        case_step_dict['type_for_android'] = item.action.ele.type_for_android
+        case_step_dict['type_for_ios'] = item.action.ele.type_for_ios
+        case_step_dict['element_loc_for_android'] = item.action.ele.loc_for_android
+        case_step_dict['element_loc_for_ios'] = item.action.ele.loc_for_ios
         case_step_dict['element_info'] = item.action.ele.title
-        case_step_dict['type'] = item.action.ele.type
         case_step_dict['screen_shot'] = item.take_screen_shot
         case_step_dict['wait_time'] = item.wait_time
         case_step_dict['output_arg'] = item.output_key

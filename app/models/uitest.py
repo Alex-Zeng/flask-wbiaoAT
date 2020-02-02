@@ -19,8 +19,10 @@ class Element(db.Model):
     __tablename__ = 'element'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, comment="目录名")
-    type = db.Column(db.String(30), comment="查找方式")
-    loc = db.Column(db.String(200), comment="信息描述")
+    type_for_android = db.Column(db.String(30), comment="Android查找方式")
+    loc_for_android = db.Column(db.String(200), comment="Android信息描述")
+    type_for_ios = db.Column(db.String(30), comment="IOS查找方式")
+    loc_for_ios = db.Column(db.String(200), comment="IOS信息描述")
     page_id = db.Column(db.Integer,db.ForeignKey('page.id'), comment="所属页面ID")
     create_datetime = db.Column(db.DateTime, server_default=db.text("CURRENT_TIMESTAMP"), comment="创建时间")
     update_datetime = db.Column(db.DateTime, nullable=False,                                server_default=db.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"), comment="更新时间")

@@ -11,7 +11,8 @@ class RuntestConfig():
                       'class': MobileBy.CLASS_NAME,
                       'tag': MobileBy.TAG_NAME, 'android_uiautomator': MobileBy.ANDROID_UIAUTOMATOR,
                       'accessibility_id': MobileBy.ACCESSIBILITY_ID, 'tap_by_proportional': '按屏幕千分比点击坐标',
-                      'tap_by_coordinates': '点击坐标'}
+                      'tap_by_coordinates': '点击坐标', 'ios_predicate': MobileBy.IOS_PREDICATE,
+                      'ios_class_chain': MobileBy.IOS_CLASS_CHAIN, 'ios_uiautomation': MobileBy.IOS_UIAUTOMATION, }
     screenShotsDir = PATH('screen_shot')
     pageSourceDir = PATH('pageSourceDir')
     logDir = PATH('logs')

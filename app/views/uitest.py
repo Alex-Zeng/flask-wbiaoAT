@@ -79,8 +79,10 @@ class PageDetail(Resource):
 
 parser_ele = reqparse.RequestParser()
 parser_ele.add_argument('title', type=str, required=True, help="title cannot be blank!")
-parser_ele.add_argument('type', type=str, help="type cannot be blank!")
-parser_ele.add_argument('loc', type=str, help="loc cannot be blank!")
+parser_ele.add_argument('type_for_android', type=str, help="type cannot be blank!")
+parser_ele.add_argument('loc_for_android', type=str, help="loc cannot be blank!")
+parser_ele.add_argument('loc_for_ios', type=str, help="loc cannot be blank!")
+parser_ele.add_argument('type_for_ios', type=str, help="page_id wrong")
 parser_ele.add_argument('page_id', type=int, help="page_id wrong")
 
 
@@ -94,8 +96,10 @@ class ElementList(Resource):
             data_dict = {}
             data_dict['id'] = row.id
             data_dict['title'] = row.title
-            data_dict['type'] = row.type
-            data_dict['loc'] = row.loc
+            data_dict['type_for_android'] = row.type_for_android
+            data_dict['loc_for_android'] = row.loc_for_android
+            data_dict['type_for_ios'] = row.type_for_ios
+            data_dict['loc_for_ios'] = row.loc_for_ios
             data_dict['page_id'] = row.page_id
             data_dict['page_title'] = row.page.title
             data_dict['create_datetime'] = str(row.create_datetime)
@@ -107,9 +111,11 @@ class ElementList(Resource):
     def post(self, project_id, page_id):
         args = parser_ele.parse_args()
         title = args.title
-        type = args.type
-        loc = args.loc.strip()
-        entity = Element(title=title, type=type, loc=loc, page_id=page_id)
+        type_for_android = args.type_for_android
+        loc_for_android = args.loc_for_android.strip()
+        type_for_ios = args.type_for_ios
+        loc_for_ios = args.loc_for_ios.strip()
+        entity = Element(title=title, type_for_ios=type_for_ios, loc_for_ios=loc_for_ios, type_for_android=type_for_android, loc_for_android=loc_for_android, page_id=page_id)
         db.session.add(entity)
         db.session.commit()
         return jsonify(
@@ -123,8 +129,12 @@ class ElementDetail(Resource):
         args = parser_ele.parse_args()
         entity = Element.query.filter(Element.id == element_id).first()
         entity.title = args.title
-        entity.type = args.type
-        entity.loc = args.loc.strip()
+        entity.type_for_android = args.type_for_android
+        if args.loc_for_android:
+            entity.loc_for_android = args.loc_for_android.strip()
+        entity.type_for_ios = args.type_for_ios
+        if args.loc_for_ios:
+            entity.loc_for_ios = args.loc_for_ios.strip()
         entity.page_id = args.page_id
         db.session.commit()
         return jsonify({'status': '1', 'data': args, 'message': 'success'})

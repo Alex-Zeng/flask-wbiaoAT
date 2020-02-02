@@ -243,7 +243,7 @@ class StartCase(Resource):
         args = parser_sc.parse_args()
         case_entity = TestCase.query.filter(TestCase.id == case_id).first()
         log_run = Log('single_case_run')
-        case_list = analysis_case(case_entity, args.input_args)
+        case_list = analysis_case(case_entity.step, args.input_args)
         driver = StartSession.start(args.e_id)
         ba = BaseAction(driver, case_entity.title, log_run)
         ba.action(case_list)
@@ -264,7 +264,7 @@ class StartCasSuit(Resource):
         tl_id = tl.id
         status = ''
         msg = '{}'
-        tl_result = ''
+        tl_result = 0
         failed_suit = ''
         success_suit = ''
         log_run = Log('TestLog-{}'.format(tl_id))

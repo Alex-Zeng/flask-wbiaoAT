@@ -20,7 +20,7 @@ from ext import db
 
 class BaseAction:
 
-    def __init__(self, driver, case_title, run_log, tl_id=0):
+    def __init__(self, driver, case_title, run_log, tl_id='debug'):
         self.driver = driver
         self._by_type = rtconf.find_ele_types
         self.current_case = dict()
@@ -42,22 +42,38 @@ class BaseAction:
             start_time = datetime.now()
             self.current_case = v
             step_rank = v['step']
+            step_skip = v['skip']
+
             case_step = v['case_step']
             wait_time = v['wait_time']
             action_title = v['action_title']
             action = v['action']
-            find_type = v['type']
+            type_for_android = v['type_for_android']
+            type_for_ios = v['type_for_ios']
             screenshot = v['screen_shot']
             element_info = v['element_info']
-            element_loc = v['element_loc']
+            element_loc_for_ios = v['element_loc_for_ios']
+            element_loc_for_android = v['element_loc_for_android']
             input_data = v.get('input_arg', None)
             input_key = v.get('input_key', None)
             output_data = v['output_arg']
             screen_shot_path = ''
-            loc = self._by_type.get(find_type, ''), element_loc
+
+            # 判断平台 ios 则loc  find_type不一样,前端同一个元素下面维护 Android和ios的元素查找方式和位置
+            if self.driver.desired_capabilities.get('platform','') == 'MAC':
+                loc = self._by_type.get(type_for_ios, ''), element_loc_for_ios
+            else:
+                loc = self._by_type.get(type_for_android, ''), element_loc_for_android
             # 是否引用前面某个用例的 输出值
             if input_data.startswith(rtconf.use_output_arg_symbol):
                 input_data = test_data[input_data[len(rtconf.use_output_arg_symbol):]]
+
+            if step_skip:
+                self.log.info(
+                    '----------{}: {} --- {} --- {}---输入参数: {} ----输出参数: ----------'.format('成功', case_step,
+                                                                                             action_title, element_info,
+                                                                                             input_data))
+                continue
 
             try:
                 if wait_time:
@@ -509,7 +525,7 @@ class BaseAction:
         feature = ""
         if isinstance(loc, str):
             # 直接传xpath
-            if loc.startswith("//"):
+            if loc.startswith("//") or loc.startswith("(//"):
                 return loc
             elif '&' in loc:
                 # loc 包含 & 即多条件 By.XPATH, "resource-id,com.wbiao.wbauction:id/select"&"text,镖哭"

@@ -1,23 +1,16 @@
-import os
-from base.runtest_config import rtconf
+from appium import webdriver
+from appium.webdriver.common.mobileby import MobileBy
+desired_caps = {
+  "platformName": "iOS",
+  "deviceName": "Iphone6",
+  "platformVersion": "13.3",
+  "automationName": "XCUITest",
+  "bundleId": "com.wbiao.newwbiao",
+  "udid": "3b28acdc016a68bfd90df617d62bf138ec34c459"
+}
 
-path = rtconf.logDir
-# 遍历文件夹
-def walkFile(file):
-    for root, dirs, files in os.walk(file):
-
-        # root 表示当前正在访问的文件夹路径
-        # dirs 表示该文件夹下的子目录名list
-        # files 表示该文件夹下的文件list
-
-        # 遍历文件
-        print(files)
-            # print(os.path.join(root, f))
-
-
-def main():
-    walkFile(path)
-
-
-if __name__ == '__main__':
-    main()
+driver = webdriver.Remote('http://192.168.137.167:4723/wd/hub', desired_caps)
+print(driver.page_source)
+driver.find_element(MobileBy.XPATH, '//XCUIElementTypeButton[@name="我的"]').click()
+driver.back()
+driver.find_element(MobileBy.XPATH, '//XCUIElementTypeButton[@name="我的"]').click()

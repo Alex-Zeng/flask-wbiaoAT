@@ -80,5 +80,5 @@ class TestCaseStepLog(db.Model):
     action_end_time = db.Column(db.DateTime, comment="测试步骤结束时间")
     run_test_case_times = db.Column(db.String(100), default=0, comment="测试步骤执行用时")
     error_msg = db.Column(db.Text,nullable=True, comment="错误信息")
-    screen_shot_path = db.Column(db.String(100), nullable=False, comment="截图路径")
+    screen_shot_path = db.Column(db.String(200), nullable=False, comment="截图路径")
 
