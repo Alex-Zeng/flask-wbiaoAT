@@ -29,6 +29,7 @@ class BaseAction:
         self.screen_shot_wait_time = rtconf.take_screen_shot_wait_time
         self.screen_shot_folder_title = case_title
         self.screen_shot_folder_log_id = 'TestLog-{}'.format(tl_id)
+        self.assert_result = ''
 
     def action(self, case_step_list, case_log_id=None):
         """
@@ -41,12 +42,12 @@ class BaseAction:
         for v in case_step_list:
             start_time = datetime.now()
             self.current_case = v
+            self.assert_result = ''
             step_rank = v['step']
             step_skip = v['skip']
-
             case_step = v['case_step']
             wait_time = v['wait_time']
-            action_title = v['action_title']
+            step_title = v['title']
             action = v['action']
             type_for_android = v['type_for_android']
             type_for_ios = v['type_for_ios']
@@ -60,10 +61,10 @@ class BaseAction:
             screen_shot_path = ''
 
             # 判断平台 ios 则loc  find_type不一样,前端同一个元素下面维护 Android和ios的元素查找方式和位置
-            if self.driver.desired_capabilities.get('platform','') == 'MAC':
-                loc = self._by_type.get(type_for_ios, ''), element_loc_for_ios
+            if self.driver.desired_capabilities.get('platform', '') == 'MAC':
+                loc = self._by_type.get(type_for_ios, False), element_loc_for_ios
             else:
-                loc = self._by_type.get(type_for_android, ''), element_loc_for_android
+                loc = self._by_type.get(type_for_android, False), element_loc_for_android
             # 是否引用前面某个用例的 输出值
             if input_data.startswith(rtconf.use_output_arg_symbol):
                 input_data = test_data[input_data[len(rtconf.use_output_arg_symbol):]]
@@ -71,8 +72,8 @@ class BaseAction:
             if step_skip:
                 self.log.info(
                     '----------{}: {} --- {} --- {}---输入参数: {} ----输出参数: ----------'.format('成功', case_step,
-                                                                                             action_title, element_info,
-                                                                                             input_data))
+                                                                                            step_title, element_info,
+                                                                                            input_data))
                 continue
 
             try:
@@ -96,25 +97,27 @@ class BaseAction:
                     test_data[output_data] = output_text
 
                 self.log.info(
-                    '----------{}: {} --- {} --- {}---输入参数: {} ----输出参数:{}----------'.format('成功', case_step,
-                                                                                             action_title, element_info,
-                                                                                             input_data, output_text))
+                    '√√√{}:{}{} --- {} --- {}---输入参数: {} ----输出参数:{}'.format('成功', case_step,
+                                                                             step_title, element_info,
+                                                                             self.assert_result,
+                                                                             input_data, output_text))
                 # 截图
                 if screenshot:
-                    shot_name = '步骤_{}_{}'.format(step_rank,action_title)
+                    shot_name = '步骤_{}_{}'.format(step_rank, step_title)
                     screen_shot_path = self.take_screen_shot(name=shot_name)
                 result = 1
             except Exception as e:
                 result = 0
-                output_text = 'output_text'
-                self.log.error('!!!!!!!!!{}: {} --- {} --- {}---输入参数: {} ----输出参数:错误!!!!!!!!!'.format('错误', case_step,
-                                                                                                      action_title,
-                                                                                                      element_info,
-                                                                                                      input_data,
-                                                                                                      ))
+                self.log.error('×××{}:{}{} --- {} --- {}---输入参数: {} ----输出参数:无'.format('错误',
+                                                                                       case_step,
+                                                                                       step_title,
+                                                                                       element_info,
+                                                                                       self.assert_result,
+                                                                                       input_data,
+                                                                                       ))
                 error_msg = traceback.format_exc()
                 self.log.error(error_msg)
-                err_shot_name = '步骤_{}_{}错误截图'.format(step_rank, action_title)
+                err_shot_name = '步骤_{}_{}错误截图'.format(step_rank, step_title)
                 screen_shot_path = self.take_screen_shot(name=err_shot_name)
                 raise e
             finally:
@@ -129,11 +132,12 @@ class BaseAction:
                 if case_log_id:
                     entity = TestCaseStepLog(test_case_log_id=case_log_id,
                                              test_case_step_rank=step_rank,
-                                             test_case_action_title=action_title, test_case_action_input=action_input,
+                                             test_case_action_title=step_title, test_case_action_input=action_input,
                                              test_case_action_output=action_output,
                                              run_test_action_result=result, error_msg=error_msg,
                                              action_start_time=start_time, action_end_time=end_time,
-                                             run_test_case_times=run_test_case_step_times,screen_shot_path=screen_shot_path)
+                                             run_test_case_times=run_test_case_step_times,
+                                             screen_shot_path=screen_shot_path)
                     db.session.add(entity)
                     db.session.commit()
 
@@ -163,24 +167,33 @@ class BaseAction:
 
     def check_element(self, loc):
         """
-        断言元素是否存在
+        断言元素存在
         """
         try:
             assert self.find_element(loc)
-            self.take_screen_shot(name='断言成功')
-            self.log.info('成功找到{}元素，截图保留'.format(loc))
+            self.assert_result = '断言成功-----找到{}元素，截图保留'.format(loc)
         except Exception as e:
-            self.log.error('断言失败未找到元素{}'.format(loc))
-            self.take_screen_shot(name='断言失败')
-            self.log.info('未找到{}元素，截图保留'.format(loc))
+            self.assert_result = '断言失败-----未找到元素{}'.format(loc)
             raise e
+
+    def check_not_element(self, loc):
+        """
+        断言元素不存存在
+        """
+        try:
+            el = self.find_element(loc)
+            if el:
+                self.assert_result = '断言失败-----{}元素存在'.format(loc)
+                raise Exception('断言失败-----{}元素存在'.format(loc))
+        except Exception as e:
+            self.assert_result = '断言成功-----{}元素不存在'.format(loc)
 
     def check_text(self, loc, input_data):
         """
          判断文本是否相等
         """
         assert input_data in self.find_element(loc).get_attribute("text")
-        self.log.info('断言成功:文本{} 存在'.format(input_data))
+        self.assert_result = '断言成功-----文本{} 存在'.format(input_data)
 
     def check_elements(self, loc):
         """
@@ -188,13 +201,9 @@ class BaseAction:
         """
         try:
             assert self.find_elements(loc)
-            self.take_screen_shot(name='断言成功')
-            self.log.info('成功找到{}元素，截图保留'.format(loc))
-            self.log.info('断言成功')
+            self.assert_result = '断言成功-----成功找到{}元素，截图保留'.format(loc)
         except Exception as e:
-            self.log.error('断言失败未找到元素{}'.format(loc))
-            self.take_screen_shot(name='断言失败')
-            self.log.info('未找到{}元素，截图保留'.format(loc))
+            self.assert_result = '断言失败-----未找到元素{}'.format(loc)
             raise e
 
     def check_activity(self, loc, input_data):
@@ -205,14 +214,10 @@ class BaseAction:
         cur_activity = self.driver.current_activity
         try:
             assert cur_activity == expect_activity
-            self.take_screen_shot(name='断言成功预期页面')
-            self.log.info('预期页面，截图保留'.format(loc))
-            self.log.info('是预期页面')
+            self.assert_result = '断言成功-----预期页面，截图保留'.format(loc)
             return 'current_activity: {}, -- expect_activity: {}'.format(cur_activity, expect_activity)
         except Exception as e:
-            self.log.error('断言失败:非预期页面{}'.format(expect_activity))
-            self.take_screen_shot(name='断言失败非预期页面')
-            self.log.info('非预期页面，截图保留'.format(loc))
+            self.assert_result = '断言失败-----非预期页面{}'.format(expect_activity)
             raise e
 
     def get_page_source(self):
@@ -230,6 +235,7 @@ class BaseAction:
         """
         后退
         """
+        time.sleep(1)
         self.driver.back()
 
     def move_away_el(self, loc):
@@ -260,12 +266,12 @@ class BaseAction:
         y = self.driver.get_window_size()['height']
         return x, y
 
-    def if_dialog_close(self, loc):
+    def if_element_exist_then_close(self, loc):
         """
-        关闭浮窗广告
+        如果元素存在则点击,否则忽略
         """
         try:
-            self.find_element(loc).click()
+            self.find_element(loc, wait_time=5).click()
 
         except Exception:
 
@@ -418,43 +424,75 @@ class BaseAction:
         """
         os.system(input_data)
 
-    def find_element(self, loc):
+    def find_element(self, loc, wait_time=None):
         """
         查找符合的元素并返回
         return: 元素对象
         """
         by = loc[0]
         value = loc[1]
+        ewt = 3  # element_wait_time
+        if wait_time:
+            ewt = wait_time
+        else:
+            ewt = self.ele_wait_time
+
         try:
             if by == MobileBy.XPATH:
                 value = self.make_xpath_with_feature(value)
-            return WebDriverWait(self.driver, self.ele_wait_time, 1).until(lambda x: x.find_element(by, value))
+            return WebDriverWait(self.driver, ewt, 1).until(lambda x: x.find_element(by, value))
         except TimeoutException:
-            err_msg = '错误信息: {}秒内未找到该元素, 查询方式: {}, 元素位置: {}'.format(self.ele_wait_time, by, value)
+            err_msg = '错误信息: {}秒内未找到该元素, 查询方式: {}, 元素位置: {}'.format(ewt, by, value)
             raise TimeoutException(err_msg)
 
-    def find_elements(self, loc):
+    def find_elements(self, loc, wait_time=None):
         """
         查找所有符合预期的元素元素
         return: 元素对象列表
         """
         by = loc[0]
         value = loc[1]
+
+        ewt = 3  # element_wait_time
+        if wait_time:
+            ewt = wait_time
+        else:
+            ewt = self.ele_wait_time
+
         try:
             if by == MobileBy.XPATH:
                 value = self.make_xpath_with_feature(value)
-            return WebDriverWait(self.driver, self.ele_wait_time, 1).until(lambda x: x.find_elements(by, value))
+            return WebDriverWait(self.driver, ewt, 1).until(lambda x: x.find_elements(by, value))
         except TimeoutException:
-            err_msg = '错误信息: {}秒内未找到该元素, 查询方式: {}, 元素位置: {}'.format(self.ele_wait_time, by, value)
+            err_msg = '错误信息: {}秒内未找到该元素, 查询方式: {}, 元素位置: {}'.format(ewt, by, value)
             s_jpg = self.driver.get_screenshot_as_png()
             raise TimeoutException(err_msg, s_jpg, traceback.format_exc())
 
-    def to_activity(self, input_data):
+    def to_activity(self, loc, input_data):
         """
         启动activity
         """
         app_package = self.driver.desired_capabilities().get('appPackage')
         self.driver.start_activity(app_package, input_data)
+
+    def back_to_some_activity(self, loc, activity):
+        """一直点手机返回按键返回主页"""
+
+        for i in range(10):
+            self.back()
+            if self.driver.current_activity == activity:
+                break
+
+    def back_until_element_show(self, loc):
+        """一直点手机返回按键直到某个元素出现"""
+
+        for i in range(10):
+            self.back()
+            try:
+                if self.find_element(loc, wait_time=3):
+                    break
+            except Exception:
+                pass
 
     def travel_elements(self, loc):
         """

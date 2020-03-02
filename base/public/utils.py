@@ -159,9 +159,9 @@ def analysis_case(steps, case_args):
         case_step_dict = {}
         case_step_dict['step'] = item.rank
         case_step_dict['skip'] = item.skip
+        case_step_dict['title'] = item.title
         case_step_dict['case_step'] = '步骤: {}'.format(item.rank)
         case_step_dict['action'] = item.action.fun.fun_title
-        case_step_dict['action_title'] = item.action.title
         case_step_dict['type_for_android'] = item.action.ele.type_for_android
         case_step_dict['type_for_ios'] = item.action.ele.type_for_ios
         case_step_dict['element_loc_for_android'] = item.action.ele.loc_for_android

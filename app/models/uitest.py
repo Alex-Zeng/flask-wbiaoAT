@@ -32,7 +32,6 @@ class Element(db.Model):
 class Action(db.Model):
     __tablename__ = 'action'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(100), nullable=False, comment="执行操作名称")
     fun_id = db.Column(db.Integer, db.ForeignKey('function_info.id'),nullable=False, comment="方法id")
     ele_id = db.Column(db.Integer, db.ForeignKey('element.id'),comment="所操作元素id")
     page_id = db.Column(db.Integer, db.ForeignKey('page.id'), comment="所属页面ID")
@@ -71,6 +70,7 @@ class TestCaseStep(db.Model):
     __tablename__ = 'test_case_step'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     rank = db.Column(db.Integer, nullable=False, comment="步骤")
+    title = db.Column(db.String(100) ,   comment="用例步骤名称")
     action_id = db.Column(db.Integer ,  db.ForeignKey('action.id'), nullable=False,  comment="执行动作")
     skip = db.Column(db.Integer, nullable=False, comment="是否略过")
     take_screen_shot = db.Column(db.Integer, default=0,nullable=False, comment="是否截图")

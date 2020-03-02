@@ -157,7 +157,6 @@ class ElementDetail(Resource):
 
 
 parser_act = reqparse.RequestParser()
-parser_act.add_argument('title', type=str, required=True, help="title cannot be blank!")
 parser_act.add_argument('fun_id', type=str, required=True, help="fun_id cannot be blank!")
 parser_act.add_argument('ele_id', type=str, required=True, help="ele_id cannot be blank!")
 parser_act.add_argument('page_id', type=int, help="page_id")
@@ -172,13 +171,11 @@ class ActionList(Resource):
         for row in results:
             data_dict = {}
             data_dict['id'] = row.id
-            data_dict['title'] = row.title
+            data_dict['title'] = '在[{}页面]-[{}]-[{}元素]'.format(row.page.title,row.fun.title,row.ele.title)
             data_dict['fun_id'] = row.fun_id
-            fun_title = FunctionInfo.query.filter(FunctionInfo.id == row.fun_id).first().title
-            data_dict['fun_title'] = fun_title
+            data_dict['fun_title'] = row.fun.title
             data_dict['ele_id'] = row.ele_id
-            ele_title = Element.query.filter(Element.id == row.ele_id).first().title
-            data_dict['ele_title'] = ele_title
+            data_dict['ele_title'] = row.ele.title
             data_dict['page_id'] = row.page_id
             data_dict['page_title'] = row.page.title
             data_dict['create_datetime'] = str(row.create_datetime)
@@ -189,7 +186,7 @@ class ActionList(Resource):
     # @login_required
     def post(self, project_id, page_id):
         args = parser_act.parse_args()
-        entity = Action(title=args.title, fun_id=args.fun_id, ele_id=args.ele_id, page_id=page_id)
+        entity = Action(fun_id=args.fun_id, ele_id=args.ele_id, page_id=page_id)
         db.session.add(entity)
         db.session.commit()
         return jsonify(
@@ -203,7 +200,6 @@ class ActionDetail(Resource):
         args = parser_act.parse_args()
         print(args)
         entity = Action.query.filter(Action.id == action_id).first()
-        entity.title = args.title
         entity.fun_id = args.fun_id
         entity.ele_id = args.ele_id
         entity.page_id = args.page_id
@@ -380,6 +376,7 @@ parser_step.add_argument('rank', type=int, required=True, help="rank cannot be b
 parser_step.add_argument('skip', type=int, required=True, help="skip cannot be blank and must be number!")
 parser_step.add_argument('action_id', type=str, required=True, help="action_id cannot be blank!")
 parser_step.add_argument('output_key', type=str, help="output_key error")
+parser_step.add_argument('title', type=str, help="title error")
 parser_step.add_argument('input_key', type=str, help="input_key error!")
 parser_step.add_argument('wait_time', type=int, help="wait_time error!")
 parser_step.add_argument('take_screen_shot', type=int, help="take_screen_shot error!")
@@ -387,6 +384,17 @@ parser_step.add_argument('take_screen_shot', type=int, help="take_screen_shot er
 
 # 用例步骤
 class TestCaseStepList(Resource):
+
+    def rank_repeat_than_plus(self,rank,case_id):
+        # 检查是否是有重复的步骤,如果有加1
+
+        entity = TestCaseStep.query.filter(TestCaseStep.rank == rank,TestCaseStep.test_case_id == case_id).first()
+        if entity:
+            new_rank = self.rank_repeat_than_plus(rank+1, case_id)
+            return new_rank
+        else:
+            return rank
+
     # @login_required
     def get(self, project_id, case_id):
         result = TestCase.query.filter(TestCase.id == case_id).first()
@@ -395,6 +403,7 @@ class TestCaseStepList(Resource):
             data_dict = {}
             data_dict['id'] = row.id
             data_dict['rank'] = row.rank
+            data_dict['title'] = row.title
             data_dict['input_key'] = row.input_key
             data_dict['output_key'] = row.output_key
             data_dict['action_id'] = row.action.id
@@ -403,7 +412,7 @@ class TestCaseStepList(Resource):
             data_dict['wait_time'] = row.wait_time
             data_dict['page_id'] = row.action.page.id
             data_dict['page_title'] = row.action.page.title
-            data_dict['action_title'] = row.action.title
+            data_dict['action_title'] = '在[{}页面]-[{}]-[{}元素]'.format(row.action.page.title,row.action.fun.title,row.action.ele.title)
             data_dict['update_datetime'] = str(row.update_datetime)
             data_list.append(data_dict)
         return jsonify({'status': '1', 'data': {"data_list": data_list}, 'message': 'success'})
@@ -411,12 +420,8 @@ class TestCaseStepList(Resource):
     # @login_required
     def post(self, project_id, case_id):
         args = parser_step.parse_args()
-        has_entity = TestCaseStep.query.filter(TestCaseStep.rank == args.rank,
-                                               TestCaseStep.test_case_id == case_id).first()
-        if has_entity:
-            return jsonify(
-                {'status': '0', 'data': {}, 'message': '已存在步骤{}'.format(args.rank)})
-        entity = TestCaseStep(rank=args.rank, skip=0, action_id=args.action_id, input_key=args.input_key,
+        final_rank = self.rank_repeat_than_plus(args.rank, case_id)
+        entity = TestCaseStep(rank=final_rank,title=args.title, skip=0, action_id=args.action_id, input_key=args.input_key,
                               output_key=args.output_key, take_screen_shot=args.take_screen_shot,
                               wait_time=args.wait_time, test_case_id=case_id)
         db.session.add(entity)
@@ -462,6 +467,7 @@ class TestCaseStepDetail(Resource):
         self.update_rank(case_id, args.rank, step_id)
         entity = TestCaseStep.query.filter(TestCaseStep.id == step_id).first()
         entity.action_id = args.action_id
+        entity.title = args.title
         entity.wait_time = args.wait_time
         entity.take_screen_shot = args.take_screen_shot
         entity.input_key = args.input_key
@@ -646,3 +652,4 @@ class TestSuitStepDetail(Resource):
             db.session.commit()
             return jsonify(
                 {'status': '1', 'data': step_id, 'message': 'success'})
+
