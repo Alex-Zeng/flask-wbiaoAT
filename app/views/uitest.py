@@ -411,6 +411,7 @@ class TestCaseStepList(Resource):
             data_dict['take_screen_shot'] = row.take_screen_shot
             data_dict['wait_time'] = row.wait_time
             data_dict['page_id'] = row.action.page.id
+            data_dict['ele_id'] = row.action.ele.id
             data_dict['page_title'] = row.action.page.title
             data_dict['action_title'] = '在[{}页面]-[{}]-[{}元素]'.format(row.action.page.title,row.action.fun.title,row.action.ele.title)
             data_dict['update_datetime'] = str(row.update_datetime)

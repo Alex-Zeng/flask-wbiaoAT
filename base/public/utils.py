@@ -11,7 +11,7 @@ import allure
 from functools import wraps
 import datetime
 import collections
-
+from base.runtest_config import rtconf
 def all_file_path(root_directory, extension_name):
     '''
     遍历目录
@@ -181,6 +181,18 @@ def analysis_case(steps, case_args):
             case_step_dict['input_arg'] = ''
         step_list.append(case_step_dict)
     return step_list
+
+def get_log_file_path(id):
+    file_name = 'TestLog-{}.log'.format(id)
+    # entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
+    path = rtconf.logDir
+
+    file_path = ''
+    for root, dirs, files in os.walk(path):
+        for f in files:
+            if file_name == f:
+                file_path = os.path.join(root, f)
+    return file_path
 
 if __name__ == '__main__':
     # print(os.path.abspath(os.path.join(os.path.dirname(__file__))

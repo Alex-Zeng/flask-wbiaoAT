@@ -1,16 +1,16 @@
-from appium import webdriver
-from appium.webdriver.common.mobileby import MobileBy
-desired_caps = {
-  "platformName": "iOS",
-  "deviceName": "Iphone6",
-  "platformVersion": "13.3",
-  "automationName": "XCUITest",
-  "bundleId": "com.wbiao.newwbiao",
-  "udid": "3b28acdc016a68bfd90df617d62bf138ec34c459"
-}
+def uniqueOccurrences(arr):
+    s_arr = set(arr)
+    new_list = []
+    for i in s_arr:
+        count = 0
+        for k in arr:
+            if i == k:
+                count += 1
+        new_list.append(count)
 
-driver = webdriver.Remote('http://192.168.137.167:4723/wd/hub', desired_caps)
-print(driver.page_source)
-driver.find_element(MobileBy.XPATH, '//XCUIElementTypeButton[@name="我的"]').click()
-driver.back()
-driver.find_element(MobileBy.XPATH, '//XCUIElementTypeButton[@name="我的"]').click()
+    return True if len(set(new_list)) == len(new_list) else False
+
+if __name__ == '__main__':
+    arr = [1, 2, 2,2, 1, 1, 3]
+    result = uniqueOccurrences(arr)
+    print(result)

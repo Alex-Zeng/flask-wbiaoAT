@@ -194,7 +194,8 @@ class StartSession(Resource):
     @staticmethod
     def start(e_id):
         results = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
-        phone_info = model_to_dict(results)
+        to_dict = model_to_dict(results)
+        phone_info = to_dict
         phone_info['setting_args'] = json.loads(phone_info['setting_args'])
         driver = td.start(phone_info)
         results.status = 1
@@ -254,6 +255,7 @@ class StartCasSuit(Resource):
 
     @staticmethod
     def run_test_task(e_id):
+
         start = datetime.now()
         log_main.info('正在运行的任务：{}'.format(e_id))
         entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
@@ -323,10 +325,12 @@ class StartCasSuit(Resource):
 
                     suit_log_entity.run_test_result = 1
                     success_suit += suit_title + ','
+
                 except Exception as e:
                     suit_log_entity.run_test_result = 0
                     failed_suit += suit_title + ','
-                    raise e
+                    status = 0
+                    tl_result = 0
                 finally:
                     suit_end = datetime.now()
                     suit_use_time = (suit_end - suit_start).seconds
@@ -336,12 +340,11 @@ class StartCasSuit(Resource):
                     log_run.info('-用例集结束: {}, 总用时 {} 秒-'.format(shot_title, suit_use_time))
             status = 1
             tl_result = 1
-            msg = '此次测试执行成功,成功用例集 {} ,'.format(success_suit)
-        except Exception:
+        except Exception as e:
             status = 0
             tl_result = 0
-            msg = '此次测试执行失败,失败测试集 {} , '.format(failed_suit)
             log_main.error(traceback.format_exc())
+            raise e
         finally:
             end = datetime.now()
             run_task_use_time = (end - start).seconds
@@ -349,8 +352,7 @@ class StartCasSuit(Resource):
             log_entity.run_test_result = tl_result
             log_entity.run_test_times = run_task_use_time
             db.session.commit()
-            msg += '总用时:{}秒'.format(run_task_use_time)
-            # log_run.info(msg)
+            msg = '此次测试执行结束,总用时:{}秒 成功用例集: [{}], 失败用例集: [{}]'.format(run_task_use_time,success_suit, failed_suit)
             log_main.info(msg)
             return jsonify({'status': status, 'data': '', 'message': msg})
 
@@ -495,18 +497,15 @@ class getImage(Resource):
 
 
 class getLogFile(Resource):
-    @staticmethod
-    def get_log_file_path(id):
-        file_name = 'TestLog-{}.log'.format(id)
-        # entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
-        path = rtconf.logDir
 
-        file_path = ''
-        for root, dirs, files in os.walk(path):
-            for f in files:
-                if file_name == f:
-                    file_path = os.path.join(root, f)
-        return file_path
+    @staticmethod
+    def get_log(id):
+        str = ''
+        file_path = get_log_file_path(id)
+        if file_path:
+            with open(file_path, encoding='utf-8') as f:
+                str = f.read().rstrip()
+            return str
 
     @staticmethod
     def get_log_image_path(id):
@@ -523,21 +522,26 @@ class getLogFile(Resource):
 
     def get(self, id):
         str = ''
-        file_path = self.get_log_file_path(id)
+        file_path = get_log_file_path(id)
         if file_path:
             with open(file_path, encoding='utf-8') as f:
                 str = f.read().rstrip()
             return jsonify(
                 {'status': '1', 'data': str, 'message': 'success'})
 
-
+class FinalLogText(Resource):
+    def get(self, e_id):
+        results = TestLog.query.filter(TestLog.equipment_id == e_id).order_by(TestLog.run_test_start_time.desc()).first()
+        str =  getLogFile.get_log(results.id)
+        return jsonify(
+            {'status': '1', 'data': str, 'message': 'success'})
 
 class clearLog(Resource):
 
     def delete(self,log_id):
         entity = TestLog.query.filter(TestLog.id == log_id).first()
         ob = model_to_dict(entity)
-        log_file_path = getLogFile.get_log_file_path(log_id)
+        log_file_path = get_log_file_path(log_id)
         log_image_path = getLogFile.get_log_image_path(log_id)
         if log_file_path:
             # 删除日志运行log

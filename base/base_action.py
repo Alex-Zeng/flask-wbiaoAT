@@ -62,9 +62,9 @@ class BaseAction:
 
             # 判断平台 ios 则loc  find_type不一样,前端同一个元素下面维护 Android和ios的元素查找方式和位置
             if self.driver.desired_capabilities.get('platform', '') == 'MAC':
-                loc = self._by_type.get(type_for_ios, False), element_loc_for_ios
+                loc = self._by_type.get(type_for_ios, ''), element_loc_for_ios
             else:
-                loc = self._by_type.get(type_for_android, False), element_loc_for_android
+                loc = self._by_type.get(type_for_android, ''), element_loc_for_android
             # 是否引用前面某个用例的 输出值
             if input_data.startswith(rtconf.use_output_arg_symbol):
                 input_data = test_data[input_data[len(rtconf.use_output_arg_symbol):]]
@@ -97,7 +97,7 @@ class BaseAction:
                     test_data[output_data] = output_text
 
                 self.log.info(
-                    '√√√{}:{}{} --- {} --- {}---输入参数: {} ----输出参数:{}'.format('成功', case_step,
+                    '√√√{}-{}-{} --- {} --- {}---输入参数: **{}** - 输出参数:**{}**'.format('成功', case_step,
                                                                              step_title, element_info,
                                                                              self.assert_result,
                                                                              input_data, output_text))
@@ -108,7 +108,7 @@ class BaseAction:
                 result = 1
             except Exception as e:
                 result = 0
-                self.log.error('×××{}:{}{} --- {} --- {}---输入参数: {} ----输出参数:无'.format('错误',
+                self.log.error('×××{}:{}{} --- {} --- {}---输入参数: **{}**'.format('错误',
                                                                                        case_step,
                                                                                        step_title,
                                                                                        element_info,
@@ -341,8 +341,8 @@ class BaseAction:
         x1 = int(screen_size[0] * 0.5)
 
         # %60的距离,相当于滑动一页
-        y1 = int(screen_size[1] * 0.7)
-        y2 = int(screen_size[1] * 0.1)
+        y1 = int(screen_size[1] * 0.8)
+        y2 = int(screen_size[1] * 0.2)
         self.driver.swipe(x1, y1, x1, y2, 1000)
 
     def swipe_to_down(self):
@@ -499,14 +499,12 @@ class BaseAction:
         遍历元素,点击,返回两个操作
         """
         elements = self.find_elements(loc)
-        before_click_activity = self.driver.current_activity
         for i in range(len(elements)):
             self.find_elements(loc)[i].click()
             time.sleep(1)
             pagename = "元素{}点击后".format(i)
             self.take_screen_shot(name=pagename)
-            if before_click_activity != self.driver.current_activity:
-                self.back()
+
 
     def take_screen_shot(self, name='截图', wait_time=None):
         """
@@ -569,6 +567,7 @@ class BaseAction:
                 # loc 包含 & 即多条件 By.XPATH, "resource-id,com.wbiao.wbauction:id/select"&"text,镖哭"
                 for i in loc.split('&'):
                     feature += self.make_xpath_with_unit_feature(i) + ' and '
+
             else:
                 # loc 是 字符串即单条件 resource-id,com.wbiao.wbauction:id/select
 
