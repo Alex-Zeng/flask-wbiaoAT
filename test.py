@@ -11,6 +11,7 @@ def uniqueOccurrences(arr):
     return True if len(set(new_list)) == len(new_list) else False
 
 if __name__ == '__main__':
-    arr = [1, 2, 2,2, 1, 1, 3]
-    result = uniqueOccurrences(arr)
-    print(result)
+    png = '123'
+    filename='D:\workspace\UIAtuoTest\base\screen_shot\TestLog-190\MUMU模拟4723-登录\20200403114736步骤_7_密码登录-点击登录按钮.txt'
+    with open(filename, 'wb') as f:
+        f.write(png)

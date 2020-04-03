@@ -264,9 +264,9 @@ class StartCasSuit(Resource):
         db.session.add(tl)
         db.session.commit()
         tl_id = tl.id
-        status = ''
+        status = 1
         msg = '{}'
-        tl_result = 0
+        tl_result = 1
         failed_suit = ''
         success_suit = ''
         log_run = Log('TestLog-{}'.format(tl_id))
@@ -338,8 +338,6 @@ class StartCasSuit(Resource):
                     db.session.commit()
                     driver.quit()
                     log_run.info('-用例集结束: {}, 总用时 {} 秒-'.format(shot_title, suit_use_time))
-            status = 1
-            tl_result = 1
         except Exception as e:
             status = 0
             tl_result = 0
@@ -490,7 +488,8 @@ class Report(Resource):
 class getImage(Resource):
     def get(self, id):
         entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
-        path = entity.screen_shot_path
+        path = rtconf.screenShotsDir + entity.screen_shot_path
+
         if path:
             resp = Response(open(path, 'rb'), mimetype="image/jpeg")
             return resp

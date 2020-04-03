@@ -514,18 +514,19 @@ class BaseAction:
             device.take_screenShot(u"个人主页")   #实际截图保存的结果为：20180113171058个人主页.png
         """
         # day = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
-
+        tm = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
         fq = rtconf.screenShotsDir + os.sep + self.screen_shot_folder_log_id + os.sep + self.screen_shot_folder_title
-        img_type = '.png'
-
+        file_title = tm + '{}.png'.format(name)
         if not os.path.exists(fq):
             os.makedirs(fq)
-
-        tm = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
-        filename = fq + os.sep + tm + '{}.png'.format(name)
+        filename = fq + os.sep + file_title
+        print(filename)
         time.sleep(wait_time if wait_time else self.screen_shot_wait_time)
-        self.driver.get_screenshot_as_file(filename)
-        return filename
+        result = self.driver.get_screenshot_as_file(filename)
+        print("截图成功或失败:%s" % result)
+        # temp_path 用于解耦,保存到数据库日志的截图路径,以后项目目录改变可以方便拼接完整路径
+        temp_path = os.sep + self.screen_shot_folder_log_id + os.sep + self.screen_shot_folder_title + os.sep + file_title
+        return temp_path
 
     @staticmethod
     def make_xpath_with_unit_feature(loc):
