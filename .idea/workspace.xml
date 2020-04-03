@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51c61f42-db77-429e-93f0-e2cd8015eefa" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/wbiaoAT.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UIAtuoTest.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/run_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/run_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/uitest.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/uitest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/base_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/base_action.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/public/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/public/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +31,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-177">
-              <caret line="340" column="22" lean-forward="true" selection-start-line="340" selection-start-column="22" selection-end-line="340" selection-end-column="22" />
+            <state relative-caret-position="7150">
+              <caret line="340" column="22" selection-start-line="340" selection-start-column="22" selection-end-line="340" selection-end-column="22" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -98,11 +94,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/base_action.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="542">
-              <caret line="573" column="64" lean-forward="true" selection-start-line="573" selection-start-column="64" selection-end-line="573" selection-end-column="64" />
+            <state relative-caret-position="235">
+              <caret line="559" column="25" selection-start-line="559" selection-start-column="25" selection-end-line="559" selection-end-column="25" />
               <folding>
                 <element signature="e#94#103#0" expanded="true" />
               </folding>
@@ -111,10 +107,17 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-253" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/base/runtest_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+            <state relative-caret-position="352">
+              <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
@@ -265,6 +268,32 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
+              <item name="base" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
+              <item name="base" type="462c0819:PsiDirectoryNode" />
+              <item name="screen_shot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -302,81 +331,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name=".vscode" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="screen_shot" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="screen_shot" type="462c0819:PsiDirectoryNode" />
-              <item name="TestLog-debug" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wbiaoAT" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="screen_shot" type="462c0819:PsiDirectoryNode" />
-              <item name="TestLog-debug" type="462c0819:PsiDirectoryNode" />
-              <item name="今日精选" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wbiaoAT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../atxserver2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../UIAtuoTestWeb" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -411,7 +371,7 @@
   </component>
   <component name="RunManager" selected="Python.test">
     <configuration name="multirun" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="wbiaoAT" />
+      <module name="UIAtuoTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -433,7 +393,7 @@
       <method v="2" />
     </configuration>
     <configuration name="run_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="wbiaoAT" />
+      <module name="UIAtuoTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -455,7 +415,7 @@
       <method v="2" />
     </configuration>
     <configuration name="runtest_config" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="wbiaoAT" />
+      <module name="UIAtuoTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -477,7 +437,7 @@
       <method v="2" />
     </configuration>
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="wbiaoAT" />
+      <module name="UIAtuoTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -499,7 +459,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Flask (main.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
-      <module name="wbiaoAT" />
+      <module name="UIAtuoTest" />
       <option name="target" value="$PROJECT_DIR$/main.py" />
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -514,7 +474,7 @@
       <method v="2" />
     </configuration>
     <configuration name="wbiaoAT" type="Python.FlaskServer">
-      <module name="wbiaoAT" />
+      <module name="UIAtuoTest" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -587,7 +547,8 @@
       <workItem from="1580611217564" duration="50614000" />
       <workItem from="1583464265314" duration="22543000" />
       <workItem from="1584604096714" duration="601000" />
-      <workItem from="1585634760527" duration="4997000" />
+      <workItem from="1585634760527" duration="6680000" />
+      <workItem from="1585821344615" duration="1197000" />
     </task>
     <task id="LOCAL-00001" summary="新增case和casesuit接口">
       <created>1568101321556</created>
@@ -722,18 +683,24 @@
       <option name="project" value="LOCAL" />
       <updated>1583115683668</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="优化">
+      <created>1585815799945</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1585815799946</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="703744000" />
+    <option name="totallyTimeSpent" value="706624000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.1056" />
+      <window_info content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.26506665" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.30151844" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
@@ -741,7 +708,7 @@
       <window_info anchor="bottom" id="Python Console" order="4" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.329718" />
       <window_info active="true" anchor="bottom" id="Run" order="8" visible="true" weight="0.34815618" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
@@ -816,7 +783,8 @@
     <MESSAGE value="日志功能删除日志文件,截图,优化" />
     <MESSAGE value="zengjia IOS" />
     <MESSAGE value="增加用例标题,日志格式优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加用例标题,日志格式优化" />
+    <MESSAGE value="优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -843,16 +811,6 @@
     <SUITE FILE_PATH="coverage/wbiaoAT$Flask__main_py_.coverage" NAME="Flask (main.py) Coverage Results" MODIFIED="1574837242333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/run_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base/logs/20191217/Equipment-8.log" />
     <entry file="file://$PROJECT_DIR$/base/logs/20191218/main.log" />
     <entry file="file://$PROJECT_DIR$/base/logs/20191218/Equipment-8.log" />
@@ -1005,6 +963,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7150">
+          <caret line="340" column="22" selection-start-line="340" selection-start-column="22" selection-end-line="340" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1034">
@@ -1042,13 +1010,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/runtest_config.py">
+    <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="352">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
@@ -1059,29 +1024,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
+    <entry file="file://$PROJECT_DIR$/base/base_action.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-177">
-          <caret line="340" column="22" lean-forward="true" selection-start-line="340" selection-start-column="22" selection-end-line="340" selection-end-column="22" />
+        <state relative-caret-position="235">
+          <caret line="559" column="25" selection-start-line="559" selection-start-column="25" selection-end-line="559" selection-end-column="25" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#94#103#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/base_action.py">
+    <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="573" column="64" lean-forward="true" selection-start-line="573" selection-start-column="64" selection-end-line="573" selection-end-column="64" />
+        <state relative-caret-position="-253" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/runtest_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
           <folding>
-            <element signature="e#94#103#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
