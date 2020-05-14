@@ -5,7 +5,6 @@
 # @File    : main.py
 from gevent import monkey
 monkey.patch_all()
-
 from flask import Flask
 from app.blue.admin import admin_bp
 from app.blue.uitest import ui_test_bp

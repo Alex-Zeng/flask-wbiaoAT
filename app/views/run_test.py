@@ -1,7 +1,6 @@
 from flask_login import login_required
 from flask_restful import Resource, reqparse
 import shutil
-from ext import db
 from ext import scheduler as run_test_job
 from base.public.log import log_main
 from base.driver_objects import td
@@ -14,6 +13,7 @@ from datetime import datetime
 from sqlalchemy import func,desc
 from base.runtest_config import rtconf
 from flask import Response
+
 
 parser_em = reqparse.RequestParser()
 parser_em.add_argument('title', type=str, required=True, help="title cannot be blank!")
