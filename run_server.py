@@ -16,6 +16,6 @@ if __name__ == '__main__':
     # sched.start()
     # sched.print_jobs()
 
-    http_server = WSGIServer(('', 5002), app)
+    http_server = WSGIServer(('localhost', 5002), app)
     http_server.serve_forever()
     # app.run(port=5002,threaded=True)

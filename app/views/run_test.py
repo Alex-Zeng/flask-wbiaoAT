@@ -10,10 +10,10 @@ from app.models import *
 from base.public.log import Log
 import traceback
 from datetime import datetime
-from sqlalchemy import func,desc
+from sqlalchemy import func, desc
 from base.runtest_config import rtconf
 from flask import Response
-
+from pyminitouch import safe_connection, safe_device, MNTDevice, CommandBuilder
 
 parser_em = reqparse.RequestParser()
 parser_em.add_argument('title', type=str, required=True, help="title cannot be blank!")
@@ -296,7 +296,7 @@ class StartCasSuit(Resource):
                         else:
                             log_run.info(
                                 '---开始:-----用例{}-{},输入参数列表: {}-----'.format(case_entity.id, case_entity.title,
-                                                                         suit_step.input_args))
+                                                                            suit_step.input_args))
                         case_log_entity = TestCaseLog(test_case_id=case_entity.id, test_case_title=case_entity.title,
                                                       test_case_suit_log_id=suit_log.id)
                         db.session.add(case_log_entity)
@@ -309,12 +309,12 @@ class StartCasSuit(Resource):
                             test_case_result = 1
                             log_run.info(
                                 '---结束-----用例{}-{},输入参数列表: {}-----成功-------'.format(case_entity.id, case_entity.title,
-                                                                                 suit_step.input_args))
+                                                                                    suit_step.input_args))
                         except Exception as t:
                             test_case_result = 0
                             log_run.error(
                                 '---结束-----用例{}-{},输入参数列表: {}-----失败!!!!!!!!!'.format(case_entity.id, case_entity.title,
-                                                                                   suit_step.input_args))
+                                                                                      suit_step.input_args))
                             raise t
                         finally:
                             case_end = datetime.now()
@@ -350,7 +350,7 @@ class StartCasSuit(Resource):
             log_entity.run_test_result = tl_result
             log_entity.run_test_times = run_task_use_time
             db.session.commit()
-            msg = '此次测试执行结束,总用时:{}秒 成功用例集: [{}], 失败用例集: [{}]'.format(run_task_use_time,success_suit, failed_suit)
+            msg = '此次测试执行结束,总用时:{}秒 成功用例集: [{}], 失败用例集: [{}]'.format(run_task_use_time, success_suit, failed_suit)
             log_main.info(msg)
             return jsonify({'status': status, 'data': '', 'message': msg})
 
@@ -528,16 +528,19 @@ class getLogFile(Resource):
             return jsonify(
                 {'status': '1', 'data': str, 'message': 'success'})
 
+
 class FinalLogText(Resource):
     def get(self, e_id):
-        results = TestLog.query.filter(TestLog.equipment_id == e_id).order_by(TestLog.run_test_start_time.desc()).first()
-        str =  getLogFile.get_log(results.id)
+        results = TestLog.query.filter(TestLog.equipment_id == e_id).order_by(
+            TestLog.run_test_start_time.desc()).first()
+        str = getLogFile.get_log(results.id)
         return jsonify(
             {'status': '1', 'data': str, 'message': 'success'})
 
+
 class clearLog(Resource):
 
-    def delete(self,log_id):
+    def delete(self, log_id):
         entity = TestLog.query.filter(TestLog.id == log_id).first()
         ob = model_to_dict(entity)
         log_file_path = get_log_file_path(log_id)
@@ -558,4 +561,56 @@ class clearLog(Resource):
         db.session.delete(entity)
         db.session.commit()
         return jsonify(
-            {'status': '1', 'data':ob, 'message': 'success'})
+            {'status': '1', 'data': ob, 'message': 'success'})
+
+
+parser_mini = reqparse.RequestParser()
+parser_mini.add_argument('cos', type=str, action='append', help="坐标不能为空")
+parser_mini.add_argument('device_id', type=str, required=True, help="device_id不能为空")
+
+
+class operateMinitouch(Resource):
+    def post(self):
+        args = parser_mini.parse_args()
+        cos = args.get('cos')
+        cos_len = len(cos)
+        device_id = args.get('device_id')
+
+
+        with safe_device(device_id) as device:
+            max_x = int(device.connection.max_x)
+            max_y = int(device.connection.max_y)
+            if cos_len == 2:
+                # 前端只有两个坐标穿过开,代表只有鼠标放开的坐标,单点击的位置
+                x2 = float(cos[0])
+                y2 = float(cos[1])
+                tab_x = int(max_x * x2)
+                tab_y = int(max_y * y2)
+                # single-tap
+                device.tap([(tab_x, tab_y)])
+            elif cos_len == 4:
+                x1 = float(cos[0])
+                y1 = float(cos[1])
+                x2 = float(cos[2])
+                y2 = float(cos[3])
+                swipe_x1 = int(max_x * x1)
+                swipe_y1 = int(max_y * y1)
+                swipe_x2 = int(max_x * x2)
+                swipe_y2 = int(max_y * y2)
+                print(swipe_x1)
+                print(swipe_y1)
+                print(swipe_x2)
+                print(swipe_y2)
+
+                device.swipe([(swipe_x1, swipe_y1), (swipe_x2, swipe_y2)],duration=30, pressure=50)
+        return jsonify(
+            {'status': '1', 'data': {'cos': cos, 'device_id': device_id}, 'message': 'success'})
+        # with safe_device(device_id) as device:
+        #     # It's also very important to note that the maximum X and Y coordinates may, but usually do not, match the display size.
+        #     # so you need to calculate position by yourself, and you can get maximum X and Y by this way:
+        #     x1,y1 = cos
+        #     x = int(int(device.connection.max_x) * x1)
+        #     y = int(int(device.connection.max_y) * y1)
+        #     # single-tap
+        #     device.tap([(x, y)])
+    # TODO 接口前端的百分比坐标,执行动作
