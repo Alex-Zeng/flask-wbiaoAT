@@ -13,7 +13,7 @@ from datetime import datetime
 from sqlalchemy import func, desc
 from base.runtest_config import rtconf
 from flask import Response
-from pyminitouch import safe_connection, safe_device, MNTDevice, CommandBuilder
+from pyminitouch.deviced_object import devices
 
 parser_em = reqparse.RequestParser()
 parser_em.add_argument('title', type=str, required=True, help="title cannot be blank!")
@@ -566,43 +566,39 @@ class clearLog(Resource):
 
 parser_mini = reqparse.RequestParser()
 parser_mini.add_argument('cos', type=str, action='append', help="坐标不能为空")
-parser_mini.add_argument('device_id', type=str, required=True, help="device_id不能为空")
-
 
 class operateMinitouch(Resource):
-    def post(self):
+    def get(self,device_id):
+        flag = devices.stop_device(device_id)
+        return jsonify(
+            {'status': '1', 'data': flag, 'message': '断开链接成功'})
+
+    def post(self,device_id):
         args = parser_mini.parse_args()
         cos = args.get('cos')
         cos_len = len(cos)
-        device_id = args.get('device_id')
+        device = devices.get_device(device_id)
 
-
-        with safe_device(device_id) as device:
-            max_x = int(device.connection.max_x)
-            max_y = int(device.connection.max_y)
-            if cos_len == 2:
-                # 前端只有两个坐标穿过开,代表只有鼠标放开的坐标,单点击的位置
-                x2 = float(cos[0])
-                y2 = float(cos[1])
-                tab_x = int(max_x * x2)
-                tab_y = int(max_y * y2)
-                # single-tap
-                device.tap([(tab_x, tab_y)])
-            elif cos_len == 4:
-                x1 = float(cos[0])
-                y1 = float(cos[1])
-                x2 = float(cos[2])
-                y2 = float(cos[3])
-                swipe_x1 = int(max_x * x1)
-                swipe_y1 = int(max_y * y1)
-                swipe_x2 = int(max_x * x2)
-                swipe_y2 = int(max_y * y2)
-                print(swipe_x1)
-                print(swipe_y1)
-                print(swipe_x2)
-                print(swipe_y2)
-
-                device.swipe([(swipe_x1, swipe_y1), (swipe_x2, swipe_y2)],duration=30, pressure=50)
+        max_x = int(device.connection.max_x)
+        max_y = int(device.connection.max_y)
+        if cos_len == 2:
+            # 前端只有两个坐标穿过开,代表只有鼠标放开的坐标,单点击的位置
+            x2 = float(cos[0])
+            y2 = float(cos[1])
+            tab_x = int(max_x * x2)
+            tab_y = int(max_y * y2)
+            # single-tap
+            device.tap([(tab_x, tab_y)])
+        elif cos_len == 4:
+            x1 = float(cos[0])
+            y1 = float(cos[1])
+            x2 = float(cos[2])
+            y2 = float(cos[3])
+            swipe_x1 = int(max_x * x1)
+            swipe_y1 = int(max_y * y1)
+            swipe_x2 = int(max_x * x2)
+            swipe_y2 = int(max_y * y2)
+            device.swipe([(swipe_x1, swipe_y1), (swipe_x2, swipe_y2)],duration=30, pressure=50)
         return jsonify(
             {'status': '1', 'data': {'cos': cos, 'device_id': device_id}, 'message': 'success'})
         # with safe_device(device_id) as device:

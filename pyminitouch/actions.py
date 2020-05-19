@@ -180,7 +180,7 @@ class MNTDevice(object):
         if not no_down:
             x, y = points.pop(0)
             _builder.down(point_id, x, y, pressure)
-            _builder.publish(self.connection)
+            _builder.commit()
 
         # start swiping
         for each_point in points:
@@ -197,7 +197,8 @@ class MNTDevice(object):
         # release
         if not no_up:
             _builder.up(point_id)
-            _builder.publish(self.connection)
+
+        _builder.publish(self.connection)
 
     # extra functions' name starts with 'ext_'
     def ext_smooth_swipe(
