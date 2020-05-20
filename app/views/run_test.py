@@ -13,7 +13,7 @@ from datetime import datetime
 from sqlalchemy import func, desc
 from base.runtest_config import rtconf
 from flask import Response
-from pyminitouch.deviced_object import devices
+from wbminitouch.deviced_object import devices
 
 parser_em = reqparse.RequestParser()
 parser_em.add_argument('title', type=str, required=True, help="title cannot be blank!")
