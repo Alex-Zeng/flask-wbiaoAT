@@ -14,24 +14,50 @@ class ThreadDevice():
 
     def __init__(self):
         self.device_dict = {}
+        self.device_list = []
 
-    def start_device(self, device_id):
-        device = MNTDevice(device_id)
-        self.device_dict[device_id] = device
-        return device
-
-    def get_device(self, device_id):
-        device = self.device_dict.get(device_id, 0)
-        if device:
-            return device
+    def start_device(self,user_id, device_id):
+        if device_id in self.device_list:
+            return '设备已经开启'
         else:
-            return self.start_device(device_id)
+            device = MNTDevice(device_id)
+            if device:
+                user_dict = self.device_dict.get(user_id,0)
+                if user_dict:
+                    user_dict.update({device_id:device})
+                else:
+                    self.device_dict[user_id] = {device_id:device}
+                self.device_list.append(device_id)
+                return '设备开启成功'
+            else:
+                return '设备开启失败'
 
-    def stop_device(self, device_id):
-        device = self.device_dict.get(device_id, 0)
-        if device:
-            self.device_dict[device_id].stop()
-            device = self.device_dict.pop(device_id,0)
-        return device
+    def get_device(self,user_id, user_name, device_id):
+
+        if device_id in self.device_list:
+            # 如果设备ID已经存在,表明已开启
+            user_device_dict =  self.device_dict.get(user_id, 0)
+            if user_device_dict:
+                if device_id in user_device_dict:
+                # 设备已开启,判断是否当前用户开启的
+                    device = user_device_dict.get(device_id,0)
+                    return (1,device)
+                else:
+                    return (0,'设备{}已被用户{}使用'.format(device_id,user_name))
+        else:
+            return (0,'请先连接设备')
+
+    def stop_device(self,user_id, device_id):
+        if device_id in self.device_list:
+            user_device_dict = self.device_dict.get(user_id,0)
+            device = user_device_dict.pop(device_id,0)
+            self.device_list.remove(device_id)
+            if device:
+                device.stop()
+                return 1,'{}设备已停止'.format(device_id)
+            else:
+                return  0,'此设备不属于你'
+        else:
+            return 0,'设备未开启'
 
 devices = ThreadDevice()

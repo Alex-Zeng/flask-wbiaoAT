@@ -3,6 +3,7 @@ from flask_restful import Resource, reqparse
 import shutil
 from ext import scheduler as run_test_job
 from base.public.log import log_main
+from utils import  *
 from base.driver_objects import td
 from base.base_action import BaseAction
 from base.public.utils import *
@@ -12,7 +13,7 @@ import traceback
 from datetime import datetime
 from sqlalchemy import func, desc
 from base.runtest_config import rtconf
-from flask import Response
+from flask import Response,jsonify, session
 from wbminitouch.deviced_object import devices
 
 parser_em = reqparse.RequestParser()
@@ -193,12 +194,12 @@ class EquipmentIncludeTestCaseSuitDetail(Resource):
 class StartSession(Resource):
     @staticmethod
     def start(e_id):
+
         results = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
         to_dict = model_to_dict(results)
         phone_info = to_dict
         phone_info['setting_args'] = json.loads(phone_info['setting_args'])
         driver = td.start(phone_info)
-        results.status = 1
         results.session_id = driver.session_id
         db.session.commit()
         return driver
@@ -259,13 +260,17 @@ class StartCasSuit(Resource):
         start = datetime.now()
         log_main.info('正在运行的任务：{}'.format(e_id))
         entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
+        if entity.status == 1:
+            raise Exception('此设备已经在运行')
+        else:
+            entity.status = 1
         et_title = entity.title
         tl = TestLog(equipment_id=e_id, equipment_title=et_title, equipment_args=entity.setting_args, run_test_result=2)
         db.session.add(tl)
         db.session.commit()
         tl_id = tl.id
         status = 1
-        msg = '{}'
+        error_msg = '无'
         tl_result = 1
         failed_suit = ''
         success_suit = ''
@@ -273,8 +278,8 @@ class StartCasSuit(Resource):
         log_run.info('第{}次运行,运行设备{}:{}, 参数设置:{}'.format(tl_id, e_id, et_title, entity.setting_args))
         try:
             for item in entity.test_case_suit:
-                suit_start = datetime.now()
                 driver = StartSession.start(e_id)
+                suit_start = datetime.now()
                 suit_title = item.test_case_suit.title
                 shot_title = '{}-{}'.format(et_title, suit_title)
                 log_run.info('-用例集开始: {}-'.format(shot_title))
@@ -341,7 +346,9 @@ class StartCasSuit(Resource):
         except Exception as e:
             status = 0
             tl_result = 0
-            log_main.error(traceback.format_exc())
+            error_msg = traceback.format_exc()
+            log_main.error(error_msg)
+            log_run.error(error_msg)
             raise e
         finally:
             end = datetime.now()
@@ -349,8 +356,9 @@ class StartCasSuit(Resource):
             log_entity = TestLog.query.filter(TestLog.id == tl.id).first()
             log_entity.run_test_result = tl_result
             log_entity.run_test_times = run_task_use_time
+            entity.status = 0
             db.session.commit()
-            msg = '此次测试执行结束,总用时:{}秒 成功用例集: [{}], 失败用例集: [{}]'.format(run_task_use_time, success_suit, failed_suit)
+            msg = '此次测试执行结束,总用时:{}秒 成功用例集: [{}], 失败用例集: [{}] 错误:{}'.format(run_task_use_time, success_suit, failed_suit, error_msg)
             log_main.info(msg)
             return jsonify({'status': status, 'data': '', 'message': msg})
 
@@ -487,6 +495,7 @@ class Report(Resource):
 
 class getImage(Resource):
     def get(self, id):
+
         entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
         path = rtconf.screenShotsDir + entity.screen_shot_path
 
@@ -566,18 +575,19 @@ class clearLog(Resource):
 
 parser_mini = reqparse.RequestParser()
 parser_mini.add_argument('cos', type=str, action='append', help="坐标不能为空")
-
 class operateMinitouch(Resource):
-    def get(self,device_id):
-        flag = devices.stop_device(device_id)
-        return jsonify(
-            {'status': '1', 'data': flag, 'message': '断开链接成功'})
 
+    @login_required
     def post(self,device_id):
+        user = user_loader(session.get('user_id'))
         args = parser_mini.parse_args()
         cos = args.get('cos')
         cos_len = len(cos)
-        device = devices.get_device(device_id)
+        flag ,device = devices.get_device(user.id,user.username,device_id)
+
+        if not flag:
+            return jsonify(
+                {'status': '0', 'data': '', 'message': device})
 
         max_x = int(device.connection.max_x)
         max_y = int(device.connection.max_y)
@@ -609,4 +619,33 @@ class operateMinitouch(Resource):
         #     y = int(int(device.connection.max_y) * y1)
         #     # single-tap
         #     device.tap([(x, y)])
-    # TODO 接口前端的百分比坐标,执行动作
+
+class operaDevice(Resource):
+    @login_required
+    def get(self,opera,device_id):
+        if opera == 'connect':
+            flag = is_android_device_connected_by_adb(device_id)
+            if not flag:
+                flag = adb_connect_android_device(device_id)
+                if not flag:
+                    msg = 'adb连接{}失败,检查是否已开启adb服务,或设备已连接目标服务器,并开放了adb调试权限等'.format(device_id)
+                    return jsonify(
+                        {'status': 0, 'data': flag, 'message': msg})
+                logger.info('adb连接{}成功'.format(device_id))
+            else:
+                logger.info('adb已经连接{}'.format(device_id))
+
+            user = user_loader(session.get('user_id'))
+            msg = devices.start_device(user.id,device_id)
+            return jsonify(
+                {'status': 1, 'data': user.username, 'message': msg})
+        elif opera == 'disConnect':
+            user_id = user_loader(session.get('user_id')).id
+            status, msg = devices.stop_device(user_id, device_id)
+            return jsonify(
+                {'status': status, 'data': msg, 'message': msg})
+
+
+
+
+

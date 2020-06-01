@@ -140,6 +140,8 @@ class MNTServer(object):
         ]
         logger.info("start minitouch: {}".format(" ".join(command_list)))
         self.mnt_process = subprocess.Popen(command_list, stdout=subprocess.DEVNULL)
+        logger.info("start minitouch: {}".format(self.mnt_process))
+
 
     def heartbeat(self):
         """ check if minitouch process alive """

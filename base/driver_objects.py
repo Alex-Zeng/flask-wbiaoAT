@@ -19,12 +19,9 @@ class ThreadDriver():
         try:
             self.driver = BaseDriver(phone_info).get_driver()
             self.driver_dict[self.driver.session_id] = self.driver
-            for k,v in self.driver_dict.items():
-                print(k)
-                print(v)
             return self.driver
         except Exception as e:
-            return '启动会话失败: {}'.format(e)
+            raise e
 
     def quit(self, session_id):
         try:

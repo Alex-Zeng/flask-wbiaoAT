@@ -6,6 +6,8 @@
 import json
 import os
 import sys
+import subprocess
+from loguru import logger
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 import allure
 from functools import wraps
@@ -194,7 +196,57 @@ def get_log_file_path(id):
                 file_path = os.path.join(root, f)
     return file_path
 
+
+def is_android_device_connected_by_adb(device_id):
+    """ return True if device connected, else return False """
+    try:
+        device_name = subprocess.check_output(
+            ['adb', "-s", device_id, "shell", "getprop", "ro.product.model"]
+        )
+        device_name = (
+            device_name.decode('utf-8')
+            .replace("\n", "")
+            .replace("\r", "")
+        )
+        logger.info("device {} online".format(device_name))
+    except subprocess.CalledProcessError:
+        return False
+    return True
+
+def adb_connect_android_device(device_id):
+    """ return True if device connected, else return False """
+    try:
+        device_name = subprocess.check_output(
+            ['adb', "connect", device_id]
+        )
+        device_name = (
+            device_name.decode('utf-8')
+            .replace("\n", "")
+            .replace("\r", "")
+        )
+        logger.info(device_name)
+        if 'cannot' in device_name:
+            return False
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+def get_android_device_info(device_id):
+    """ return True if device connected, else return False """
+    try:
+        device_name = subprocess.check_output(
+            ['adb', "-s", device_id, "shell", "getprop"]
+        )
+        device_name = (
+            device_name.decode('utf-8')
+            .replace("\n", "")
+            .replace("\r", "")
+        )
+        logger.info(device_name)
+    except subprocess.CalledProcessError:
+        return False
+    return True
+
 if __name__ == '__main__':
     # print(os.path.abspath(os.path.join(os.path.dirname(__file__))
-    print(os.path.abspath(__file__))
-    print(os.getcwd())
+    get_android_device_info('127.0.0.1:7555')

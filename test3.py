@@ -1,3 +1,4 @@
-a = {'c':333,'a':1,'b':2}
-a.pop('a')
-print(a)
+str = 'Physical size: 540x960'
+lsit = str.split(': ')
+
+print(lsit[1])
