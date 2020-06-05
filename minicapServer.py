@@ -60,6 +60,7 @@ def stop_minicap_server(ws,device_name):
     device = device_ob.pop(device_name, 0)
     if device:
         device.stop()
+        ws.send(1)
 
 
 if __name__ == '__main__':

@@ -123,7 +123,7 @@ class MNCAPServer(object):
         out_put = subprocess.check_output(
             [_ADB, "-s", self.device_id, "shell", "wm", "size"]
         )
-
+        logger.info("当前设备分辨率为: {}".format(out_put.decode('utf-8')))
         size = out_put.decode('utf-8').split(': ')[1].strip()
         return size
 
@@ -145,10 +145,14 @@ class MNCAPServer(object):
         """ fork a process to start minicap on android """
         # adb shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P 540x960@340x720/0
         size = self._get_size().split('x')
-        real_x = size[0]
-        real_y = size[1]
-        virtual_x = config.VIRTUAL_X
-        virtual_y =config.VIRTUAL_Y
+        real_x = int(size[0])
+        real_y = int(size[1])
+        virtual_x = real_x
+        virtual_y = real_y
+        # if real_x >= 1080 and real_y >= 1920:
+        #     virtual_x = int(real_x * config.VIRTUAL_X)
+        #     virtual_y = int(real_y * config.VIRTUAL_Y)
+
         command_list = [
             _ADB,
             "-s",

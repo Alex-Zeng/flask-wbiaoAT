@@ -13,7 +13,7 @@ import allure
 from functools import wraps
 import datetime
 import collections
-from base.runtest_config import rtconf
+from appium_base.runtest_config import rtconf
 def all_file_path(root_directory, extension_name):
     '''
     遍历目录

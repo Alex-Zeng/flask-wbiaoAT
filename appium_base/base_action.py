@@ -14,7 +14,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 
 from app.models import TestCaseStepLog
-from base.runtest_config import rtconf
+from appium_base.runtest_config import rtconf
 from ext import db
 
 

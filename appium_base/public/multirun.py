@@ -1,6 +1,6 @@
 from multiprocessing import Pool
 import os,time,random
-from base.public.log import log_main
+from appium_base.public.log import log_main
 
 def run_test_task(name):
     log_main.info('正在运行的任务：%s，PID：（%s）' % (name, os.getpid()))

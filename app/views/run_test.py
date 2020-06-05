@@ -2,17 +2,18 @@ from flask_login import login_required
 from flask_restful import Resource, reqparse
 import shutil
 from ext import scheduler as run_test_job
-from base.public.log import log_main
+from appium_base.public.log import log_main
 from utils import  *
-from base.driver_objects import td
-from base.base_action import BaseAction
-from base.public.utils import *
+from appium_base.driver_objects import td
+from appium_base.base_action import BaseAction
+from appium_base.public.utils import *
 from app.models import *
-from base.public.log import Log
+from appium_base.public.log import Log
 import traceback
+from apk import apk_path
 from datetime import datetime
 from sqlalchemy import func, desc
-from base.runtest_config import rtconf
+from appium_base.runtest_config import rtconf
 from flask import Response,jsonify, session
 from wbminitouch.deviced_object import devices
 
@@ -645,6 +646,211 @@ class operaDevice(Resource):
             return jsonify(
                 {'status': status, 'data': msg, 'message': msg})
 
+
+parser_adb = reqparse.RequestParser()
+parser_adb.add_argument('opera', type=int, help="操作")
+parser_adb.add_argument('device_id', type=str, help="设备device_id")
+parser_adb.add_argument('data', type=str, help="输入")
+class AdbOperaDevice(Resource):
+    def UploadFile(self):
+        filename = reqparse.request.files['file']  # 获取上传的文件
+        if filename:
+            new_filename = apk_path + os.sep + 'wbiao.apk'
+            filename.save(new_filename)  # 保存文件到指定路径
+            return new_filename
+        else:
+            raise Exception('请上传安装包apk文件')
+
+    @login_required
+    def post(self):
+
+        logger.info("远程IP: {}".format(reqparse.request.headers))
+        logger.info("远程IP: {}".format(reqparse.request.to))
+        args = parser_adb.parse_args()
+        opera = args.get('opera')
+        device_id = args.get('device_id')
+        msg = '操作错误'
+        adb_entity = AdbTool()
+        user = user_loader(session.get('user_id'))
+        flag =devices.if_device_is_use(user.id,device_id)
+        if  flag  == 2:
+            return jsonify(
+                {'status': 0, 'data': opera, 'message': "设备未连接"})
+        elif  flag  == 0:
+            return jsonify(
+                {'status': 0, 'data': opera, 'message': "设备已被其他人使用"})
+        try:
+
+            if opera == 1:
+                # 安装apk
+                apk_path = self.UploadFile()
+                adb_entity.adb_install_local(device_id, apk_path)
+                msg = '安装apk成功'
+            elif opera == 2:
+                # 输入文本
+                content = args.get('data', 0)
+                adb_entity.adb_send_keys(device_id, content)
+                msg = '输入文本{}成功'.format(content)
+            elif opera == 3:
+                # 返回键
+                adb_entity.back(device_id)
+                msg = '返回成功'
+            elif opera == 4:
+                # HOME建
+                adb_entity.home(device_id)
+                msg = '返回主页成功'
+            elif opera == 5:
+                # 后台切换应用
+                adb_entity.switch_app(device_id)
+                msg = '打开后台成功'
+            return jsonify(
+                {'status': 1, 'data': opera, 'message': msg})
+        except Exception as e:
+            return jsonify(
+                {'status': 0, 'data': opera, 'message': e})
+
+
+class AdbTool():
+    def __init__(self):
+        self._ADB = "adb"
+
+    def restart_adb(self):
+        """ restart adb server """
+        subprocess.check_call([self._ADB, "kill-server"])
+        subprocess.check_call([self._ADB, "start-server"])
+
+    def is_android_device_connected_by_adb(self, device_id):
+        """ return True if device connected, else return False """
+        try:
+            device_name = subprocess.check_output(
+                [self._ADB, "-s", device_id, "shell", "getprop", "ro.product.model"]
+            )
+            device_name = (
+                device_name.decode('utf-8')
+                    .replace("\n", "")
+                    .replace("\r", "")
+            )
+            logger.info("device {} online".format(device_name))
+        except subprocess.CalledProcessError:
+            return False
+        return True
+
+    def adb_connect_android_device(self, device_id):
+        """ return True if device connected, else return False """
+        try:
+            device_name = subprocess.check_output(
+                [self._ADB, "connect", device_id]
+            )
+            device_name = (
+                device_name.decode('utf-8')
+                    .replace("\n", "")
+                    .replace("\r", "")
+            )
+            logger.info("device {} online".format(device_name))
+            if 'cannot' in device_name:
+                logger.info(device_name)
+                return False
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
+    def input_keyevent(self, device_id, keyevent):
+        """ 暂时不支持中文,支持中文需要ADB keyboard https://github.com/senzhk/ADBKeyBoard """
+        try:
+            device_name = subprocess.check_output(
+                [self._ADB, "-s", device_id, "shell", "input", "keyevent", "{}".format(keyevent)]
+            )
+            logger.info(device_name)
+            device_name = (
+                device_name.decode('utf-8')
+                    .replace("\n", "")
+                    .replace("\r", "")
+            )
+            logger.info(device_name)
+        except subprocess.CalledProcessError:
+            return False
+        return True
+
+    def adb_send_keys(self, device_id, content):
+        """ 暂时不支持中文,支持中文需要ADB keyboard https://github.com/senzhk/ADBKeyBoard """
+        try:
+            device_name = subprocess.check_output(
+                [self._ADB, "-s", device_id, "shell", "input", "text", "{}".format(content)]
+            )
+            logger.info(device_name)
+            device_name = (
+                device_name.decode('utf-8')
+                    .replace("\n", "")
+                    .replace("\r", "")
+            )
+            logger.info(device_name)
+        except subprocess.CalledProcessError:
+            return False
+        return True
+
+    def home(self, device_id, ):
+        self.input_keyevent(device_id, "3")
+
+    def switch_app(self, device_id):
+        self.input_keyevent(device_id, "187")
+
+    def back(self, device_id):
+        self.input_keyevent(device_id, "4")
+
+    def install_apk(self, device_id, apk_path):
+        # -g ：为应用程序授予所有运行时的权限  -t ：允许测试包 -r:覆盖安装
+        try:
+            device_name = subprocess.check_output(
+                [self._ADB, "-s", device_id, "install", "-r", "-t", "-g", "{}".format(apk_path)]
+            )
+            device_name = (
+                device_name.decode('utf-8')
+                    .replace("\n", "")
+                    .replace("\r", "")
+            )
+            logger.info(device_name)
+            if 'Success' in device_name:
+                return True
+            else:
+                return False
+        except subprocess.CalledProcessError:
+            return False
+
+    def adb_push(self, device_id, remote_path):
+        try:
+            dst = "/data/local/tmp/tmp-{}.apk".format(int(time.time() * 1000))
+            device_name = subprocess.check_output(
+                [self._ADB, "-s", device_id, "push", "{}".format(remote_path), "{}".format(dst)]
+            )
+            device_name = (
+                device_name.decode('utf-8')
+                    .replace("\n", "")
+                    .replace("\r", "")
+            )
+            logger.info(device_name)
+            return dst
+        except subprocess.CalledProcessError:
+            return False
+
+    def adb_install_local(self, device_id, remote_path):
+        local_path = self.adb_push(device_id, remote_path)
+        try:
+            device_name = subprocess.check_output(
+                [self._ADB, "-s", device_id, "shell", "pm", "install", "-r", "-t", "-g", "{}".format(local_path)]
+            )
+            device_name = (
+                device_name.decode('utf-8')
+                    .replace("\n", "")
+                    .replace("\r", "")
+            )
+            logger.info(device_name)
+
+        except subprocess.CalledProcessError:
+            return False
+        finally:
+            subprocess.check_output(
+                [self._ADB, "-s", device_id, "shell", "rm", "{}".format(local_path)]
+            )
 
 
 

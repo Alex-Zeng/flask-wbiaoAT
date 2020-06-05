@@ -2,27 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51c61f42-db77-429e-93f0-e2cd8015eefa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/wbminicap/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/actions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/connection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/deviced_object.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/logger.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/appium_base/public/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/run_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/run_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/driver_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/driver_objects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/public/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/public/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/appium_base/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/base_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/appium_base/base_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/base_driver.py" beforeDir="false" afterPath="$PROJECT_DIR$/appium_base/base_driver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/base_funci_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/appium_base/base_funci_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/driver_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/appium_base/driver_objects.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/public/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apk/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/public/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/appium_base/public/log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/public/multirun.py" beforeDir="false" afterPath="$PROJECT_DIR$/appium_base/public/multirun.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/public/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/appium_base/public/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/runtest_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/appium_base/runtest_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/minicapServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/minicapServer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/test2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/content-disposition/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/content-disposition/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/debug/karma.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/debug/karma.conf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/depd/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/depd/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/application.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/application.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/http-errors/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/http-errors/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test3.py" beforeDir="false" afterPath="$PROJECT_DIR$/test3.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wbminitouch/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminitouch/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wbminitouch/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminitouch/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wbminitouch/connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminitouch/connection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wbminicap/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminicap/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wbminicap/connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminicap/connection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wbminitouch/deviced_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminitouch/deviced_object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wbminitouch/minicapStrem.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminicap/minicapStrem.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,109 +56,100 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminitouch/deviced_object.py">
+        <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="638">
-              <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminicap/connection.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="150" column="35" lean-forward="true" selection-start-line="150" selection-start-column="35" selection-end-line="150" selection-end-column="35" />
+            <state relative-caret-position="376">
+              <caret line="674" column="31" lean-forward="true" selection-start-line="674" selection-start-column="31" selection-end-line="674" selection-end-column="31" />
               <folding>
-                <element signature="e#0#17#0" expanded="true" />
+                <element signature="e#0#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminicap/config.py">
+        <entry file="file://$PROJECT_DIR$/app/models/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="487">
-              <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+            <state relative-caret-position="582">
+              <caret line="69" column="43" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#117#173#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminicap/utils.py">
+        <entry file="file://$PROJECT_DIR$/appium_base/runtest_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="814">
-              <caret line="43" column="4" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="44">
+              <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test2.py">
+        <entry file="file://D:/Python36/Lib/os.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="29" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="29" />
+            <state relative-caret-position="208">
+              <caret line="219" selection-start-line="219" selection-end-line="219" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminitouch/connection.py">
+        <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask_login/login_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1980">
-              <caret line="104" column="12" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="12" />
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="208">
+              <caret line="178" column="8" selection-start-line="178" selection-start-column="8" selection-end-line="178" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminitouch/actions.py">
+        <entry file="file://$PROJECT_DIR$/appium_base/base_action.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2596">
-              <caret line="124" selection-start-line="124" selection-end-line="124" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="420">
+              <caret line="518" column="23" selection-start-line="518" selection-start-column="21" selection-end-line="518" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/minicapServer.py">
+        <entry file="file://$PROJECT_DIR$/wbminitouch/deviced_object.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-657">
-              <caret line="15" column="2" lean-forward="true" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="71" />
+            <state relative-caret-position="332">
+              <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminicap/actions.py">
+        <entry file="file://$PROJECT_DIR$/appium_base/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="264">
+              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#114#124#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/typing.pyi">
+        <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask_login/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7590">
-              <caret line="348" column="8" selection-start-line="348" selection-start-column="8" selection-end-line="348" selection-end-column="8" />
+            <state relative-caret-position="406">
+              <caret line="260" selection-start-line="260" selection-end-line="260" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/minicapServer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="294">
+              <caret line="15" column="71" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -171,7 +168,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>action.title</find>
       <find>swipe_to_up</find>
       <find>if_element_exist_then_close</find>
       <find>get_log_file_path</find>
@@ -201,6 +197,7 @@
       <find>operateMinitouch</find>
       <find>EquipmentIncludeTesSuit</find>
       <find>请先连接设备</find>
+      <find>adb_entity</find>
     </findStrings>
     <replaceStrings>
       <replace>TestSuitStepList</replace>
@@ -234,7 +231,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/views/admin.py" />
         <option value="$PROJECT_DIR$/app/models/admin.py" />
         <option value="$PROJECT_DIR$/.vscode/launch.json" />
@@ -270,21 +266,22 @@
         <option value="$PROJECT_DIR$/wbminicap/utils.py" />
         <option value="$PROJECT_DIR$/wbminicap/actions.py" />
         <option value="$PROJECT_DIR$/wbminicap/deviced_object.py" />
-        <option value="$PROJECT_DIR$/test3.py" />
         <option value="$PROJECT_DIR$/wbminitouch/minicapStrem.py" />
         <option value="$PROJECT_DIR$/wbminitouch/__init__.py" />
-        <option value="$PROJECT_DIR$/config.py" />
-        <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/base/public/utils.py" />
         <option value="$PROJECT_DIR$/base/driver_objects.py" />
-        <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$PROJECT_DIR$/wbminitouch/connection.py" />
-        <option value="$PROJECT_DIR$/app/views/run_test.py" />
         <option value="$PROJECT_DIR$/test2.py" />
-        <option value="$PROJECT_DIR$/wbminitouch/deviced_object.py" />
-        <option value="$PROJECT_DIR$/wbminicap/connection.py" />
-        <option value="$PROJECT_DIR$/wbminicap/config.py" />
+        <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$PROJECT_DIR$/minicapServer.py" />
+        <option value="$PROJECT_DIR$/wbminicap/config.py" />
+        <option value="$PROJECT_DIR$/wbminicap/connection.py" />
+        <option value="$PROJECT_DIR$/test3.py" />
+        <option value="$PROJECT_DIR$/config.py" />
+        <option value="$PROJECT_DIR$/apk/__init__.py" />
+        <option value="$PROJECT_DIR$/utils.py" />
+        <option value="$PROJECT_DIR$/wbminitouch/deviced_object.py" />
+        <option value="$PROJECT_DIR$/app/views/run_test.py" />
       </list>
     </option>
   </component>
@@ -316,24 +313,41 @@
             <path>
               <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
               <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="apk" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
               <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
               <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="appium_base" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
               <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
-              <item name="wbminicap" type="462c0819:PsiDirectoryNode" />
+              <item name="appium_base" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
+              <item name="appium_base" type="462c0819:PsiDirectoryNode" />
+              <item name="screen_shot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
+              <item name="appium_base" type="462c0819:PsiDirectoryNode" />
+              <item name="screen_shot" type="462c0819:PsiDirectoryNode" />
+              <item name="TestLog-226" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
+              <item name="wbminitouch" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
@@ -419,8 +433,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test2">
-    <configuration name="actions" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.__init__">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="UIAtuoTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -428,12 +442,34 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="D:/venv_wbiaoAT/Lib/site-packages/pyminitouch" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/apk" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:/venv_wbiaoAT/Lib/site-packages/pyminitouch/actions.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/apk/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="UIAtuoTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app/views" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/views/run_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -486,28 +522,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="utils (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="UIAtuoTest" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/base/public" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/base/public/utils.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="UIAtuoTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -547,11 +561,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test2" />
-        <item itemvalue="Python.utils (1)" />
-        <item itemvalue="Python.utils" />
+        <item itemvalue="Python.__init__" />
+        <item itemvalue="Python.run_test" />
         <item itemvalue="Python.test3" />
-        <item itemvalue="Python.actions" />
+        <item itemvalue="Python.utils" />
+        <item itemvalue="Python.test2" />
       </list>
     </recent_temporary>
   </component>
@@ -617,7 +631,9 @@
       <workItem from="1590486655597" duration="599000" />
       <workItem from="1590541873791" duration="14556000" />
       <workItem from="1590627312906" duration="30390000" />
-      <workItem from="1590973631802" duration="2233000" />
+      <workItem from="1590973631802" duration="19931000" />
+      <workItem from="1591154428620" duration="11034000" />
+      <workItem from="1591338248461" duration="7382000" />
     </task>
     <task id="LOCAL-00001" summary="新增case和casesuit接口">
       <created>1568101321556</created>
@@ -801,26 +817,34 @@
       <option name="project" value="LOCAL" />
       <updated>1589964643146</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="新增设备页面">
+      <created>1590994610520</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1590994610520</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="911923000" />
+    <option name="totallyTimeSpent" value="948037000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" weight="0.3296" />
-      <window_info content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.23146667" />
+      <window_info active="true" content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.23413333" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.29501083" />
+      <window_info anchor="bottom" id="Terminal" order="1" visible="true" weight="0.29501083" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.329718" />
       <window_info anchor="bottom" id="Python Console" order="4" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="8" weight="0.34815618" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.23644252" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -900,7 +924,8 @@
     <MESSAGE value="增加pyminitouch" />
     <MESSAGE value="修复pyminitouch反复链接和关闭的问题" />
     <MESSAGE value="minicap服务启动" />
-    <option name="LAST_COMMIT_MESSAGE" value="minicap服务启动" />
+    <MESSAGE value="新增设备页面" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增设备页面" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -916,7 +941,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/wbiaoAT$utils.coverage" NAME="utils Coverage Results" MODIFIED="1571822461975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/wbiaoAT$run_server.coverage" NAME="run_server Coverage Results" MODIFIED="1576052542220" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/UIAtuoTest$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1590401186618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UIAtuoTest$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1591328763061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/wbiaoAT$runtest_config.coverage" NAME="runtest_config Coverage Results" MODIFIED="1573283815299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/base" />
     <SUITE FILE_PATH="coverage/UIAtuoTest$Flask__test2_py_.coverage" NAME="Flask (test2.py) Coverage Results" MODIFIED="1589436801372" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/UIAtuoTest$Flask__minicapServer_py_.coverage" NAME="Flask (minicapServer.py) Coverage Results" MODIFIED="1589364051476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -925,11 +950,13 @@
     <SUITE FILE_PATH="coverage/UIAtuoTest$test.coverage" NAME="test Coverage Results" MODIFIED="1589356621458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/wbiaoAT$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1565836023697" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/wbiaoAT$Flask__main_py_.coverage" NAME="Flask (main.py) Coverage Results" MODIFIED="1574837242333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/UIAtuoTest$utils.coverage" NAME="utils Coverage Results" MODIFIED="1590550317374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UIAtuoTest$utils.coverage" NAME="utils Coverage Results" MODIFIED="1591154957145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UIAtuoTest$run_test.coverage" NAME="run_test Coverage Results" MODIFIED="1591328889667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/views" />
     <SUITE FILE_PATH="coverage/wbiaoAT$utils__1_.coverage" NAME="utils (1) Coverage Results" MODIFIED="1573214992139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/base/public" />
     <SUITE FILE_PATH="coverage/wbiaoAT$test.coverage" NAME="test Coverage Results" MODIFIED="1584603410450" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/wbiaoAT$multirun.coverage" NAME="multirun Coverage Results" MODIFIED="1574231336190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/base/public" />
     <SUITE FILE_PATH="coverage/UIAtuoTest$actions.coverage" NAME="actions Coverage Results" MODIFIED="1589860140937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="D:/venv_wbiaoAT/Lib/site-packages/pyminitouch" />
+    <SUITE FILE_PATH="coverage/UIAtuoTest$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1591329012488" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apk" />
     <SUITE FILE_PATH="coverage/wbiaoAT$manager.coverage" NAME="manager Coverage Results" MODIFIED="1565851296734" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/UIAtuoTest$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1590739503537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/wbiaoAT$run_test.coverage" NAME="run_test Coverage Results" MODIFIED="1571823465478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/views" />
@@ -937,58 +964,6 @@
     <SUITE FILE_PATH="coverage/UIAtuoTest$utils__1_.coverage" NAME="utils (1) Coverage Results" MODIFIED="1590563882679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/base/public" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask/json/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="369" selection-start-line="369" selection-end-line="369" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/2and3/threading.pyi">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="1" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Python36/Lib/threading.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19998">
-          <caret line="915" selection-start-line="915" selection-end-line="915" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wbminitouch/minicapStrem.py" />
-    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/loguru/__init__.pyi">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7631">
-          <caret line="357" column="14" selection-start-line="357" selection-start-column="8" selection-end-line="357" selection-end-column="14" />
-          <folding>
-            <element signature="e#2825#2835#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wbminicap/logger.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="11" selection-start-column="5" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base/public/log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-514">
-          <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
-          <folding>
-            <element signature="e#145#159#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wbminicap/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
@@ -996,17 +971,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wbminitouch/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base/public/utils.py">
+    <entry file="file://$PROJECT_DIR$/appium_base/public/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5280">
           <caret line="244" column="23" selection-start-line="244" selection-start-column="23" selection-end-line="244" selection-end-column="23" />
@@ -1043,7 +1008,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/base_driver.py">
+    <entry file="file://$PROJECT_DIR$/appium_base/base_driver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
@@ -1066,12 +1031,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/base/logs/TestLog-191.log" />
     <entry file="file://$PROJECT_DIR$/base/logs/TestLog-224.log" />
-    <entry file="file://$PROJECT_DIR$/base/logs/TestLog-225.log">
+    <entry file="file://$PROJECT_DIR$/appium_base/logs/TestLog-225.log">
       <provider selected="true" editor-type-id="LogFileEditorProvider">
         <state relative-caret-position="-1400" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/driver_objects.py">
+    <entry file="file://$PROJECT_DIR$/appium_base/driver_objects.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="19" column="57" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
@@ -1130,16 +1095,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask_login/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
@@ -1154,57 +1109,6 @@
           <folding>
             <element signature="e#0#57#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="96" column="4" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
-          <folding>
-            <element signature="e#111#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="56" column="37" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="37" />
-          <folding>
-            <element signature="e#117#152#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="60" column="28" lean-forward="true" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
-          <folding>
-            <element signature="e#117#173#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Python36/Lib/subprocess.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="607" column="8" selection-start-line="607" selection-start-column="8" selection-end-line="607" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="137" column="6" selection-start-line="137" selection-start-column="6" selection-end-line="137" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask_restful/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1640">
-          <caret line="542" column="22" selection-start-line="542" selection-start-column="22" selection-end-line="542" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -1229,23 +1133,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
           <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12518">
-          <caret line="585" column="37" selection-start-line="585" selection-start-column="37" selection-end-line="585" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wbminitouch/deviced_object.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -1278,18 +1165,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wbminitouch/actions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2596">
-          <caret line="124" selection-start-line="124" selection-end-line="124" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wbminicap/actions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="472">
+          <caret line="136" column="41" lean-forward="true" selection-start-line="136" selection-start-column="41" selection-end-line="136" selection-end-column="41" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
@@ -1303,30 +1180,191 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wbminicap/connection.py">
+    <entry file="file://$PROJECT_DIR$/wbminitouch/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="150" column="35" lean-forward="true" selection-start-line="150" selection-start-column="35" selection-end-line="150" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wbminicap/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        <state relative-caret-position="484">
+          <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://D:/Python36/Lib/subprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="480" selection-start-line="480" selection-end-line="480" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wbminicap/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="24" column="15" lean-forward="true" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wbminicap/actions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wbminicap/connection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="151" selection-start-line="151" selection-end-line="153" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask_restful/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12232">
+          <caret line="572" column="12" selection-start-line="572" selection-start-column="8" selection-end-line="572" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3542">
+          <caret line="162" column="17" selection-start-line="162" selection-start-column="17" selection-end-line="162" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apk/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2948">
+          <caret line="134" column="20" selection-start-line="134" selection-start-column="20" selection-end-line="134" selection-end-column="20" />
+          <folding>
+            <element signature="e#111#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="57" column="40" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="40" />
+          <folding>
+            <element signature="e#117#152#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/werkzeug/datastructures.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="441" selection-start-line="441" selection-end-line="441" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask_login/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="260" selection-start-line="260" selection-end-line="260" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/minicapServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-657">
-          <caret line="15" column="2" lean-forward="true" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="71" />
+        <state relative-caret-position="294">
+          <caret line="15" column="71" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask_login/login_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="178" column="8" selection-start-line="178" selection-start-column="8" selection-end-line="178" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="69" column="43" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
+          <folding>
+            <element signature="e#117#173#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Python36/Lib/os.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="219" selection-start-line="219" selection-end-line="219" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appium_base/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+          <folding>
+            <element signature="e#114#124#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appium_base/base_action.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="518" column="23" selection-start-line="518" selection-start-column="21" selection-end-line="518" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appium_base/runtest_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="674" column="31" lean-forward="true" selection-start-line="674" selection-start-column="31" selection-end-line="674" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wbminitouch/deviced_object.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
         </state>
       </provider>
     </entry>

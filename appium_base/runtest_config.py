@@ -1,6 +1,6 @@
 from appium.webdriver.common.mobileby import MobileBy
 import os
-from base import PATH
+from appium_base import PATH
 
 
 class RuntestConfig():

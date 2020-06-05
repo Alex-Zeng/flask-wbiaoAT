@@ -32,6 +32,17 @@ class ThreadDevice():
             else:
                 return '设备开启失败'
 
+    def if_device_is_use(self,user_id, device_id):
+        if device_id in self.device_list:
+            user_device_dict = self.device_dict.get(user_id, 0)
+            if user_device_dict:
+                if device_id in user_device_dict:
+                    return 1
+                else:
+                    return 0
+        else:
+            return 2
+
     def get_device(self,user_id, user_name, device_id):
 
         if device_id in self.device_list:

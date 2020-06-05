@@ -7,8 +7,8 @@
 #author='Shichao-Dong'
 import time,os
 import logging
-from base.public.utils import mkdir
-from base.runtest_config import rtconf
+from appium_base.public.utils import mkdir
+from appium_base.runtest_config import rtconf
 
 
 log_path = rtconf.logDir

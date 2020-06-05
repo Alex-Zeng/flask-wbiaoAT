@@ -22,5 +22,5 @@ NEED_SHELL = SYSTEM_NAME != "Windows"
 ADB_EXECUTOR = "adb"
 
 # minicap 虚拟屏幕像素大小
-VIRTUAL_X = 445
-VIRTUAL_Y = 792
+VIRTUAL_X = 0.3
+VIRTUAL_Y = 0.3
