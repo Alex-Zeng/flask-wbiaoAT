@@ -33,7 +33,7 @@ class MNTInstaller(object):
             "{} -s {} shell getprop ro.product.cpu.abi".format(_ADB, self.device_id)
         )
         logger.info("device {} is {}".format(self.device_id, abi))
-        return abi
+        return abi.strip()
 
     def download_target_mnt(self):
         abi = self.get_abi()

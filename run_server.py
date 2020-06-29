@@ -13,6 +13,7 @@ def minicap_server():
     print('开启minicap服务')
     server.serve_forever()
     print('minicap服务结束')
+
 if __name__ == '__main__':
     p1 = Process(target=auto_test_server)  # 必须加,号
     p2 = Process(target=minicap_server)

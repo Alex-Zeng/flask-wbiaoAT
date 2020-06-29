@@ -25,43 +25,88 @@ class MNTInstaller(object):
     def __init__(self, device_id):
         self.device_id = device_id
         self.abi = self.get_abi()
-        if self.is_mnt_existed():
+        self.sdk = self.get_sdk()
+        if self.is_mnc_existed():
             logger.info("minicap already existed in {}".format(device_id))
         else:
-            self.download_target_mnt()
+            self.download_target_mnc()
+
+        if self.is_mnc_so_existed():
+            logger.info("minicap.so already existed in {}".format(device_id))
+        else:
+            self.download_target_mnc_so()
+
 
     def get_abi(self):
         abi = subprocess.getoutput(
             "{} -s {} shell getprop ro.product.cpu.abi".format(_ADB, self.device_id)
         )
-        logger.info("device {} is {}".format(self.device_id, abi))
-        return abi
+        logger.info("device_abi {} is {}".format(self.device_id, abi))
+        return abi.strip()
+
+    def get_sdk(self):
+        sdk = subprocess.getoutput(
+            "{} -s {} shell getprop ro.build.version.sdk".format(_ADB, self.device_id)
+        )
+        logger.info("device_sdk {} is {}".format(self.device_id, sdk))
+        return sdk.strip()
 
 
-    def download_target_mnt(self):
+    def download_target_mnc(self):
+        # minicap文件
         abi = self.get_abi()
         target_url = "{}/{}/bin/minicap".format(config.MNT_PREBUILT_URL, abi)
+
         logger.info("target minicap url: " + target_url)
-        mnt_path = download_file(target_url)
+        curPath = os.path.abspath(os.path.dirname(__file__))
+        mnc_path = curPath + os.sep + 'prebuilt' + os.sep + abi + os.sep + 'bin' + os.sep + 'minicap'
 
         # push and grant
         subprocess.check_call(
-            [_ADB, "-s", self.device_id, "push", mnt_path, config.MNT_HOME]
+            [_ADB, "-s", self.device_id, "push", mnc_path, config.MNC_HOME]
         )
         subprocess.check_call(
-            [_ADB, "-s", self.device_id, "shell", "chmod", "777", config.MNT_HOME]
+            [_ADB, "-s", self.device_id, "shell", "chmod", "777", config.MNC_HOME]
         )
-        logger.info("minicap already installed in {}".format(config.MNT_HOME))
+
+        logger.info("minicap already installed in {}".format(config.MNC_HOME))
 
         # remove temp
-        os.remove(mnt_path)
+        # os.remove(mnc_path)
 
-    def is_mnt_existed(self):
+    def download_target_mnc_so(self):
+
+        # minicap.so文件
+        abi = self.get_abi()
+        sdk = self.get_sdk()
+        so_target_url = "{}/{}/lib/android-{}/minicap.so".format(config.MNT_PREBUILT_URL,abi, sdk)
+        logger.info("target minicap.so url: " + so_target_url)
+        curPath = os.path.abspath(os.path.dirname(__file__))
+        so_path = curPath + os.sep + 'prebuilt' + os.sep + abi + os.sep + 'lib' + os.sep + 'android-{}'.format(sdk) + os.sep + 'minicap.so'
+        # push and grant
+        subprocess.check_call(
+            [_ADB, "-s", self.device_id, "push", so_path, config.SO_HOME]
+        )
+        subprocess.check_call(
+            [_ADB, "-s", self.device_id, "shell", "chmod", "777", config.SO_HOME]
+        )
+        logger.info("minicap.so already installed in {}".format(config.MNC_HOME))
+        # remove temp
+        # os.remove(so_path)
+
+    def is_mnc_existed(self):
 
         file_list = subprocess.check_output(
             [_ADB, "-s", self.device_id, "shell", "ls", "/data/local/tmp"]
         )
         return "minicap" in file_list.decode(config.DEFAULT_CHARSET)
+
+    def is_mnc_so_existed(self):
+
+        file_list = subprocess.check_output(
+            [_ADB, "-s", self.device_id, "shell", "ls", "/data/local/tmp"]
+        )
+        return "minicap.so" in file_list.decode(config.DEFAULT_CHARSET)
 
 
 class MNCAPServer(object):
@@ -102,9 +147,9 @@ class MNCAPServer(object):
 
         # make sure it's up
         time.sleep(1)
-        # assert (
-        #     self.heartbeat()
-        # ), "minicap did not work. see https://github.com/williamfzc/pyminicap/issues/11"
+        assert (
+            self.heartbeat()
+        ), "minicap did not work. see https://github.com/williamfzc/pyminicap/issues/11"
 
     def stop(self):
         self.mncap_process and self.mncap_process.kill()
@@ -319,8 +364,6 @@ def safe_connection(device_id):
 
 
 if __name__ == "__main__":
-    _DEVICE_ID = "127.0.0.1:7555"
-
-    with safe_connection(_DEVICE_ID) as conn:
-        # conn.send('d 0 150 150 50\nc\nu 0\nc\n')
-        conn.send("d 0 10 300 50\nc\nu 0\nc\n")
+    curPath = os.path.abspath(os.path.dirname(__file__))
+    mnc_path = curPath + os.sep + 'prebuilt' + os.sep + 'x86' + os.sep + 'bin' + os.sep + 'minicap'
+    print(mnc_path )

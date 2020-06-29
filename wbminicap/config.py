@@ -12,8 +12,9 @@ DEFAULT_CHARSET = "utf-8"
 DEFAULT_DELAY = 0.05
 
 # installer
-MNT_PREBUILT_URL = r"https://github.com/Alex-Zeng/stf-binaries/tree/master/node_modules/minicap-prebuilt/prebuilt"
-MNT_HOME = "/data/local/tmp/minicap"
+MNT_PREBUILT_URL = "https://github.com/Alex-Zeng/stf-binaries/tree/master/node_modules/minicap-prebuilt/prebuilt"
+MNC_HOME = "/data/local/tmp/minicap"
+SO_HOME = "/data/local/tmp/minicap.so"
 
 # system
 # 'Linux', 'Windows' or 'Darwin'.
