@@ -5,7 +5,7 @@ from flask_apscheduler import APScheduler
 
 db = SQLAlchemy()
 scheduler = APScheduler()
-
+minicap_server = {}
 # Setup the configuration for login manager.
 #     1. Set the login page.
 #     2. Set the more stronger auth-protection.

@@ -1,6 +1,7 @@
-import os
-curPath = os.path.abspath(os.path.dirname(__file__))
-PATH = lambda p: os.path.abspath(
-    os.path.join(os.path.dirname(__file__), p)
-)
-print(PATH(curPath) + os.sep + 'apk' )
+import faker
+
+
+fa = faker.Faker("zh_CN")
+print(fa.name())
+print(fa.address())
+print(fa.phone_number())

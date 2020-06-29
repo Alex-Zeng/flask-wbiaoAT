@@ -3,7 +3,7 @@ from flask_restful import Resource, reqparse
 import shutil
 from ext import scheduler as run_test_job
 from appium_base.public.log import log_main
-from utils import  *
+from utils import *
 from appium_base.driver_objects import td
 from appium_base.base_action import BaseAction
 from appium_base.public.utils import *
@@ -14,11 +14,12 @@ from apk import apk_path
 from datetime import datetime
 from sqlalchemy import func, desc
 from appium_base.runtest_config import rtconf
-from flask import Response,jsonify, session
+from flask import Response, jsonify, session
 from wbminitouch.deviced_object import devices
 
 parser_em = reqparse.RequestParser()
 parser_em.add_argument('title', type=str, required=True, help="title cannot be blank!")
+parser_em.add_argument('rank', type=str, help="rank cannot be blank!")
 parser_em.add_argument('setting_args', type=str, required=True, help="title cannot be blank!")
 parser_em.add_argument('remoteHost', type=str, required=True, help="remoteHost cannot be blank!")
 parser_em.add_argument('remotePort', type=str, required=True, help="remotePort cannot be blank!")
@@ -83,15 +84,16 @@ class EquipmentManagementList(Resource):
 
     # @login_required
     def get(self):
-        results = list(EquipmentManagement.query.all())
+        results = list(EquipmentManagement.query.order_by(
+            db.desc(EquipmentManagement.rank)).all())
         return jsonify({'status': '1', 'data': {"data_list": model_to_dict(results)}, 'message': 'success'})
 
     # @login_required
     def post(self):
 
         args = parser_em.parse_args()
-
-        entity = EquipmentManagement(title=args.title, setting_args=args.setting_args,
+        max_rank_entity = EquipmentManagement.query.order_by(db.desc(EquipmentManagement.rank)).first()
+        entity = EquipmentManagement(title=args.title, setting_args=args.setting_args, rank=int(max_rank_entity.rank) + 1,
                                      remoteHost=args.remoteHost, remotePort=args.remotePort,
                                      cron_status=args.cron_status, cron_times=args.cron_times, next_run_time='')
         db.session.add(entity)
@@ -106,11 +108,18 @@ class EquipmentManagementList(Resource):
 class EquipmentManagementDetail(Resource):
     ''' 设备信息'''
 
+    def get(self,e_id):
+        entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
+        max_rank_entity = EquipmentManagement.query.order_by(db.desc(EquipmentManagement.rank)).first()
+        entity.rank = int(max_rank_entity.rank) + 1
+        db.session.commit()
+
     # @login_required
     def put(self, e_id):
         args = parser_em.parse_args()
         entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
         entity.title = args.title
+        entity.rank = args.rank
         entity.setting_args = args.setting_args
         entity.remoteHost = args.remoteHost
         entity.remotePort = args.remotePort
@@ -195,7 +204,6 @@ class EquipmentIncludeTestCaseSuitDetail(Resource):
 class StartSession(Resource):
     @staticmethod
     def start(e_id):
-
         results = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
         to_dict = model_to_dict(results)
         phone_info = to_dict
@@ -279,6 +287,7 @@ class StartCasSuit(Resource):
         log_run.info('第{}次运行,运行设备{}:{}, 参数设置:{}'.format(tl_id, e_id, et_title, entity.setting_args))
         try:
             for item in entity.test_case_suit:
+                # 循环设备用例集
                 driver = StartSession.start(e_id)
                 suit_start = datetime.now()
                 suit_title = item.test_case_suit.title
@@ -292,6 +301,7 @@ class StartCasSuit(Resource):
                 suit_log_entity = TestCaseSuitLog.query.filter(TestCaseSuitLog.id == suit_log.id).first()
                 try:
                     for suit_step in item.test_case_suit.suit_step:
+                        # 循环用例集下的用例
                         case_start = datetime.now()
                         case_entity = suit_step.test_case
 
@@ -321,6 +331,7 @@ class StartCasSuit(Resource):
                             log_run.error(
                                 '---结束-----用例{}-{},输入参数列表: {}-----失败!!!!!!!!!'.format(case_entity.id, case_entity.title,
                                                                                       suit_step.input_args))
+                            # 单个用例失败
                             raise t
                         finally:
                             case_end = datetime.now()
@@ -342,6 +353,7 @@ class StartCasSuit(Resource):
                     suit_use_time = (suit_end - suit_start).seconds
                     suit_log_entity.run_test_suit_times = suit_use_time
                     db.session.commit()
+                    # 一个用例集循环结束,重新获取driver
                     driver.quit()
                     log_run.info('-用例集结束: {}, 总用时 {} 秒-'.format(shot_title, suit_use_time))
         except Exception as e:
@@ -359,8 +371,10 @@ class StartCasSuit(Resource):
             log_entity.run_test_times = run_task_use_time
             entity.status = 0
             db.session.commit()
-            msg = '此次测试执行结束,总用时:{}秒 成功用例集: [{}], 失败用例集: [{}] 错误:{}'.format(run_task_use_time, success_suit, failed_suit, error_msg)
+            msg = '此次测试执行结束,总用时:{}秒 成功用例集: [{}], 失败用例集: [{}] 错误:{}'.format(run_task_use_time, success_suit, failed_suit,
+                                                                           error_msg)
             log_main.info(msg)
+            log_run.info(msg)
             return jsonify({'status': status, 'data': '', 'message': msg})
 
     # @login_required
@@ -496,7 +510,6 @@ class Report(Resource):
 
 class getImage(Resource):
     def get(self, id):
-
         entity = TestCaseStepLog.query.filter(TestCaseStepLog.id == id).first()
         path = rtconf.screenShotsDir + entity.screen_shot_path
 
@@ -576,15 +589,17 @@ class clearLog(Resource):
 
 parser_mini = reqparse.RequestParser()
 parser_mini.add_argument('cos', type=str, action='append', help="坐标不能为空")
+
+
 class operateMinitouch(Resource):
 
     @login_required
-    def post(self,device_id):
+    def post(self, device_id):
         user = user_loader(session.get('user_id'))
         args = parser_mini.parse_args()
         cos = args.get('cos')
         cos_len = len(cos)
-        flag ,device = devices.get_device(user.id,user.username,device_id)
+        flag, device = devices.get_device(user.id, user.username, device_id)
 
         if not flag:
             return jsonify(
@@ -609,7 +624,7 @@ class operateMinitouch(Resource):
             swipe_y1 = int(max_y * y1)
             swipe_x2 = int(max_x * x2)
             swipe_y2 = int(max_y * y2)
-            device.swipe([(swipe_x1, swipe_y1), (swipe_x2, swipe_y2)],duration=30, pressure=50)
+            device.swipe([(swipe_x1, swipe_y1), (swipe_x2, swipe_y2)], duration=30, pressure=50)
         return jsonify(
             {'status': '1', 'data': {'cos': cos, 'device_id': device_id}, 'message': 'success'})
         # with safe_device(device_id) as device:
@@ -621,9 +636,10 @@ class operateMinitouch(Resource):
         #     # single-tap
         #     device.tap([(x, y)])
 
+
 class operaDevice(Resource):
     @login_required
-    def get(self,opera,device_id):
+    def get(self, opera, device_id):
         if opera == 'connect':
             flag = is_android_device_connected_by_adb(device_id)
             if not flag:
@@ -637,7 +653,7 @@ class operaDevice(Resource):
                 logger.info('adb已经连接{}'.format(device_id))
 
             user = user_loader(session.get('user_id'))
-            msg = devices.start_device(user.id,device_id)
+            msg = devices.start_device(user.id, device_id)
             return jsonify(
                 {'status': 1, 'data': user.username, 'message': msg})
         elif opera == 'disConnect':
@@ -651,6 +667,8 @@ parser_adb = reqparse.RequestParser()
 parser_adb.add_argument('opera', type=int, help="操作")
 parser_adb.add_argument('device_id', type=str, help="设备device_id")
 parser_adb.add_argument('data', type=str, help="输入")
+
+
 class AdbOperaDevice(Resource):
     def UploadFile(self):
         filename = reqparse.request.files['file']  # 获取上传的文件
@@ -663,20 +681,17 @@ class AdbOperaDevice(Resource):
 
     @login_required
     def post(self):
-
-        logger.info("远程IP: {}".format(reqparse.request.headers))
-        logger.info("远程IP: {}".format(reqparse.request.to))
         args = parser_adb.parse_args()
         opera = args.get('opera')
         device_id = args.get('device_id')
         msg = '操作错误'
         adb_entity = AdbTool()
         user = user_loader(session.get('user_id'))
-        flag =devices.if_device_is_use(user.id,device_id)
-        if  flag  == 2:
+        flag = devices.if_device_is_use(user.id, device_id)
+        if flag == 2:
             return jsonify(
                 {'status': 0, 'data': opera, 'message': "设备未连接"})
-        elif  flag  == 0:
+        elif flag == 0:
             return jsonify(
                 {'status': 0, 'data': opera, 'message': "设备已被其他人使用"})
         try:
@@ -851,7 +866,3 @@ class AdbTool():
             subprocess.check_output(
                 [self._ADB, "-s", device_id, "shell", "rm", "{}".format(local_path)]
             )
-
-
-
-

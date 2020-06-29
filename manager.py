@@ -9,7 +9,7 @@ migrate = Migrate(app, db)
 # Create a new commands: server
 # This command will be run the Flask development_env server
 manager.add_command("server", Server())
-manager.add_command('db', MigrateCommand)
+manager.add_command('db', MigrateCommand) # python manager.py db migrate  python hello.py db upgrade
 
 if __name__ == '__main__':
     manager.run()

@@ -102,9 +102,9 @@ class MNCAPServer(object):
 
         # make sure it's up
         time.sleep(1)
-        assert (
-            self.heartbeat()
-        ), "minicap did not work. see https://github.com/williamfzc/pyminicap/issues/11"
+        # assert (
+        #     self.heartbeat()
+        # ), "minicap did not work. see https://github.com/williamfzc/pyminicap/issues/11"
 
     def stop(self):
         self.mncap_process and self.mncap_process.kill()
@@ -166,6 +166,7 @@ class MNCAPServer(object):
 
         logger.info("start minicap: {}".format(" ".join(command_list)))
         self.mncap_process = subprocess.Popen(command_list, stdout=subprocess.DEVNULL)
+        logger.info("start minicap: {}".format(self.mncap_process))
 
     def heartbeat(self):
         """ check if minicap process alive """

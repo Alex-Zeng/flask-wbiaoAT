@@ -4,6 +4,7 @@ from ext import db
 class EquipmentManagement(db.Model):
     __tablename__ = 'equipment_management'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    rank = db.Column(db.Integer,nullable=False)
     title = db.Column(db.String(100), nullable=False, comment="配置名")
     setting_args = db.Column(db.Text, comment="配置参数")
     status = db.Column(db.Integer,default=0, nullable=False, comment="运行状态 0停止,1运行中")

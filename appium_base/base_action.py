@@ -192,9 +192,13 @@ class BaseAction:
         """
          判断文本是否相等
         """
-        assert input_data in self.find_element(loc).get_attribute("text")
-        self.assert_result = '断言成功-----文本{} 存在'.format(input_data)
-
+        assert_text = self.get_element_text(loc)
+        try:
+            assert input_data in assert_text
+            self.assert_result = '断言成功-----文本{}存在于{}'.format(input_data, assert_text)
+        except Exception as e:
+            self.assert_result = '断言失败-----文本{}不存在于{}'.format(input_data,assert_text)
+            raise e
     def check_elements(self, loc):
         """
         断言元素（多个）是否存在
