@@ -1,8 +1,5 @@
 import json
 
-from flask import jsonify
-from ext import db
-from flask_login import login_required
 from flask_restful import Resource, reqparse
 from app.models import *
 from sqlalchemy.exc import IntegrityError

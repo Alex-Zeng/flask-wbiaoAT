@@ -2,80 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51c61f42-db77-429e-93f0-e2cd8015eefa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/bin/minicap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/bin/minicap-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/lib/android-21/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/lib/android-22/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/lib/android-23/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/lib/android-24/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/lib/android-25/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/lib/android-26/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/lib/android-27/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/arm64-v8a/lib/android-28/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/bin/minicap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/bin/minicap-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-10/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-14/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-15/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-16/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-17/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-18/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-19/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-21/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-22/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-23/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-24/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-25/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-26/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-27/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-28/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/armeabi-v7a/lib/android-9/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/bin/minicap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/bin/minicap-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-14/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-15/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-16/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-17/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-18/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-19/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-21/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-22/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-23/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-24/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-25/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-26/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-27/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86/lib/android-28/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/bin/minicap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/bin/minicap-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/lib/android-21/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/lib/android-22/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/lib/android-23/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/lib/android-24/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/lib/android-25/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/lib/android-26/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/lib/android-27/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminicap/prebuilt/x86_64/lib/android-28/minicap.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/arm64-v8a/bin/minitouch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/arm64-v8a/bin/minitouch-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/armeabi-v7a/bin/minitouch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/armeabi-v7a/bin/minitouch-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/armeabi/bin/minitouch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/armeabi/bin/minitouch-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/mips/bin/minitouch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/mips/bin/minitouch-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/mips64/bin/minitouch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/mips64/bin/minitouch-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/x86/bin/minitouch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/x86/bin/minitouch-nopie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/x86_64/bin/minitouch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbminitouch/prebuilt/x86_64/bin/minitouch-nopie" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/run_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/run_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/uitest.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/uitest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test3.py" beforeDir="false" afterPath="$PROJECT_DIR$/test3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wbminicap/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminicap/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wbminicap/connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminicap/connection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wbminitouch/connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/wbminitouch/connection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -105,8 +36,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13354">
-              <caret line="607" selection-start-line="607" selection-end-line="607" />
+            <state relative-caret-position="15620">
+              <caret line="727" selection-start-line="727" selection-end-line="727" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -115,10 +46,46 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/appium_base/base_driver.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/appium/webdriver/webdriver.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2398">
+              <caret line="150" selection-start-line="150" selection-end-line="150" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://D:/Python36/Lib/subprocess.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="10560">
+              <caret line="480" selection-start-line="480" selection-end-line="480" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/gevent/subprocess.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20416">
+              <caret line="955" selection-start-line="955" selection-end-line="955" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="522">
-              <caret line="24" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="418">
+              <caret line="19" column="50" lean-forward="true" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -127,12 +94,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminicap/connection.py">
+        <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="88" column="9" lean-forward="true" selection-start-line="88" selection-start-column="9" selection-end-line="88" selection-end-column="9" />
+            <state relative-caret-position="2750">
+              <caret line="135" selection-start-line="135" selection-end-line="135" />
               <folding>
-                <element signature="e#0#17#0" expanded="true" />
+                <element signature="e#111#120#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -141,8 +108,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wbminicap/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="1" selection-end-column="15" />
+            <state relative-caret-position="616">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -151,69 +118,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/appium_base/__init__.py">
+        <entry file="file://$PROJECT_DIR$/app/views/uitest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="52" />
-              <folding>
-                <element signature="e#114#124#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="22">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminicap/minicapStrem.py">
+        <entry file="file://$PROJECT_DIR$/appium_base/public/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test3.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="29" column="20" lean-forward="true" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/requests/structures.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="51" selection-start-line="51" selection-end-line="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminitouch/connection.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="39" column="67" selection-start-line="39" selection-start-column="67" selection-end-line="39" selection-end-column="67" />
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wbminitouch/config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="5368">
+              <caret line="248" selection-start-line="248" selection-end-line="248" />
             </state>
           </provider>
         </entry>
@@ -295,7 +212,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.vscode/launch.json" />
         <option value="$PROJECT_DIR$/base/public/log.py" />
         <option value="$PROJECT_DIR$/base/runtest_config.py" />
         <option value="$PROJECT_DIR$/app/models/uitest.py" />
@@ -330,22 +246,23 @@
         <option value="$PROJECT_DIR$/test2.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/apk/__init__.py" />
-        <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/wbminitouch/deviced_object.py" />
         <option value="$PROJECT_DIR$/ext.py" />
         <option value="$PROJECT_DIR$/minicapServer.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/manager.py" />
         <option value="$PROJECT_DIR$/app/models/run_test.py" />
-        <option value="$PROJECT_DIR$/app/views/run_test.py" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
-        <option value="$PROJECT_DIR$/app/views/uitest.py" />
         <option value="$PROJECT_DIR$/appium_base/base_action.py" />
-        <option value="$PROJECT_DIR$/run_server.py" />
         <option value="$PROJECT_DIR$/wbminicap/config.py" />
         <option value="$PROJECT_DIR$/wbminitouch/connection.py" />
         <option value="$PROJECT_DIR$/wbminicap/connection.py" />
         <option value="$PROJECT_DIR$/test3.py" />
+        <option value="$PROJECT_DIR$/app/views/uitest.py" />
+        <option value="$PROJECT_DIR$/appium_base/public/utils.py" />
+        <option value="$PROJECT_DIR$/app/views/run_test.py" />
+        <option value="$PROJECT_DIR$/utils.py" />
+        <option value="$PROJECT_DIR$/run_server.py" />
       </list>
     </option>
   </component>
@@ -377,18 +294,7 @@
             <path>
               <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
               <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
-              <item name="appium_base" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
-              <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
               <item name="wbminicap" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
-              <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
-              <item name="wbminicap" type="462c0819:PsiDirectoryNode" />
-              <item name="prebuilt" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
@@ -683,7 +589,12 @@
       <workItem from="1592530601204" duration="2570000" />
       <workItem from="1592790752205" duration="10105000" />
       <workItem from="1593394294630" duration="1037000" />
-      <workItem from="1593398518049" duration="15891000" />
+      <workItem from="1593398518049" duration="21684000" />
+      <workItem from="1593659431726" duration="596000" />
+      <workItem from="1594189921410" duration="598000" />
+      <workItem from="1594344991301" duration="246000" />
+      <workItem from="1594360996822" duration="248000" />
+      <workItem from="1594725217106" duration="281000" />
     </task>
     <task id="LOCAL-00001" summary="新增case和casesuit接口">
       <created>1568101321556</created>
@@ -881,27 +792,34 @@
       <option name="project" value="LOCAL" />
       <updated>1593394374262</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="安装minicapBUG修复">
+      <created>1593425208347</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1593425208347</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1012496000" />
+    <option name="totallyTimeSpent" value="1020258000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" weight="0.3296" />
-      <window_info content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.15786667" />
+      <window_info content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.12" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
-      <window_info anchor="bottom" id="Terminal" order="1" weight="0.29501083" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.27657267" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.329718" />
       <window_info anchor="bottom" id="Python Console" order="4" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="8" visible="true" weight="0.23644252" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.23644252" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -911,7 +829,7 @@
       <window_info anchor="right" id="SciView" order="2" weight="0.3295129" />
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
-      <window_info anchor="right" id="Structure" order="5" sideWeight="0.47211155" visible="true" weight="0.17493333" />
+      <window_info anchor="right" id="Structure" order="5" sideWeight="0.47211155" visible="true" weight="0.13706666" />
       <window_info anchor="right" id="Key Promoter X" order="6" />
     </layout>
   </component>
@@ -983,7 +901,8 @@
     <MESSAGE value="minicap服务启动" />
     <MESSAGE value="新增设备页面" />
     <MESSAGE value="新怎用例复制,页面复制,用例集复制功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="新怎用例复制,页面复制,用例集复制功能" />
+    <MESSAGE value="安装minicapBUG修复" />
+    <option name="LAST_COMMIT_MESSAGE" value="安装minicapBUG修复" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1022,37 +941,6 @@
     <SUITE FILE_PATH="coverage/UIAtuoTest$utils__1_.coverage" NAME="utils (1) Coverage Results" MODIFIED="1590563882679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/base/public" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/models/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1408">
-          <caret line="69" column="43" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
-          <folding>
-            <element signature="e#117#173#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appium_base/runtest_config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Python36/Lib/os.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4774">
-          <caret line="219" selection-start-line="219" selection-end-line="219" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask_login/login_manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3542">
-          <caret line="178" column="8" selection-start-line="178" selection-start-column="8" selection-end-line="178" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/flask_login/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5456">
@@ -1078,16 +966,6 @@
       </provider>
     </entry>
     <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/adbutils/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="134" column="20" selection-start-line="134" selection-start-column="20" selection-end-line="134" selection-end-column="20" />
-          <folding>
-            <element signature="e#111#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/gevent/pywsgi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
@@ -1170,13 +1048,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appium_base/base_driver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="25" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/selenium/webdriver/remote/webdriver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6688">
@@ -1208,16 +1079,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1738">
           <caret line="79" column="16" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/uitest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10142">
-          <caret line="468" column="59" selection-start-line="468" selection-start-column="59" selection-end-line="468" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1338,36 +1199,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13354">
-          <caret line="607" selection-start-line="607" selection-end-line="607" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wbminicap/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="1" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/run_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/appium_base/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -1397,10 +1228,92 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
+        <state relative-caret-position="399">
           <caret line="29" column="20" lean-forward="true" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15620">
+          <caret line="727" selection-start-line="727" selection-end-line="727" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appium_base/base_driver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/appium/webdriver/webdriver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2398">
+          <caret line="150" selection-start-line="150" selection-end-line="150" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Python36/Lib/subprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10560">
+          <caret line="480" selection-start-line="480" selection-end-line="480" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/gevent/subprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20416">
+          <caret line="955" selection-start-line="955" selection-end-line="955" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2750">
+          <caret line="135" selection-start-line="135" selection-end-line="135" />
+          <folding>
+            <element signature="e#111#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wbminicap/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/uitest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appium_base/public/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5368">
+          <caret line="248" selection-start-line="248" selection-end-line="248" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" column="50" lean-forward="true" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>

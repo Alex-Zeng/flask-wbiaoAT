@@ -135,6 +135,7 @@ def adb_connect_android_device(device_id):
         return False
 
 
+
 class AdbTool():
     def __init__(self):
         self._ADB = "adb"

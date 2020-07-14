@@ -93,7 +93,8 @@ class EquipmentManagementList(Resource):
 
         args = parser_em.parse_args()
         max_rank_entity = EquipmentManagement.query.order_by(db.desc(EquipmentManagement.rank)).first()
-        entity = EquipmentManagement(title=args.title, setting_args=args.setting_args, rank=int(max_rank_entity.rank) + 1,
+        entity = EquipmentManagement(title=args.title, setting_args=args.setting_args,
+                                     rank=int(max_rank_entity.rank) + 1,
                                      remoteHost=args.remoteHost, remotePort=args.remotePort,
                                      cron_status=args.cron_status, cron_times=args.cron_times, next_run_time='')
         db.session.add(entity)
@@ -108,7 +109,7 @@ class EquipmentManagementList(Resource):
 class EquipmentManagementDetail(Resource):
     ''' 设备信息'''
 
-    def get(self,e_id):
+    def get(self, e_id):
         entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
         max_rank_entity = EquipmentManagement.query.order_by(db.desc(EquipmentManagement.rank)).first()
         entity.rank = int(max_rank_entity.rank) + 1
@@ -265,10 +266,9 @@ class StartCasSuit(Resource):
 
     @staticmethod
     def run_test_task(e_id):
-
+        entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
         start = datetime.now()
         log_main.info('正在运行的任务：{}'.format(e_id))
-        entity = EquipmentManagement.query.filter(EquipmentManagement.id == e_id).first()
         if entity.status == 1:
             raise Exception('此设备已经在运行')
         else:
@@ -723,6 +723,8 @@ class AdbOperaDevice(Resource):
         except Exception as e:
             return jsonify(
                 {'status': 0, 'data': opera, 'message': e})
+
+
 
 
 class AdbTool():
