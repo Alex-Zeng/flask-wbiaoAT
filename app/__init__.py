@@ -6,7 +6,7 @@
 from app.blue.admin import admin_bp
 from app.blue.uitest import ui_test_bp
 from app.blue.runtest import run_test_bp
-from app.views.admin import Login, isLogin, Register, Logout, TestProject
+from app.views.admin import Login, isLogin, Register, Logout, TestProject, ProjectDetail
 from app.views.uitest import *
 from app.views.run_test import *
 from flask_restful import Api
@@ -20,6 +20,7 @@ api_admin.add_resource(isLogin, '/islogin')
 api_admin.add_resource(Register, '/register')
 api_admin.add_resource(Logout, '/logout')
 api_admin.add_resource(TestProject, '/projects')
+api_admin.add_resource(ProjectDetail, '/projects/<int:project_id>')
 
 api_ui_test.add_resource(PageList, '/projects/<int:project_id>/pages')
 api_ui_test.add_resource(PageDetail, '/projects/<int:project_id>/pages/<int:page_id>')

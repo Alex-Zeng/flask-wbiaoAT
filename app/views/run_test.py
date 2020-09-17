@@ -437,6 +437,8 @@ class Report(Resource):
         if entity:
             data_count = self.DataStatistics(results_count)
             return data_count, model_to_dict(entity)
+        else:
+            return 0
 
     def get_test_suit_log_count(self, test_log_id):
         entity = TestCaseSuitLog.query.filter(TestCaseSuitLog.test_log_id == test_log_id).all()
@@ -496,7 +498,7 @@ class Report(Resource):
         data_count = ''
         data_list = ''
         type = args.type
-        if type == 'test':
+        if type == 'test' and self.get_test_log_count():
             data_count, data_list = self.get_test_log_count()
         elif type == 'suit':
             data_count, data_list = self.get_test_suit_log_count(args.id)

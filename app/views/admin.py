@@ -1,11 +1,9 @@
-from flask import jsonify, request, session,  current_app
+from flask import jsonify, request, session, current_app
 from app.models.admin import User, Project
 from ext import db, simple_cache
 from flask_login import login_user, login_required, logout_user
 from app.models import user_loader
-from flask_restful import  Resource, reqparse
-
-
+from flask_restful import Resource, reqparse
 
 parser_register = reqparse.RequestParser()
 parser_register.add_argument('telephone', type=str, required=True, help="telephone cannot be blank!")
@@ -13,6 +11,8 @@ parser_register.add_argument('username', type=str, required=True, help="username
 parser_register.add_argument('email', type=str, required=True, help="username cannot be blank!")
 parser_register.add_argument('password1', type=str, required=True, help="password1 cannot be blank!")
 parser_register.add_argument('password2', type=str, required=True, help="password2 cannot be blank!")
+
+
 class Register(Resource):
 
     def post(self):
@@ -40,8 +40,10 @@ class Register(Resource):
 
 parser_login = reqparse.RequestParser()
 # 必需的参数:要求一个值传递的参数，只需要添加 required=True 来调用 add_argument()
-parser_login.add_argument('username', type=str, required=True, help="username cannot be blank!",)
+parser_login.add_argument('username', type=str, required=True, help="username cannot be blank!", )
 parser_login.add_argument('password', type=str, required=True, help="password cannot be blank!")
+
+
 class Login(Resource):
 
     def post(self):
@@ -69,10 +71,12 @@ class Login(Resource):
             'username': user.username, 'id': user.id, 'userstatus': user.status
         }}, 'msg': '登陆成功'})
 
+
 class isLogin(Resource):
     @login_required
     def get(self):
         return jsonify({'status': 1, 'data': {}, 'msg': '已登录'})
+
 
 class Logout(Resource):
     @login_required
@@ -80,14 +84,17 @@ class Logout(Resource):
         logout_user()
         return jsonify({'status': 1, 'data': {}, 'msg': '退出成功'})
 
+
 parser_pro = reqparse.RequestParser()
 # 必需的参数:要求一个值传递的参数，只需要添加 required=True 来调用 add_argument()
-parser_pro.add_argument('title', type=str, required=True, help="项目名不能为空!",)
+parser_pro.add_argument('title', type=str, required=True, help="项目名不能为空!", )
+
+
 class TestProject(Resource):
     @login_required
     def get(self):
         user_id = user_loader(session.get('user_id')).id
-        project_lists = list(Project.query.filter(Project.author_id == user_id, Project.is_del == 0 ).all())
+        project_lists = list(Project.query.filter(Project.author_id == user_id, Project.is_del == 0).all())
 
         project_list = []
         for project in project_lists:
@@ -95,7 +102,7 @@ class TestProject(Resource):
             data_dict['id'] = project.id
             data_dict['title'] = project.title
             project_list.append(data_dict)
-        return jsonify({'status': 1, 'data': {'project_list': project_list}, 'msg': 'Success'})
+        return jsonify({'status': 1, 'data': {'project_list': project_list}, 'message': 'Success'})
 
     @login_required
     def post(self):
@@ -103,33 +110,31 @@ class TestProject(Resource):
         title = args.get('title')
         author_id = user_loader(session.get('user_id')).id
 
-        if Project.query.filter(Project.title == title).first():
-            return jsonify({'status': '0', 'data': {}, 'msg': '该项目名已被使用,请重新填写'})
+        if Project.query.filter(Project.title == title, Project.is_del == 0).first():
+            return jsonify({'status': 0, 'data': {}, 'message': '该项目名已被使用,请重新填写'})
 
         new_project = Project(title=title, author_id=author_id, env_id=1)
         db.session.add(new_project)
         db.session.commit()
-        return jsonify({'status': 1, 'data': {}, 'msg': '创建项目成功'})
-
+        return jsonify({'status': 1, 'data': {}, 'message': '创建项目成功'})
 
 
 class ProjectDetail(Resource):
     @login_required
-    def put(self,project_id):
+    def put(self, project_id):
         args = parser_pro.parse_args()
         title = args.get('title')
-        if Project.query.filter(Project.title == title).first():
-            return jsonify({'status': '0', 'data': {}, 'msg': '该项目名已被使用,请重新填写'})
+        if Project.query.filter(Project.title == title, Project.is_del == 0).first():
+            return jsonify({'status': '0', 'data': {}, 'message': '该项目名已被使用,请重新填写'})
 
         entity = Project.query.filter(Project.id == project_id).first()
         entity.title = title
         db.session.commit()
-        return jsonify({'status': 1, 'data': project_id, 'msg': 'Success'})
+        return jsonify({'status': 1, 'data': project_id, 'message': 'Success'})
 
     @login_required
-    def delete(self,project_id):
+    def delete(self, project_id):
         entity = Project.query.filter(Project.id == project_id).first()
-        db.session.delete(entity)
+        entity.is_del = 1
         db.session.commit()
-        return jsonify({'status': '0', 'data': {entity}, 'msg': 'success'})
-
+        return jsonify({'status': '1', 'data': {}, 'message': '删除成功'})
