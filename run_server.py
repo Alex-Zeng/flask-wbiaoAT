@@ -17,7 +17,7 @@ def minicap_server():
 
 
 if __name__ == '__main__':
-    p1 = Process(target=auto_test_server)  # 必须加,号
+    p1 = Process(target=auto_test_server)  # 必须加,号pytho
     p2 = Process(target=minicap_server)
     p1.start()
     p2.start()

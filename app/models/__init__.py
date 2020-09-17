@@ -3,7 +3,8 @@
 # @Time    : 2019/8/16 13:41
 # @Author  : 曾德辉
 # @File    : __init__.py.py
-from itsdangerous import  BadData, constant_time_compare
+from itsdangerous import  BadData
+# from itsdangerous import  BadData, constant_time_compare
 from ext import login_manager, simple_cache
 from flask import jsonify, request
 from app.models.admin import *
@@ -28,9 +29,9 @@ def load_token(token):
 
     # 判断浏览器信息是否改变
     bi = create_browser_id()
-    if not constant_time_compare(str(bi), str(browser_id)):
-        print("the user environment had changed, so token has been expired!")
-        return None
+    # if not constant_time_compare(str(bi), str(browser_id)):
+    #     print("the user environment had changed, so token has been expired!")
+    #     return None
 
     # 校验密码
     user = User.query.get(id)
