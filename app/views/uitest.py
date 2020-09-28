@@ -202,7 +202,7 @@ class ActionList(Resource):
         for row in results:
             data_dict = {}
             data_dict['id'] = row.id
-            data_dict['title'] = '在[{}页面]-[{}]-[{}元素]'.format(row.page.title, row.fun.title, row.ele.title)
+            data_dict['title'] = '在[{}]页面-[{}]-[{}]元素'.format(row.page.title, row.fun.title, row.ele.title)
             data_dict['fun_id'] = row.fun_id
             data_dict['fun_title'] = row.fun.title
             data_dict['ele_id'] = row.ele_id

@@ -60,23 +60,23 @@ class BaseAction:
             output_data = v['output_arg']
             screen_shot_path = ''
 
-            # 判断平台 ios 则loc  find_type不一样,前端同一个元素下面维护 Android和ios的元素查找方式和位置
-            if self.driver.desired_capabilities.get('platform', '') == 'MAC':
-                loc = self._by_type.get(type_for_ios, ''), element_loc_for_ios
-            else:
-                loc = self._by_type.get(type_for_android, ''), element_loc_for_android
-            # 是否引用前面某个用例的 输出值
-            if input_data.startswith(rtconf.use_output_arg_symbol):
-                input_data = test_data[input_data[len(rtconf.use_output_arg_symbol):]]
-
-            if step_skip:
-                self.log.info(
-                    '----------{}: {} --- {} --- {}---输入参数: {} ----输出参数: ----------'.format('成功', case_step,
-                                                                                            step_title, element_info,
-                                                                                            input_data))
-                continue
-
             try:
+                # 步骤跳过
+                if step_skip:
+                    self.log.info(
+                        '---------- {} --- {} 此用例跳过'.format( case_step,step_title))
+                    continue
+
+                # 判断平台 ios 则loc  find_type不一样,前端同一个元素下面维护 Android和ios的元素查找方式和位置
+                if self.driver.desired_capabilities.get('platform', '') == 'MAC':
+                    loc = self._by_type.get(type_for_ios, ''), element_loc_for_ios
+                else:
+                    loc = self._by_type.get(type_for_android, ''), element_loc_for_android
+
+                # 是否引用前面某个用例的 输出值,以xx开头
+                if input_data.startswith(rtconf.use_output_arg_symbol):
+                    input_data = test_data[input_data[len(rtconf.use_output_arg_symbol):]]
+
                 if wait_time:
                     time.sleep(wait_time)
                 if loc[0]:
@@ -93,14 +93,15 @@ class BaseAction:
                     output_text = pattern.search(output_text).group()
                     # 输处返回参数，给依赖用例使用
                     test_data[output_data] = output_text
+                    self.log.info("处理验证码关键字verify_code,从验证码toast中得到验证码:{}".format(output_text))
                 else:
                     test_data[output_data] = output_text
 
                 self.log.info(
                     '√√√{}-{}-{} --- {} --- {}---输入参数: **{}** - 输出参数:**{}**'.format('成功', case_step,
-                                                                             step_title, element_info,
-                                                                             self.assert_result,
-                                                                             input_data, output_text))
+                                                                                    step_title, element_info,
+                                                                                    self.assert_result,
+                                                                                    input_data, output_text))
                 # 截图
                 if screenshot:
                     shot_name = '步骤_{}_{}'.format(step_rank, step_title)
@@ -109,12 +110,12 @@ class BaseAction:
             except Exception as e:
                 result = 0
                 self.log.error('×××{}:{}{} --- {} --- {}---输入参数: **{}**'.format('错误',
-                                                                                       case_step,
-                                                                                       step_title,
-                                                                                       element_info,
-                                                                                       self.assert_result,
-                                                                                       input_data,
-                                                                                       ))
+                                                                                case_step,
+                                                                                step_title,
+                                                                                element_info,
+                                                                                self.assert_result,
+                                                                                input_data,
+                                                                                ))
                 error_msg = traceback.format_exc()
                 self.log.error(error_msg)
                 err_shot_name = '步骤_{}_{}错误截图'.format(step_rank, step_title)
@@ -157,6 +158,7 @@ class BaseAction:
         """
         输入文本
         """
+        self.log.info("输入参数:{}".format(input_data))
         self.find_element(loc).send_keys(input_data)
 
     def get_element_text(self, loc):
@@ -197,8 +199,9 @@ class BaseAction:
             assert input_data in assert_text
             self.assert_result = '断言成功-----文本{}存在于{}'.format(input_data, assert_text)
         except Exception as e:
-            self.assert_result = '断言失败-----文本{}不存在于{}'.format(input_data,assert_text)
+            self.assert_result = '断言失败-----文本{}不存在于{}'.format(input_data, assert_text)
             raise e
+
     def check_elements(self, loc):
         """
         断言元素（多个）是否存在
@@ -508,7 +511,6 @@ class BaseAction:
             time.sleep(1)
             pagename = "元素{}点击后".format(i)
             self.take_screen_shot(name=pagename)
-
 
     def take_screen_shot(self, name='截图', wait_time=None):
         """

@@ -6,7 +6,7 @@ from multiprocessing import Process
 
 def auto_test_server():
     print('开启自动化服务')
-    http_server = WSGIServer(('localhost', 5002), app)
+    http_server = WSGIServer(('0.0.0.0', 5002), app)
     http_server.serve_forever()
     print('自动化服务结束')
 
