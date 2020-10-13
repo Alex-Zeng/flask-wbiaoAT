@@ -90,10 +90,21 @@ class EquipmentManagementList(Resource):
 
     # @login_required
     def post(self):
-
+        default_args = {
+            "platformName": "Android",
+            "platformVersion": "设备版本",
+            "deviceName": "设备名",
+            "appPackage": "应用包名",
+            "appActivity": "启动的activity",
+            "automationName": "uiautomator2",
+            "noReset": "True",
+            "dontStopAppOnRest": "False",
+            "autoGrantPermissions": "True",
+            "systemPort": "5745"
+        }
         args = parser_em.parse_args()
         max_rank_entity = EquipmentManagement.query.order_by(db.desc(EquipmentManagement.rank)).first()
-        entity = EquipmentManagement(title=args.title, setting_args=args.setting_args,
+        entity = EquipmentManagement(title=args.title, setting_args=args.setting_args if args.setting_args else json.dumps(default_args),
                                      rank=int(max_rank_entity.rank) + 1,
                                      remoteHost=args.remoteHost, remotePort=args.remotePort,
                                      cron_status=args.cron_status, cron_times=args.cron_times, next_run_time='')
@@ -725,8 +736,6 @@ class AdbOperaDevice(Resource):
         except Exception as e:
             return jsonify(
                 {'status': 0, 'data': opera, 'message': e})
-
-
 
 
 class AdbTool():

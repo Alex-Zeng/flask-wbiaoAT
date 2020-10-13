@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="51c61f42-db77-429e-93f0-e2cd8015eefa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/run_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/run_test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,19 +31,43 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/admin.py">
+        <entry file="file://$PROJECT_DIR$/run_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="902">
-              <caret line="46" column="6" selection-start-line="46" selection-start-column="6" selection-end-line="46" selection-end-column="6" />
+            <state relative-caret-position="132">
+              <caret line="9" column="29" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="660">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/minicapServer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-448">
+              <caret line="26" column="21" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/appium_base/base_action.py">
+        <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="117" column="82" lean-forward="true" selection-start-line="117" selection-start-column="82" selection-end-line="117" selection-end-column="82" />
+            <state relative-caret-position="312">
+              <caret line="99" column="30" lean-forward="true" selection-start-line="99" selection-start-column="30" selection-end-line="100" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -224,7 +249,6 @@
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$PROJECT_DIR$/app/views/admin.py" />
-        <option value="$PROJECT_DIR$/app/views/run_test.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/app/blue/admin/__init__.py" />
         <option value="$PROJECT_DIR$/app/models/__init__.py" />
@@ -235,6 +259,7 @@
         <option value="$PROJECT_DIR$/app/views/uitest.py" />
         <option value="$PROJECT_DIR$/appium_base/base_funci_info.py" />
         <option value="$PROJECT_DIR$/appium_base/base_action.py" />
+        <option value="$PROJECT_DIR$/app/views/run_test.py" />
       </list>
     </option>
   </component>
@@ -273,6 +298,13 @@
               <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UIAtuoTest" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="run_test.py" type="8704e2dd:PyFileNode" />
             </path>
             <path>
               <item name="UIAtuoTest" type="b2602c69:ProjectViewProjectNode" />
@@ -616,6 +648,10 @@
       <workItem from="1600825906748" duration="1119000" />
       <workItem from="1600910054570" duration="771000" />
       <workItem from="1601256538169" duration="1825000" />
+      <workItem from="1601360130461" duration="428000" />
+      <workItem from="1602206662668" duration="644000" />
+      <workItem from="1602292090854" duration="1443000" />
+      <workItem from="1602468528083" duration="3208000" />
     </task>
     <task id="LOCAL-00001" summary="新增case和casesuit接口">
       <created>1568101321556</created>
@@ -862,20 +898,27 @@
       <option name="project" value="LOCAL" />
       <updated>1601273609164</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="优化日志">
+      <created>1601360222771</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1601360222771</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1060729000" />
+    <option name="totallyTimeSpent" value="1066452000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" weight="0.3296" />
-      <window_info content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.1984" />
+      <window_info content_ui="combo" x="1386" y="101" width="332" height="673" id="Project" order="1" sideWeight="0.5278884" side_tool="true" visible="true" weight="0.1488" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.27657267" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.25921908" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.329718" />
       <window_info anchor="bottom" id="Python Console" order="4" weight="0.329718" />
@@ -892,7 +935,7 @@
       <window_info anchor="right" id="SciView" order="2" weight="0.3295129" />
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
-      <window_info anchor="right" id="Structure" order="5" sideWeight="0.47211155" visible="true" weight="0.13706666" />
+      <window_info anchor="right" id="Structure" order="5" sideWeight="0.47211155" visible="true" weight="0.0976" />
       <window_info anchor="right" id="Key Promoter X" order="6" />
     </layout>
   </component>
@@ -1165,16 +1208,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="514" column="79" lean-forward="true" selection-start-line="514" selection-start-column="79" selection-end-line="514" selection-end-column="79" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/~yminitouch/actions.py" />
     <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/~yminitouch/__init__.py" />
     <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/~yminitouch-0.3.3-py3.6.egg-info/SOURCES.txt" />
@@ -1275,34 +1308,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/minicapServer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1496">
-          <caret line="68" column="24" selection-start-line="68" selection-start-column="11" selection-end-line="68" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/venv_wbiaoAT/Lib/site-packages/gevent/baseserver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7832">
           <caret line="362" column="8" selection-start-line="362" selection-start-column="8" selection-end-line="362" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/run_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1313,6 +1322,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="902">
           <caret line="46" column="6" selection-start-line="46" selection-start-column="6" selection-end-line="46" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appium_base/base_action.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2112">
+          <caret line="108" column="26" selection-start-line="108" selection-start-column="26" selection-end-line="108" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
@@ -1364,10 +1397,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appium_base/base_action.py">
+    <entry file="file://$PROJECT_DIR$/minicapServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="117" column="82" lean-forward="true" selection-start-line="117" selection-start-column="82" selection-end-line="117" selection-end-column="82" />
+        <state relative-caret-position="-448">
+          <caret line="26" column="21" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/run_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="99" column="30" lean-forward="true" selection-start-line="99" selection-start-column="30" selection-end-line="100" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
