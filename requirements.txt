@@ -48,7 +48,7 @@ Jinja2==2.10.1
 loguru==0.4.1
 logzero==1.5.0
 lxml==4.3.4
-Mako==1.1.0
+Mako==1.2.2
 MarkupSafe==1.1.1
 marshmallow==2.20.1
 more-itertools==7.1.0
